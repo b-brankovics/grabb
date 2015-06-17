@@ -560,7 +560,7 @@ remove or replace files that would suggest completion:
 
 Folder structure:
 
-**<folder>**/
+**\<folder\>**/
 
 - reference.fas
 - bait.fas
