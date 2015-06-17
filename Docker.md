@@ -21,7 +21,7 @@ This command downloads a test image and runs it in a container.
 
 There are two ways to do this:
 
-* Pul the repository
+* Pull the repository
 
         docker pull grabb
 
@@ -64,7 +64,7 @@ Same as for the previous example, it is possible to mount local folders.
 
 Instead of using the **-ti** arguments, now the **-d** argument has to be used.
 
-In addition the GRAbB command has to be specified as well. The output folder has
+In addition, the `GRAbB.pl` command has to be specified as well. The output folder has
 to be inside a directory that is mounted from the host computer,
 because otherwise it is not possible to access the results.
 
