@@ -2,8 +2,7 @@
 use strict;
 
 #===DESCRIPTION=================================================================
-# A tool to format fasta files to uniform column width
-
+# A tool to reverse complement the entries of fasta format files                                                                                                                                       
 #===MAIN========================================================================
 
 # Hash to store the sequences: key (id and defintion) and value (sequence) 
