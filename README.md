@@ -35,7 +35,7 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
     5. [Assembly](#markdown-header-assembly)
     6. [Testing completion](#markdown-header-testing-completion)
     7. [Modes](#markdown-header-modes)
-5. [Arguments](#Arguments)
+5. [Arguments](#arguments)
     1. [ref](#markdown-header-ref)
     2. [bait](#markdown-header-bait)
     3. [reads](#markdown-header-reads)
