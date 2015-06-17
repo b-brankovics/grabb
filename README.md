@@ -563,10 +563,12 @@ Folder structure:
 - reference.fas
 - bait.fas
 - extra_bait.fas
-- *<prefix>*_assembly_thread_*<int>*.fas
+- *prefix*_assembly_thread_*int*.fas
+- *prefix*_result_thread_*int*.fas
+- *prefix*.log
 - old_collection.list
-- reads*<int>*.fastq or reads*<int>*.fasta
-- **Round_<int>_**/
+- reads*int*.fastq or reads*int*.fasta
+- **Round_int_**/
 
     + hashstat.bin
     + mirabait.log
