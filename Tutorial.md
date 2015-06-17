@@ -41,7 +41,7 @@ Steps
 
 3. Circularize the genome
 
-        ./helper_programs/merge_contigs.pl tutorial1/PH-1_mt_assembly_thread_1.fas 15 circular.fas
+        ./helper_programs/merge_contigs tutorial1/PH-1_mt_assembly_thread_1.fas 15 circular.fas
 
     - This cuts the 84 bp overlap from one of the ends of the contig and marks the entry as circular
     - The resulting sequence is saved to circular.fas
@@ -96,16 +96,16 @@ Files used
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/references/published_mts.fas --reads data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz --folder tutorial2 --prefix F11_mt
 
     - The program will run for 2 iterations
     - Ending with an assembly (**tutorial2/F11_mt_assembly_thread_1.fas**) with 1 contig
 
-2. Run get_overlaps.pl script to see if the contigs overlap
+2. Run `get_overlaps` script to see if the contigs overlap
 
-        ./helper_programs/get_overlaps.pl tutorial2/F11_mt_assembly_thread_1.fas 15
+        ./helper_programs/get_overlaps tutorial2/F11_mt_assembly_thread_1.fas 15
 
     - 15 specifies the minimum overlap to be detected
     - The script will display which contig overlaps with which contig and what is the size of the overlap
@@ -113,7 +113,7 @@ Steps
 
 3. Circularize the genome
 
-        ./helper_programs/merge_contigs.pl tutorial2/F11_mt_assembly_thread_1.fas 15 circular.fas
+        ./helper_programs/merge_contigs tutorial2/F11_mt_assembly_thread_1.fas 15 circular.fas
 
     - This cuts the 24 bp overlap from one of the ends of the contig and marks the entry as circular
     - The resulting sequence is saved to circular.fas
@@ -122,7 +122,7 @@ Steps
 
         nucmer data/results/F11_mt.fas circular.fas; mummerplot out.delta
 
-    - For this mummer has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
+    - For this `mummer` has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in the same orientation or not or whether they are in the same phase
     - In this case our sequence has to be shifted, but it doesn't have to be reversed
 
@@ -155,16 +155,16 @@ Files used
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl  --ref data/references/HQ651161.fas --bait data/references/JQ423253.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder tutorial3 --prefix rDNA
 
     - The program will run for 4 iterations
     - Ending with an assembly (**tutorial3/rDNA_assembly_thread_1.fas**) with a single contig
 
-2. Run get_overlaps.pl script to see if the contig overlaps with itself
+2. Run `get_overlaps` script to see if the contig overlaps with itself
 
-        ./helper_programs/get_overlaps.pl tutorial3/rDNA_assembly_thread_1.fas 15
+        ./helper_programs/get_overlaps tutorial3/rDNA_assembly_thread_1.fas 15
 
     - 15 specifies the minimum overlap to be detected
     - The script will display which contig overlaps with which contig and what is the size of the overlap
@@ -172,7 +172,7 @@ Steps
 
 3. Circularize the genome
 
-        ./helper_programs/merge_contigs.pl tutorial3/rDNA_assembly_thread_1.fas 15 circular.fas
+        ./helper_programs/merge_contigs tutorial3/rDNA_assembly_thread_1.fas 15 circular.fas
 
     - This cuts the 100 bp overlap from one of the ends of the contig and marks the entry as circular
     - The resulting sequence is saved to circular.fas
