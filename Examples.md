@@ -1,6 +1,6 @@
 Examples of special usages
 ----------------------
-- [Adding Velvet with new paramters to the source code of GRAbB](#adding-velvet-with-new-parameters-to-the-source-code-of-grabb)
+- [Adding Velvet with new paramters to the source code of GRAbB](#adding-velvet-with-new-paramters-to-the-source-code-of-grabb)
 - [Using ABySS assembler as external assembler](#using-abyss-assembler-as-external-assembler)
 - [Overwriting a previous run directory](#overwriting-a-previous-run-directory)
 - [Using a previous run directory](#using-a-previous-run-directory)
