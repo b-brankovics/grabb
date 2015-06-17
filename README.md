@@ -68,7 +68,7 @@ OR
 
 Use Docker
 
-* docker pull grabb
+* `docker pull brankovics/grabb`
 * Create local docker repository
 
         git clone https://github.com/b-brankovics/grabb
