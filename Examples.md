@@ -120,7 +120,7 @@ There are two ways to use the folder of a previous run:
 
         Some of the files have to be removed:
 
-            rm old/reference.fas old/bait.fas old/extra_bait.fas old/thread_<int>/reference.fas old/thread_<int>/bait.fas old/Round<int>/positive_*.txt old/Round<int>/readpool*.fast[aq] old/old_collection.list old/thread_<int>/old_collection.list old/Round#/new_collection.list
+            rm old/reference.fas old/bait.fas old/extra_bait.fas old/thread_<int>/reference.fas old/thread_<int>/bait.fas old/Round<int>/positive_*.txt old/Round<int>/readpool*.fast[aq] old/old_collection.list old/thread_<int>/old_collection.list old/Round<int>/new_collection.list
         
         - both from the working directory and the thread folders: **reference.fas**, **bait.fas**, **extra\_bait.fas** and **old\_collection.list**
         - From the given Round directory: **positive\_\*.txt**, **readpool\*.fast\[aq\]** and **new\_collection.list**
