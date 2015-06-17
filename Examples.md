@@ -18,8 +18,8 @@ The following is the work flow used with the assembler that needs to be added to
     velvetg new_velvet -cov_cutoff 50
 
 - The output of this work flow is located at **new_velvet/contigs.fa**
-- We want to be able to adjust the kmer used by Velvet at invocation using **--arg1** argument
-- We want to be able to adjust the arguments for the velvetg at invocation using **--arg2** argument
+- We want to be able to adjust the kmer used by [Velvet](https://www.ebi.ac.uk/%7Ezerbino/velvet/) at invocation using **--arg1** argument
+- We want to be able to adjust the arguments for the `velvetg` at invocation using **--arg2** argument
 
 Steps: (according to the instruction in [README.md](README.md#adding-to-the-source-code-of-grabb))
 
@@ -60,7 +60,7 @@ Preform the above work flow within `GRAbB.pl`
 
 
 ----------------------
-#### Using ABySS assembler as external assembler
+#### Using [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss) assembler as external assembler
 
 This example demonstrates how a new assembler can be used with the `external_scaffold.pl` script
 
