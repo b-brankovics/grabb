@@ -4,6 +4,7 @@ Examples of special usages
 - [Create Docker image for grabb](#create-docker-image-for-grabb)
 - [Run the Docker image and attach local folders](#run-the-docker-image-and-attach-local-folders)
 - [Run the Docker image detached](#run-the-docker-image-detached)
+- [Password for superuser privileges](#password-for-superuser-privileges)
 
 ----------------------
 #### Install Docker
@@ -79,3 +80,8 @@ At the end the results can be found in the folder specified as output in the hos
 To remove the container:
 
     docker rm <identifier>
+
+----------------------
+#### Password for superuser privileges
+
+The password is "**grab**"
