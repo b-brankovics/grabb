@@ -62,7 +62,7 @@ Preform the above work flow within `GRAbB.pl`
 ----------------------
 #### Using ABySS assembler as external assembler
 
-This example demonstrates how a new assembler can be used with the external_scaffold.pl script
+This example demonstrates how a new assembler can be used with the `external_scaffold.pl` script
 
 The following is the work flow used with the assembler that we want to use
 
