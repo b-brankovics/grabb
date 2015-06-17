@@ -1,0 +1,95 @@
+#!/usr/bin/perl -w
+use strict;
+
+# Loads a fasta file with two sequences and outputs the score of the alignment
+# Output: number of identical bases, percentage, number of identical bases(non "-"), corresponding percentage
+
+for (@ARGV) {
+    if ($_ eq "-h" || $_ eq "--help") {
+        die "Usage:\n\tThis programs needs a fasta format input STDIN or file\n\tCompares the first two sequences\n\nOutput: <total length>\t<\# of identical bases>\t<percentage of identity>\t<\# of identical bases, not counting '-'>\t<percentage of identity w/o '-'>\n";
+    }
+}
+
+# Hash to store the sequences: key (id and defintion) and value (sequence) 
+my %fas_data;
+# Array to store the order of the sequences
+my @ids;
+
+# If there were arguments specified then read the sequence from them
+# OR read from STDIN
+if (@ARGV) {
+    for (@ARGV) {
+	&read_fasta(\%fas_data, \@ids, $_);
+    }
+} else {
+    &read_fasta(\%fas_data, \@ids);
+}
+
+print &match_score($fas{$ids[0]},$fas{$ids[1]});
+
+
+#===SUBROUTINES=================================================================
+
+sub read_fasta {
+    # This loads the sequences into a hash and an array
+    my ($hash, $list, $file) = @_;
+    my $in;
+    if ($file) {
+	open $in, '<', $file || die $!;
+    } else {
+	$in = *STDIN;
+    }
+    my $seq_id;
+    for (<$in>) {
+	# Skip empty lines
+	next if /^\s*$/;
+	# Check wheter it is an id line
+	if (/>(.*)/) {
+	    # Save the id and the definition and store it in the array
+	    $seq_id = $1;
+	    print STDERR "WARNING: <$seq_id> is present in multiple copies\n" if $hash->{$seq_id};
+	    push @$list, $seq_id;
+	} else {
+	    # If there was no id lines before this then throw an error
+	    unless (defined $seq_id) {
+		print "Format error! Check the file!\n";
+		last;
+	    }
+	    # Remove lineendings and white space
+	    s/\R//g;
+	    s/\s+//g;
+	    # Add to the sequence
+	    $hash->{$seq_id} .= $_;
+	}
+    }
+    close $in;
+}
+
+sub match_score {
+    # Compares two sequence and returns a string with statistics
+    #   Length of the alignment
+    #   Number of identical characters
+    #   length / identical * 100
+    #   length without shared gaps / identical * 100
+    my ($seq1, $seq2) = @_;
+    my $len1 = length $seq1;
+    my $len2 = length $seq2;
+    my ($shorter, $longer) = sort {$a<=>$b} ($len1, $len2); 
+    my $corrected = $longer;   # will be equal to length of the alignment when all indel characters are excluded
+    my $score;                 # count the number of identical characters
+    my $score_ungap;           # count number of mismatches (skips indels)
+    for (0..($shorter-1)) {
+        # do the comparison
+        my $base1 = substr $seq1, $_, 1;
+        my $base2 = substr $seq2, $_, 1;
+        if ($base1 eq $base2) {
+            $score++;
+            if ($base1 ne "-") {
+                $score_ungap++;
+            } else {
+                $corrected--;
+            }
+        }# else {print "$_\n"}
+    }
+    "$longer\t$score\t" . (100 * $score/$longer) . "%\t$score_ungap\t" . (100 * $score_ungap/$corrected) ."%\n";
+}
