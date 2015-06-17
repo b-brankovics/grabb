@@ -752,20 +752,20 @@ the run
         my $single_first = "$alt_1_cmd @arg1 @$readpool_ref";
 
 * The code to execute the second step of the assembly for single-end
-  sequences (*@arg2*: the arguments specified at invocation after the
+  sequences (`@arg2`: the arguments specified at invocation after the
   **--arg2** argument)
 
         my $single_second = "$alt_2_cmd @arg2";
 
 * The code to execute the first step of the assembly for paired-end
-  sequences (*@arg1*: the arguments specified at invocation after the
-  **--arg1** argument; *@$readpool_ref*: list of the readpool files
+  sequences (`@arg1`: the arguments specified at invocation after the
+  **--arg1** argument; `@$readpool_ref`: list of the readpool files
   created be GRAbB)
 
         my $paired_first = "$alt_1_cmd @arg1 @$readpool_ref";
 
 * The code to execute the second step of the assembly for paired-end
-  sequences (*@arg2*: the arguments specified at invocation after the
+  sequences (`@arg2`: the arguments specified at invocation after the
   **--arg2** argument)
 
         my $paired_second = "$alt_2_cmd @arg2";
