@@ -13,11 +13,12 @@ RUN mkdir /home/grabb/bin
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install -y exonerate
+RUN apt-get install -y velvet
 RUN apt-get install -y seqtk
 
 # Copy executable files from local folder to the bin folder
 COPY edena /home/grabb/bin/
-COPY $PWD/../GRAbB.pl /home/grabb/bin/
+COPY GRAbB.pl /home/grabb/bin/
 COPY mirabait /home/grabb/bin/
 COPY velvetg /home/grabb/bin/
 COPY velveth /home/grabb/bin/
