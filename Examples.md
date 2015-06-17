@@ -70,7 +70,7 @@ The following is the work flow used with the assembler that we want to use
 
 - The output of this work flow is located at **abyss-contigs.fa**
 
-Steps: (according to the instruction in README.md)
+Steps: (according to the instruction in [README.md](README.md#using-external_scaffold))
 
 1. Add the commands of the assembler
 
