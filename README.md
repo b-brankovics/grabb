@@ -141,7 +141,7 @@ Usage:
 
     ./fastq2fasta <reads_1.fastq> <reads_2.fastq>
 
-#### get_overlaps.pl
+#### get_overlaps
 
 This program reads the contigs from a fasta file and checks if they
 are overlapping with each other by using a minimal overlap size that is
@@ -171,7 +171,7 @@ Usage:
 
     ./merge_contigs <contigs.fasta> <overlap> <output.fas>
 
-#### rename_fastq.pl
+#### rename_fastq
 
 This program creates a FASTA format read file for each FASTQ read file
 
