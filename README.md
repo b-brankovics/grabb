@@ -184,9 +184,9 @@ Usage:
 
 This program creates paired-end read files from single-end files
 
-1. Selects the reads that are at least as long as the specified length (<int>)
-2. Gets the first <int> characters to be used as forward read
-3. Gets the last <int> characters to be used as reverse read (reverse complement)
+1. Selects the reads that are at least as long as the specified length (\<_int_\>)
+2. Gets the first \<_int_\> characters to be used as forward read
+3. Gets the last \<_int_\> characters to be used as reverse read (reverse complement)
 
 All the produced reads are $len long.
 
@@ -200,7 +200,7 @@ Usage:
 
 This program creates a read file with reads with uniform length
 
-1. Selects the reads that are at least as long as the specified length (<int>)
+1. Selects the reads that are at least as long as the specified length (\<_int_\>)
 2. Trims the reads to the specified length
 
 All the produced reads are $len long
@@ -826,8 +826,8 @@ The lines marked with `# ADD` have to be adjusted:
   specified after **--arg2** are stored in the array `@param1`,
   the fact that the assembly is for a single-end or paired-end library
   is stored in the variable `$paired` (the value of the variable is
-  either "single" or "paired") and the variable `$format` stores the
-  file format of the read files (either "fasta" or "fastq").
+  either "*single*" or "*paired*") and the variable `$format` stores the
+  file format of the read files (either "*fasta*" or "*fastq*").
 
     ```
 `$assmebler @reads`; # ADD
@@ -840,7 +840,7 @@ The lines marked with `# ADD` have to be adjusted:
         my $result = ""; # ADD
 
 After all these modifications are completed and save to the files
-_<external.pl>_ (the file name can be anything that does not already
+_\<external.pl\>_ (the file name can be anything that does not already
 exist in the directory), then GRAbB maybe run with the newly specified
 assembler program. Using the proper argument:
 
