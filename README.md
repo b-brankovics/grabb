@@ -78,7 +78,7 @@ Use Docker
 
 Run GRAbB.pl without any arguments and it prints the Usage information
 
-The documentation is this file and the files mantioned at the [examples](#examples).
+The documentation is this file and the files mentioned at the [examples](#examples).
 
 #### Examples
 
@@ -101,7 +101,7 @@ See the wiki or the files __Docker.md__, __Examples.md__ and __Tutorials.md__.
 
 1. Download [EDENA](http://www.genomic.ch/edena.php) and extract it or use the copy in the 3rd_party_programs
 2. Move to the directory
-3. Type '_make_' on the commndline (g++ needs to be installed, on ubuntu type 'sudo apt-get install g++')
+3. Type '_make_' on the command line (g++ needs to be installed, on ubuntu type 'sudo apt-get install g++')
 4. Copy/move or smylink 'edena' into somewhere in the path or add the folder to the path (The files in the bin folder)
 
 #### Velvet
@@ -109,17 +109,17 @@ See the wiki or the files __Docker.md__, __Examples.md__ and __Tutorials.md__.
 1. Download [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/) and extract it or use the copy in the 3rd_party_programs
 2. Move to the directory. First zlib needs to be installed
 3. Move to 'third-party/zlib-1.2.3/'
-4. Type '_make_' on the commandline
-5. Type '_sudo make install_' on the commandline
+4. Type '_make_' on the command line
+5. Type '_sudo make install_' on the command line
 6. Go back to the parent directory (_cd ../.._)
-7. Type '_make_' on the commandline
+7. Type '_make_' on the command line
 8. Copy/move or smylink '_velveth_' and '_velvetg_' into somewhere in the path or add the folder to the path
 
 #### Seqtk
 
 1. Download [Seqtk]()https://github.com/lh3/seqtk.git from github and uncompress it or ´_git clone https://github.com/lh3/seqtk.git_´
 2. Move to the directory
-3. Type '_make_' on the commndline (zlib needs to be installed, see 1.3) for instructions)
+3. Type '_make_' on the command line (zlib needs to be installed, see 1.3) for instructions)
 4. Copy/move or smylink 'seqtk' into somewhere in the path or add the folder to the path (The files in the bin folder)
 
 #### exonerate
@@ -331,7 +331,7 @@ reads identified, then the program stops the iteration, either for the
 given thread (specific) or for all the threads (general).
 
 By using a general baiting step before the specific baiting it is
-possible to reduce the required runtime, because the large input read
+possible to reduce the required run time, because the large input read
 file(s) is/are only screened once per iteration and the specific
 baiting is confined to screening the reads that are already identified
 to be specific during the general baiting.
@@ -382,7 +382,7 @@ these criteria is met.
     specified then the run is an exhaustive run, since it iterates
     until it cannot find any new information.
 
-2. Length critera (total length, longest contig or N50)
+2. Length criteria (total length, longest contig or N50)
 
     This is the simplest explicit completion criterion. There are
     three options that can be used for this setting: total assembly
@@ -530,7 +530,7 @@ not have to be highly similar to the target sequence.
 
 A separate bait file can be specified besides the reference file, this
 file together with the reference file will be used as [first
-bait](#creating-the-bait). Usefull when using special
+bait](#creating-the-bait). Useful when using special
 criterion for the assembly, such as
 [homology](#modes).
 
@@ -600,7 +600,7 @@ Folder structure:
 
 The prefix for the output files:
 
-* logfile
+* log file
 * assembly file
 * result file
 
@@ -647,14 +647,14 @@ testing and baiting
 
 	            --type exonerate
 
-* Or to have paralell runs (threads)
+* Or to have parallel runs (threads)
 
         --type multi
 
 
-* To get the completion creterion for each thread from the refernce file
-(These creteria overwrite the globally defined
-creteria. Write "exhaustive" in the identifier
+* To get the completion criterion for each thread from the reference file
+(These criteria overwrite the globally defined
+criteria. Write "exhaustive" in the identifier
 line if exhaustive should be used.)
 
     (Need to be used together with multi)
@@ -704,7 +704,7 @@ If specified twice, then only result files are kept, the rest is deleted
 #### Using custom assembler program
 
 GRAbB may use either [EDENA](http://www.genomic.ch/edena.php) or
-[Velvet](https://www.ebi.ac.uk/~zerbino/velvet/) to preforme the _de
+[Velvet](https://www.ebi.ac.uk/~zerbino/velvet/) to preform the _de
 novo_ assembly, by default. There are two possibilities to add other
 assemblers to be used by the program.
 
@@ -804,7 +804,7 @@ assembly if **external** is selected as assembler.
     # Run the assembly
     `$assmebler @reads`; # ADD
     
-    # Specifiy the expected result file
+    # Specify the expected result file
     my $result = ""; # ADD
     
     # Copy the result file to the expected position
