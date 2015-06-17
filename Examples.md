@@ -10,9 +10,9 @@ Examples of special usages
 ----------------------
 #### Adding Velvet with new paramters to the source code of GRAbB
 
-This example demonstrates how a new assembler can be added to the source code of GRAbB
+This example demonstrates how a new assembler can be added to the source code of `GRAbB.pl`
 
-The following is the work flow used with the assembler that needs to be added to GRAbB
+The following is the work flow used with the assembler that needs to be added to `GRAbB.pl`
 
     velveth new_velvet 51 -fasta -shortPaired -separate reads1.fas reads2.fas
     velvetg new_velvet -cov_cutoff 50
@@ -52,9 +52,9 @@ Steps: (according to the instruction in [README.md](README.md#adding-to-the-sour
 
         my $result = "new_velvet/contigs.fa";
 
-8. Save the modified source code of GRAbB to file
+8. Save the modified source code of `GRAbB.pl` to file
 
-Preform the above work flow within GRAbB
+Preform the above work flow within `GRAbB.pl`
 
     ./GRAbB.pl --ref <ref.fas> --folder <folder> --prefix <prefix> --reads <reads1.fas reads2.fas> --assembler alternative --arg1 51 --arg2 "-cov_cutoff 51"
 
@@ -86,7 +86,7 @@ Steps: (according to the instruction in [README.md](README.md#using-external_sca
 
 4. Save the modified source code of external_scaffold.pl to file (e.g. **external_abyss.pl**)
 
-Preform the above work flow within GRAbB
+Preform the above work flow within `GRAbB.pl`
 
     ./GRAbB.pl --ref <ref.fas> --folder <folder> --prefix <prefix> --reads <reads1.fas reads2.fas> --assembler external external_abyss.pl
 
@@ -97,7 +97,7 @@ How to use the folder (**old**) that has been used for a previous run, but is no
 
     ./GRAbB.pl --ref data/results/F11_mt.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder old --prefix PH-1_mt
 
-GRAbB detects that the folder is not empty and asks a few questions, below is an example with the answers needed to continue
+`GRAbB.pl` detects that the folder is not empty and asks a few questions, below is an example with the answers needed to continue
 
     Specified folder (old) is not empty.
     Do you wish to continue?[y/n] y
@@ -106,7 +106,7 @@ GRAbB detects that the folder is not empty and asks a few questions, below is an
     Do you wish to delete the content of the folder?[y/n] y
     Are you sure?[y/n] y
 
-If the previous run was aborted before completion, then GRAbB may fail to deleted straightaway. In this case run it again and answer the questions same as before.
+If the previous run was aborted before completion, then `GRAbB.pl` may fail to deleted straightaway. In this case run it again and answer the questions same as before.
 
 
 ----------------------
@@ -125,7 +125,7 @@ There are two ways to use the folder of a previous run:
         - both from the working directory and the thread folders: reference.fas, bait.fas, extra_bait.fas and old_collection.list
         - From the given Round directory: positive_*.txt, readpool*.fast[aq] and new_collcetion.list
 
-        Now GRAbB maybe run using the folder and tell GRAbB to use the content of the folder
+        Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
 
      2. Rerunning last Round starting with the comparing the list of the identified   reads of the latest round and the previous one
 
@@ -135,9 +135,9 @@ There are two ways to use the folder of a previous run:
 
         - both from the working directory and the thread folders: reference.fas, bait.fas, extra_bait.fas and old_collection.list
 
-        Now GRAbB maybe run using the folder and tell GRAbB to use the content of the folder
+        Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
 
-2. Rerunning GRAbB by starting a new round
+2. Rerunning `GRAbB.pl` by starting a new round
 
     Create the next round directory inside the working directory
 
@@ -148,4 +148,4 @@ There are two ways to use the folder of a previous run:
         for i in old/thread_*; do cp $i/assembly.fas $i/bait.fas; done
         cat old/thread_*/assembly.fas | perl -ne 'if(/\>/){$n++; print ">new$n\n";} else {print}' >old/bait.fas
 
-    Now GRAbB maybe run using the folder and tell GRAbB to use the content of the folder
+    Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
