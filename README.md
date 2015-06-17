@@ -851,7 +851,7 @@ assembler program. Using the proper argument:
 --------------------------------
 #### Citation
 
-If you use the `GRAbB.pl` or any of the helper programs, please, site the paper describing the program
+If you use the `GRAbB.pl` or any of the helper programs, please, site the paper describing the program.
 
 _The paper is not yet published_
 
