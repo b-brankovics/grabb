@@ -128,7 +128,7 @@ Steps
 
 5. Shift the sequence into the proper phase
 
-    - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also tutorial 1)
+    - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also [tutorial 1](#reconstruction-of-the-mitochondrial-genome-using-the-mitogenome-of-a-related-species))
     - Create a fasta file which contains the start of the provided result sequence (**data/results/F11_mt.fas**)
 
         head -2 data/results/F11_mt.fas >ref.fas
