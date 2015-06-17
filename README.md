@@ -82,7 +82,7 @@ The documentation is this file and the files mentioned at the [examples](#exampl
 
 #### Examples
 
-See the wiki or the files __Docker.md__, __Examples.md__ and __Tutorials.md__.
+See the wiki or the files __Docker.md__, __Examples.md__ and __[Tutorials.md](Tutorials.md)__.
 
 --------------------------------
 #### Prerequisites
