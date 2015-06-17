@@ -132,7 +132,7 @@ Steps
     - Create a fasta file which contains the start of the provided result sequence (**data/results/F11_mt.fas**)
 
             head -2 data/results/F11_mt.fas >ref.fas
-        ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
+            ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
 
 6. Compare result with the correct sequence
 
