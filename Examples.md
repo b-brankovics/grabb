@@ -84,7 +84,7 @@ Steps: (according to the instruction in [README.md](README.md#using-external_sca
 
         my $result = "abyss-contigs.fa"; # ADD
 
-4. Save the modified source code of external_scaffold.pl to file (e.g. **external_abyss.pl**)
+4. Save the modified source code of external_scaffold.pl to file (e.g. `external_abyss.pl`)
 
 Preform the above work flow within `GRAbB.pl`
 
