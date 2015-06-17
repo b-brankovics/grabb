@@ -254,7 +254,7 @@ Steps
 
         ./GRAbB.pl --ref data/references/F11_rDNA_5000-7705.fas --bait data/results/PH-1_rDNA.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder tutorial5 --prefix PH-1_IGS --type multi_exonerate
 
-    - The program runs for one iteration and saves the matching region into separate file (**tutorial5/PH-1\_IGS\_result\_thread_1.fas)
+    - The program runs for one iteration and saves the matching region into separate file (**tutorial5/PH-1\_IGS\_result\_thread_1.fas**)
     - The program is run without the extra bait file then the program runs for two iterations
 
 2. Compare result with the correct sequence
