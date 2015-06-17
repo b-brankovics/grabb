@@ -20,7 +20,7 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
     1. [fastq2fasta](#fastq2fasta)
     2. [get_overlaps](#get_overlaps)
     3. [interleaved2pairs](#interleaved2pairs)
-    4. [merg_mutual_contigs](#merg_mutual_contigs)
+    4. [merge_contigs](#merge_contigs)
     5. [rename_fastq](#rename_fastq)
     6. [single2pairs](#single2pairs)
     7. [uniform_length](#uniform_length)
