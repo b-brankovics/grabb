@@ -560,6 +560,8 @@ remove or replace files that would suggest completion:
 
 Folder structure:
 
+**<folder>**/
+
 - reference.fas
 - bait.fas
 - extra_bait.fas
@@ -576,7 +578,7 @@ Folder structure:
     + positive\_*\<int\>*.txt
     + readpool*\<int\>*.fastq
     + reads*\<int\>*.fastq
-    + **thread\__\<int\>**/
+    + __thread\_*\<int\>*__/
 
         * assembly.fas
         * new\_collection.list
