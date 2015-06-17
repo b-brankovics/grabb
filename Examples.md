@@ -127,7 +127,7 @@ There are two ways to use the folder of a previous run:
 
         Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
 
-     2. Rerunning last round starting with the comparing the list of the identified   reads of the latest round and the previous one
+    2. Rerunning last round starting with the comparing the list of the identified   reads of the latest round and the previous one
 
        	Some of	the files have to be removed:
        	
