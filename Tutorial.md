@@ -149,9 +149,9 @@ Steps
 
 Files used
 
-    - reads: **data/reads/PH-1_r1.fastq.gz** **data/reads/PH-1_r2.fastq.gz**
-    - reference: **data/references/HQ651161.fas**
-    - bait: **data/references/JQ423253.fas**
+- reads: **data/reads/PH-1_r1.fastq.gz** **data/reads/PH-1_r2.fastq.gz**
+- reference: **data/references/HQ651161.fas**
+- bait: **data/references/JQ423253.fas**
 
 Steps
 
