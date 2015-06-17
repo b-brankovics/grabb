@@ -91,7 +91,7 @@ See the wiki or the files __Docker.md__, __Examples.md__ and __Tutorials.md__.
 
 1. Download MIRA (4.0) assembler (http://sourceforge.net/projects/mira-assembler/)
 2. Extract it. The executable files are in the _bin_ folder.
-3. Copy/move or smylink 'mirabait' into somewhere in the path or add the folder to the path (This program only uses mirabait)
+3. Copy/move or smylink **'mirabait'** into somewhere in the path or add the folder to the path (This program only uses mirabait)
 
     __Warning__: the name of the executable file has to be mirabait!
 
@@ -101,8 +101,8 @@ See the wiki or the files __Docker.md__, __Examples.md__ and __Tutorials.md__.
 
 1. Download [EDENA](http://www.genomic.ch/edena.php) and extract it or use the copy in the 3rd_party_programs
 2. Move to the directory
-3. Type '_make_' on the command line (g++ needs to be installed, on ubuntu type 'sudo apt-get install g++')
-4. Copy/move or smylink 'edena' into somewhere in the path or add the folder to the path (The files in the bin folder)
+3. Type `make` on the command line (g++ needs to be installed, on ubuntu type `sudo apt-get install g++`)
+4. Copy/move or smylink **'edena'** into somewhere in the path or add the folder to the path (The files in the bin folder)
 
 #### Velvet
 
