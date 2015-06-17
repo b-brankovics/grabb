@@ -24,16 +24,16 @@ Files used
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/results/F11_mt.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder tutorial1 --prefix PH-1_mt
 
     - The program will run for 9 iterations
     - Ending with an assembly (**tutorial1/PH-1_mt_assembly_thread_1.fas**) with a single contig
 
-2. Run get_overlaps.pl script to see if the contig overlaps with itself
+2. Run `get_overlaps` script to see if the contig overlaps with itself
 
-        ./helper_programs/get_overlaps.pl tutorial1/PH-1_mt_assembly_thread_1.fas 15
+        ./helper_programs/get_overlaps tutorial1/PH-1_mt_assembly_thread_1.fas 15
 
     - 15 specifies the minimum overlap to be detected
     - The script will display which contig overlaps with which contig and what is the size of the overlap
