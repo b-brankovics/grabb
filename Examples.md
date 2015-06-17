@@ -123,7 +123,7 @@ There are two ways to use the folder of a previous run:
             rm old/reference.fas old/bait.fas old/extra_bait.fas old/thread_1/reference.fas old/thread_1/bait.fas old/Round#/positive_*.txt old/Round#/readpool*.fast[aq] old/old_collection.list old/thread_1/old_collection.list old/Round#/new_collection.list
         
         - both from the working directory and the thread folders: **reference.fas**, **bait.fas**, **extra\_bait.fas** and **old\_collection.list**
-        - From the given Round directory: **positive\_\*.txt**, **\readpool\*.fast\[aq\]** and **new\_collection.list**
+        - From the given Round directory: **positive\_\*.txt**, **readpool\*.fast\[aq\]** and **new\_collection.list**
 
         Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
 
