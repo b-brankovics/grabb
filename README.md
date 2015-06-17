@@ -357,8 +357,8 @@ GRAbB for the assembly. By default
 using command line options the other assemblers can be selected, as
 well.
 
-The fact that [single](#single)- or
-[paired-mode](#single) is selected is passed on to the
+The fact that [single](#modes)- or
+[paired-mode](#modes) is selected is passed on to the
 assembler program that assembles the specific reads _de novo_. Also,
 it is possible to pass additional arguments, such as overlap size
 ([EDENA](http://www.genomic.ch/edena.php)), to the assembler program
