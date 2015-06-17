@@ -745,8 +745,8 @@ the run
         my $name = "";
 
 * The code to execute the first step of the assembly for single-end
-  sequences (*@arg1*: the arguments specified at invocation after the
-  **--arg1** argument; *@$readpool_ref*: list of the readpool files
+  sequences (`@arg1`: the arguments specified at invocation after the
+  **--arg1** argument; `@$readpool_ref`: list of the readpool files
   created by GRAbB)
 
         my $single_first = "$alt_1_cmd @arg1 @$readpool_ref";
