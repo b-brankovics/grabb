@@ -1,0 +1,171 @@
+                                                    Rheinfelden, Fall 2013
+
+README for the binary package of MIRA 4.0.x
+===========================================
+
+Table of contents
+-----------------
+
+1. What's new?
+2. What's provided?
+3. Installation
+4. Documentation
+5. Demos
+6. License and Disclaimer
+7. Contact
+
+
+1. What's new?
+==============
+
+For a complete list of changes since a specific version, please consult
+CHANGES.txt, or for older updates, src/mira/CHANGES_old.txt of the source
+package distributions.
+
+Current stable versions will have major.minor.sub-version of 4.0.x while
+development version will have a branch identifier of 4.1.x (respectively 3.9.x
+until the official release of 4.0).
+
+
+2. What's provided?
+===================
+
+You have downloaded the binary package of MIRA. It consists of binaries,
+documentation, a directory with small demos and a directory with some support
+files.
+
+Binaries provided:
+ - mira: for assembly or mapping of sequences
+ - miramem: estimating memory needed to assemble projects. Realised through
+   link to the mira binary.
+ - miraconvert: for converting sequencing related file types into other
+   types. Includes various options for processing, filtering etc.pp. Realised
+   through link to the mira binary.
+ - mirabait: quickly bait sequences from a large set.Realised through link to
+   the mira binary.
+Note: the above is just only one binary ("mira"), the others are just soft
+links pointing to mira.
+
+Scripts provided:
+ - fasta2frag.tcl: fragmenting sequences into smaller, overlapping
+   subsequences. Useful for simulating shotgun sequences. Can create
+   subsequences in both directions (/default) and also paired-end sequences.
+ - fixACE4consed.tcl: Consed has a bug which incapacitates it from reading
+   consensus tags in ACE files written by the MIRA assembler (and possibly
+   other programs). This script massages an ACE file so that consed can read
+   the consensus tags.
+
+Documentation provided:
+See section 4 "Documentation"
+
+
+3. Installation
+===============
+
+The binaries (in directory "bin") are statically linked and self
+contained, they should work with any Linux kernel >=2.6. On Mac OSX, they
+may work on version 10.5 and should work on all versions >= 10.6.
+
+Copy the binaries (and scripts if you want) into a directory in your path
+environment (or add the extraction directory to your path variable) and you
+are ready to go.
+
+Support files for the Staden GAP4 (GAP5) assembly finishing tool and consed
+are in the "support" directory. Please refer to the documentation of the
+respective package on how to integrate them into your environment.
+
+
+4. Documentation
+================
+
+Documentation in HTML and PDF format can be found in the 'docs' directory.
+
+Provided files:
+ - DefinitiveGuideToMIRA.html
+   Full documentation in HTML format
+ - DefinitiveGuideToMIRA.pdf
+   Full documentation in PDF format
+
+If you are new to MIRA, I suggest you start reading the following chapters in
+the full documentation:
+
+ - Introduction (always)
+ - Installation (eventually)
+ - Short usage introduction to MIRA3 (always, although that chapter is geared
+   a bit towards Sanger)
+ - Then
+    - Assembly of 454 data with MIRA3 (when working with 454 sequences)
+    - Assembly of Ion Torrent data with MIRA3 (when working with Ion Torrent
+      sequences)
+    - Solexa sequence assembly with MIRA3 (when working with Solexa sequences)
+    - Assembly of EST data with MIRA3 (when working with EST data)
+ - Working with the results of MIRA (always)
+ - Utilities in the MIRA package (eventually)
+ - Assembly of hard genome or EST projects (always)
+ - Some advice when going into a sequencing project (eventually)
+
+
+5. Demos
+========
+
+A few small usage examples for genomic and EST assembly are in the 'minidemo'
+directory. As the demos rely on file links, this directory will have to be
+unpacked under a Unix operating system. Unpacking it with WinZip/WinRAR/other
+Windows applications and then transferring the directory to Linux will NOT
+work.
+
+Simply go into the directory and execute the runme.sh scripts (and have a look
+at them if you wish).
+
+However, these demos can be rather simplistic, so please do read the
+documentation.
+
+
+6. Licenses and Disclaimer
+==========================
+
+The MIRA source code is under the GPL licence (currently v2). Permission to
+use this software for any purpose is hereby granted without fee, but make sure
+to stick to the GPL.
+
+The documentation pertaining to MIRA is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 3.0 Unported License. To view a copy of
+this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send
+a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco,
+California, 94105, USA.
+
+Any version of this software and documentation is provided 'as-is', without
+any express or implied warranty. In no event will the author be held liable
+for any damages arising from the use of this software. Every kind of usage of
+the software is only allowed with the acceptance of this license. 'Using'
+certainly defines installing and running the software, it also includes
+copying or providing the software or a service built upon its functionalities
+for third-parties.
+
+The author disclaims all warranties with regard to this software, in all
+versions. Use it at your own risk.
+
+
+7. Contact
+==========
+
+If you have any question regarding usage of MIRA, please subscribe to the MIRA
+talk mailing list
+
+  http://www.freelists.org/list/mira_talk
+
+and then send your question to:
+
+  mira_talk@freelists.org
+
+To report bugs or ask for features, please use the ticketing system at:
+
+  http://sourceforge.net/p/mira-assembler/tickets/
+
+This ensures that requests don't get lost.
+
+Home of MIRA: http://sourceforge.net/projects/mira-assembler/
+
+
+Have a lot of fun with MIRA,
+  Bastien

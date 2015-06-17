@@ -1,0 +1,56 @@
+
+# These tag definitions are set and used by mira, miraEST and EdIt
+#
+# Add these lines to the file $STADENROOT/tables/GTAGDB
+#  so that GAP4 also knows them the next time you start
+
+"Strong Repeat Marker in Consensus":id="SRMc":bg=OrangeRed
+"Strong Repeat Marker in Read":id="SRMr":bg=OrangeRed
+"Weak Repeat Marker in Consensus":id="WRMc":bg=Orange
+"Weak Repeat Marker in Read":id="WRMr":bg=Orange
+"Old Repeat Marker Base":id="ORMB":bg=orange1
+"Carbon Copy Repeat Marker in Read":id="CRMr":bg=palegoldenrod
+"Masked Nasty Repeat":id="MNRr":bg=black:fg=white
+
+"Unsure in read":id="UNSr":bg=Yellow
+"Unsure in consensus":id="UNSc":bg=Yellow
+
+"IUPAC code consensus":id="IUPc":bg=royalblue3
+"Missing coverage in consensus":id="MCVc":bg=firebrick3
+
+"SNP inteR Organism on Read":id="SROr":bg=DarkTurquoise
+"SNP inteR Organism on Consensus":id="SROc":bg=DarkTurquoise
+"SNP intrA Organism on Read":id="SAOr":bg=SeaGreen
+"SNP intrA Organism on Consensus":id="SAOc":bg=SeaGreen
+"SNP Intra- and inter Organism on Read":id="SIOr":bg=PaleGreen
+"SNP Intra- and inter Organism on Consensus":id="SIOc":bg=PaleGreen
+
+"EdIt: insertion":id="ED_I":bg=pink
+"EdIt: deletion":id="ED_D":bg=pink
+"EdIt: base change":id="ED_C":bg=pink
+
+"Pyrosequencing Suspicious HomoPolymer":id="PSHP":bg=orange1
+"Dubious Gap Position on Consensus":id="DGPc":bg=orange1
+"Sequencing Type Mismatch Solved":id="STMS":bg=lightblue
+"Sequencing Type Mismatch Unresolved":id="STMU":bg=lightblue
+
+# HAsh Frequency tags
+"HAF no info":id="HAF0":bg=grey
+"HAF singlet":id="HAF1":bg=white
+"HAF below avg":id="HAF2":bg=palegreen1
+"HAF avg":id="HAF3":bg=Green
+"HAF above avg":id="HAF4":bg=yellow2
+"HAF rept":id="HAF5":bg=red
+"HAF heavy rept":id="HAF6":bg=indianred4
+"HAF crazy rept":id="HAF7":bg=red4
+
+
+# other tags, mostly for development & debugging
+"454 edit, qual too high":id="Q454":bg=yellow
+"454 cons calc: problem":id="P454":bg=yellow
+"454 test tag":id="T454":bg=yellow
+"454 hypothesis tag":id="H454":bg=green
+
+
+"454 read edit, tricky":id="R454":bg=green
+"Edit single discr., no HAF tag":id="ESDN":bg=green
