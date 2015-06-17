@@ -1,0 +1,123 @@
+#!/usr/bin/perl -w
+use strict;
+
+#####################################################################################
+#                                  single2pairs.pl                                  #
+#####################################################################################
+# This program creates paired-end read files from single-end files                  #
+#   1) Selects the reads that are at least as long as the specified length ($len)   #
+#   2) Gets the first $len characters to be used as forward read                    #
+#   3) Gets the last $len characters to be used as reverse read (reverse complement)#
+# All the produced reads are $len long                                              #
+# The output file will be created in the current working directory                  #
+#                                                                                   #
+#    Inputs:                                                                        #
+#                the length of the reads to be produced                             #
+#                a list of read files specified on the command line                 #
+#    Outputs:                                                                       #
+#                a forward and a reverse read file for each input file              #
+#                                                                                   #
+#    Requirements:                                                                  #
+#                    working prinseq-lite.pl                                        #
+#####################################################################################
+
+# Print help message if the only argument is "-h"
+if (@ARGV == 1 && $ARGV[0] eq '-h') {
+    print "Usage:\n\t$0 <integer> <ReadFile>\n";
+    print "\n\tFor each fastq file the program will create two fastq files (forward and reverse reads) with the specified read length\n";
+    exit 0;
+}
+
+# This variable holds the prinseq-lite executable
+my $prinseq = 'prinseq-lite.pl';
+
+# Test if prinseq is functioning
+die "The specified command ($prinseq) does not work.\n" unless (`which $prinseq`);
+
+# At least two inputs should be defined
+die unless scalar @ARGV > 1;
+
+# The first argument is the length of the minimum sequence length
+my $len = shift;
+
+# Create the paired read files for each input file
+for my $in (@ARGV) {
+
+    # Remove the path before the file name
+    my $file = $in;
+    $file =~ s/.*\/([^\/]+)/$1/;
+    
+    # The prefix for the output
+    my $final = "$file\_$len";
+    
+    # The read file has to be treated differently if it is FASTA or FASTQ format
+    if ($in =~ /\.f(ast)?q$/) {
+    
+        # Reomve the file ending from the prefix
+        $final =~ s/\.f(ast)?q//g;
+        
+        # This is only a temporary file
+        my $out = "temp_$final";
+        
+        # Collect all the reads that are at least as long as the first argument specified it
+        `$prinseq -fastq $in -min_len $len -out_good $out -out_bad null`;
+
+        # Create the paired read files
+        #    Get the first $len bases of the read to use it for the forward read
+        #    and grab the last $len bases and use its reverse complement as reverse read
+        
+        # Create the forward read file
+        #    Simply print the id lines (and the + line), but only print the first $len characters of the other lines
+        `cat $out\.fastq | perl -ne '\$n++; if (\$n%2 == 1) {print} else {s/\\R//g; print substr(\$_, 0, $len), "\\n";}' >$final\_1.fastq`;
+
+        # Print that the file has been created
+        print "$final\_1.fastq created\n" if -e "$final\_1.fastq";
+        
+        # Create the reverse read file
+        #    Simply print the id lines (and the + line),
+        #        For the sequence line print the reverse complement of the last $len characters
+        #        For the quality line print the reverse of the last $len characeters
+        `cat $out\.fastq | perl -ne '\$n++; if (\$n%2 == 1) {print} else {s/\\R//g; \$seq = reverse \$_; if (\$n%4 == 2) {\$seq =~ tr/AGCTYRWSKMDVHBN/TCGARYWSMKHBDVN/;} print substr(\$seq, 0, $len), "\\n";}' >$final\_2.fastq`;
+        
+        # Print that the file has been created
+        print "$final\_2.fastq created\n" if -e "$final\_2.fastq";
+        
+        # Delete the temporary file
+        unlink("$out\.fastq");
+    } else {
+        
+        # Reomve the file ending from the prefix
+        $final =~ s/\.fas(ta)?//g;
+        
+        # This is only a temporary file
+        my $out = "temp_$final";
+        
+        # Collect all the reads that are at least as long as the first argument specified it
+        `$prinseq -fasta $in -min_len $len -out_good $out -out_bad null`;
+
+        # Create the paired read files
+        #    Get the first $len bases of the read to use it for the forward read
+        #    and grab the last $len bases and use its reverse complement as reverse read
+        
+        # Create the forward read file
+        #    Simply print the id lines, but only print the first $len characters of the sequence
+        `cat $out\.fasta | perl -ne 'if (/>/) {print "\\n"} else {s/\\R//g;}; print' | perl -ne 'next if (/^\\s*\$/);if (/>/) {print} else {print substr(\$_, 0, $len), "\\n";}' >$final\_1.fasta`;
+        
+        # Print that the file has been created
+        print "$final\_1.fasta created\n" if -e "$final\_1.fasta";
+        
+        # Create the forward read file
+        #    Simply print the id lines, print the reverse complement of the last $len characters of the sequence
+        `cat $out\.fasta | perl -ne 'if (/>/) {print "\\n"} else {s/\\R//g;}; print' | perl -ne 'next if (/^\\s*\$/);if (/>/) {print} else {s/\\R//g; \$seq = reverse \$_; \$seq =~ tr/ATGC/TACG/; print substr(\$seq, 0, $len), "\\n";}' >$final\_2.fasta`;
+        
+        # Print that the file has been created
+        print "$final\_2.fasta created\n" if -e "$final\_2.fasta";
+        
+        # Delete the temporary file
+        unlink("$out\.fasta");
+    }
+}
+
+#############
+#    END    #
+#############

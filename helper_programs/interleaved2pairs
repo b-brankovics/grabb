@@ -1,0 +1,53 @@
+#!/usr/bin/perl -w
+use strict;
+
+#####################################################################################
+#                            interleaved2pairs.pl                                   #
+#####################################################################################
+# This program creates a forward and reverse read file from an interleaved file     #
+#                                                                                   #
+#    Inputs:                                                                        #
+#                a list of FASTQ read files specified on the command line           #
+#    Outputs:                                                                       #
+#                a pair of read file (forward and reverse) for each input file      #
+#####################################################################################
+
+# Print help message if the only argument is "-h"
+if (@ARGV == 1 && $ARGV[0] eq '-h') {
+    print "Usage:\n\t$0 <ReadFile>\n";
+    print "\n\tFor each read file the program will create two separate read files (forward and reverse reads)\n";
+    exit 0;
+}
+
+# Create the two read file for each input file
+for my $in (@ARGV) {
+    
+    if ($in =~ /\.f(ast)?q$/) {
+        
+        # Get the base of the file name
+        my $base = $in;
+        $base =~ s/\.f(ast)?q$//;
+    
+        # Create the names of the output files
+        my $for = $base . "_1.fastq";
+        my $rev = $base . "_2.fastq";
+    
+        # Print the forward read to the first output file and the reverse read to the second output file
+        `cat $in | awk '{if(0<++count%8 && count%8<5) {print \$0 >"$for";} else {print \$0 >"$rev";}}'`;
+    } elsif ($in =~ /\.fas(ta)?$/) {
+    
+        # Get the base of the file name
+        my $base = $in;
+        $base =~ s/\.fas(ta)?$//;
+    
+        # Create the names of the output files
+        my $for = $base . "_1.fas";
+        my $rev = $base . "_2.fas";
+    
+        # Print the forward read to the first output file and the reverse read to the second output file
+        `cat $in | perl -ne 'if (/>/) {print "\\n"} else {s/\\R//g;}; print' | perl -ne 'next if (/^\\s*\$/); \$n++; if (\$n\%4 == 1 || \$n\%4 == 2) {print} else {print STDERR}' >$for 2>$rev`;
+    
+    } else {
+        print "$in has unknown extension. Rename the file and rerun this program\n";
+    }
+}
