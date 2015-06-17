@@ -21,7 +21,7 @@ The following is the work flow used with the assembler that needs to be added to
 - We want to be able to adjust the kmer used by Velvet at invocation using **--arg1** argument
 - We want to be able to adjust the arguments for the velvetg at invocation using **--arg2** argument
 
-Steps: (according to the instruction in README.md)
+Steps: (according to the instruction in [README.md](README.md#adding-to-the-source-code-of-grabb))
 
 1. Add the commands of the assembler
 
