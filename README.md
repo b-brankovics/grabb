@@ -91,7 +91,7 @@ See the wiki or the files __Docker.md__, __Examples.md__ and __Tutorials.md__.
 
 1. Download MIRA (4.0) assembler (http://sourceforge.net/projects/mira-assembler/)
 2. Extract it. The executable files are in the _bin_ folder.
-3. Copy/move or smylink **'mirabait'** into somewhere in the path or add the folder to the path (This program only uses mirabait)
+3. Copy/move or smylink **'mirabait'** into somewhere in the path or add the folder to the path (This program uses only mirabait)
 
     __Warning__: the name of the executable file has to be mirabait!
 
