@@ -70,9 +70,9 @@ Use Docker
 * docker pull grabb
 * Create local docker repository
 
-    git clone https://github.com/b-brankovics/grabb
-    cd grabb/docker
-    docker build -t localhost:5000/$USER/grabb .
+        git clone https://github.com/b-brankovics/grabb
+        cd grabb/docker
+        docker build -t localhost:5000/$USER/grabb .
 
 #### Documentation
 
