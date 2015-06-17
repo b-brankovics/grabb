@@ -209,8 +209,8 @@ Steps
 
 Files used
 
-    - reads: **data/reads/F11\_r1.fastq.gz** **data/reads/F11\_r2.fastq.gz**
-    - reference: **data/references/Foc1\_three\_loci.fas**
+- reads: **data/reads/F11\_r1.fastq.gz** **data/reads/F11\_r2.fastq.gz**
+- reference: **data/references/Foc1\_three\_loci.fas**
 
 Steps
 
@@ -244,9 +244,9 @@ Steps
 
 Files used
 
-    - reads: **data/reads/PH-1\_r1.fastq.gz** **data/reads/PH-1\_r2.fastq.gz**
-    - reference: **data/references/F11\_rDNA\_5000-7705.fas**
-    - bait: **data/results/PH-1\_rDNA.fas**
+- reads: **data/reads/PH-1\_r1.fastq.gz** **data/reads/PH-1\_r2.fastq.gz**
+- reference: **data/references/F11\_rDNA\_5000-7705.fas**
+- bait: **data/results/PH-1\_rDNA.fas**
 
 Steps
 
@@ -273,8 +273,8 @@ Steps
 
 Files used
 
-    - reads: **data/reads/F11\_r1.fastq.gz** **data/reads/F11\_r2.fastq.gz**
-    - reference: **data/references/AY527619.fas**
+- reads: **data/reads/F11\_r1.fastq.gz** **data/reads/F11\_r2.fastq.gz**
+- reference: **data/references/AY527619.fas**
 
 Steps
 
@@ -304,8 +304,8 @@ Steps
 
 Files used
 
-    - reads: **data/reads/Foc1\_r1.fastq.gz** **data/reads/Foc1\_r2.fastq.gz**
-    - reference: **data/references/AY527535.fas**
+- reads: **data/reads/Foc1\_r1.fastq.gz** **data/reads/Foc1\_r2.fastq.gz**
+- reference: **data/references/AY527535.fas**
 
 Steps
 
@@ -451,8 +451,8 @@ Steps
 
 Files used
 
-    - reads: **data/reads/SRR550150\_100000\_1.fastq.gz** **data/reads/SRR550150\_100000\_2.fastq.gz**
-    - reference: **data/results/Foc1_rDNA.fas**
+- reads: **data/reads/SRR550150\_100000\_1.fastq.gz** **data/reads/SRR550150\_100000\_2.fastq.gz**
+- reference: **data/results/Foc1_rDNA.fas**
 
 Steps
 
