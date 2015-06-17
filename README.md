@@ -27,7 +27,7 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
     8. [fasta_shift](#markdown-header-fasta_shift)
     9. [pairwise_alignment_score](#markdown-header-pairwise_alignment_score)
     10. [reverse_complement](#markdown-header-reverse_complement)
-4. [Algorithm overview](#markdown-header-algorithm-overview)
+4. [Algorithm overview](#algorithm-overview)
     1. [Main loop](#markdown-header-main-loop)
     2. [Creating the bait](#markdown-header-creating-the-bait)
     3. [Baiting](#markdown-header-baiting)
