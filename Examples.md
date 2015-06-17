@@ -114,16 +114,16 @@ If the previous run was aborted before completion, then `GRAbB.pl` may fail to d
 
 There are two ways to use the folder of a previous run:
 
-1. Rerunning the last Round either starting with baiting or comparing the list of the identified reads of the latest round and the previous one
+1. Rerunning the last round either starting with baiting or comparing the list of the identified reads of the latest round and the previous one
 
-    1. Rerunning last Round starting with the baiting step
+    1. Rerunning last round starting with the baiting step
 
         Some of the files have to be removed:
 
             rm old/reference.fas old/bait.fas old/extra_bait.fas old/thread_1/reference.fas old/thread_1/bait.fas old/Round#/positive_*.txt old/Round#/readpool*.fast[aq] old/old_collection.list old/thread_1/old_collection.list old/Round#/new_collection.list
         
-        - both from the working directory and the thread folders: reference.fas, bait.fas, extra_bait.fas and old_collection.list
-        - From the given Round directory: positive_*.txt, readpool*.fast[aq] and new_collcetion.list
+        - both from the working directory and the thread folders: **reference.fas**, **bait.fas**, **extra\_bait.fas** and **old\_collection.list**
+        - From the given Round directory: **positive\_\*.txt**, **\readpool\*.fast\[aq\]** and **new\_collection.list**
 
         Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
 
@@ -133,7 +133,7 @@ There are two ways to use the folder of a previous run:
        	
        	    rm old/reference.fas old/bait.fas old/extra_bait.fas old/thread_1/reference.fas old/thread_1/bait.fas old/old_collection.list old/thread_1/old_collection.list
 
-        - both from the working directory and the thread folders: reference.fas, bait.fas, extra_bait.fas and old_collection.list
+        - both from the working directory and the thread folders: **reference.fas**, **bait.fas**, **extra\_bait.fas** and **old_collection.list**
 
         Now `GRAbB.pl` maybe run using the folder and tell `GRAbB.pl` to use the content of the folder
 
