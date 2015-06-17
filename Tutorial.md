@@ -15,12 +15,12 @@ Tutorials for GRAbB
 ----------------------
 #### Reconstruction of the mitochondrial genome using the mitogenome of a related species
 
-- This tutorial shows how to assemble the mitogenome of Fusarium graminearum (PH-1) by using F. oxysporum (F11) as a reference
+- This tutorial shows how to assemble the mitogenome of *Fusarium graminearum* (PH-1) by using *F. oxysporum* (F11) as a reference
 
 Files used
 
-- reads: data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz
-- reference: data/references/F11_mt.fas
+- reads: **data/reads/PH-1_r1.fastq.gz** **data/reads/PH-1_r2.fastq.gz**
+- reference: **data/references/F11_mt.fas**
 
 Steps
 
@@ -29,7 +29,7 @@ Steps
         ./GRAbB.pl --ref data/results/F11_mt.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder tutorial1 --prefix PH-1_mt
 
     - The program will run for 9 iterations
-    - Ending with an assembly (tutorial1/PH-1_mt_assembly_thread_1.fas) with a single contig
+    - Ending with an assembly (**tutorial1/PH-1_mt_assembly_thread_1.fas**) with a single contig
 
 2. Run get_overlaps.pl script to see if the contig overlaps with itself
 
@@ -50,7 +50,7 @@ Steps
 
         nucmer data/references/NC_009493.fas circular.fas; mummerplot out.delta
 
-    - For this mummer has to be installed on the system (Otherwise you can use **exonerate** to align the two sequences)
+    - For this `mummer` has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in the same orientation or not or whether they are in the same phase
     - In this case our sequence has to be reverse complemented and shifted
 
@@ -91,8 +91,8 @@ Steps
 
 Files used
 
-    - reads: data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz
-    - reference: data/references/published_mts.fas
+    - reads: **data/reads/F11_r1.fastq.gz** **data/reads/F11_r2.fastq.gz**
+    - reference: **data/references/published_mts.fas**
 
 Steps
 
@@ -101,7 +101,7 @@ Steps
         ./GRAbB.pl --ref data/references/published_mts.fas --reads data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz --folder tutorial2 --prefix F11_mt
 
     - The program will run for 2 iterations
-    - Ending with an assembly (tutorial2/F11_mt_assembly_thread_1.fas) with 1 contig
+    - Ending with an assembly (**tutorial2/F11_mt_assembly_thread_1.fas**) with 1 contig
 
 2. Run get_overlaps.pl script to see if the contigs overlap
 
@@ -122,14 +122,14 @@ Steps
 
         nucmer data/results/F11_mt.fas circular.fas; mummerplot out.delta
 
-    - For this mummer has to be installed on the system (Otherwise you can use **exonerate** to align the two sequences)
+    - For this mummer has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in the same orientation or not or whether they are in the same phase
     - In this case our sequence has to be shifted, but it doesn't have to be reversed
 
 5. Shift the sequence into the proper phase
 
     - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also tutorial 1)
-    - Create a fasta file which contains the start of the provided result sequence (data/results/F11_mt.fas)
+    - Create a fasta file which contains the start of the provided result sequence (**data/results/F11_mt.fas**)
 
         head -2 data/results/F11_mt.fas >ref.fas
         ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
@@ -149,9 +149,9 @@ Steps
 
 Files used
 
-    - reads: data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz
-    - reference: data/references/HQ651161.fas
-    - bait: data/references/JQ423253.fas
+    - reads: **data/reads/PH-1_r1.fastq.gz** **data/reads/PH-1_r2.fastq.gz**
+    - reference: **data/references/HQ651161.fas**
+    - bait: **data/references/JQ423253.fas**
 
 Steps
 
@@ -160,7 +160,7 @@ Steps
         ./GRAbB.pl  --ref data/references/HQ651161.fas --bait data/references/JQ423253.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder tutorial3 --prefix rDNA
 
     - The program will run for 4 iterations
-    - Ending with an assembly (tutorial3/rDNA_assembly_thread_1.fas) with a single contig
+    - Ending with an assembly (**tutorial3/rDNA_assembly_thread_1.fas**) with a single contig
 
 2. Run get_overlaps.pl script to see if the contig overlaps with itself
 
@@ -181,15 +181,15 @@ Steps
 
         nucmer data/results/PH-1_rDNA.fas circular.fas; mummerplot out.delta
 
-    - For this mummer has to be installed on the system (Otherwise you can use **exonerate** to align the two sequences)
+    - For this mummer has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in the same orientation or not or whether they are in the same phase
     - In this case our sequence has to be shifted, but it doesn't have to be reversed
 
 5. Shift the sequence into the proper phase
 
-    - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also tutorial 1)
+    - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also [tutorial 1](#reconstruction-of-the-mitochondrial-genome-using-the-mitogenome-of-a-related-species))
 
-    - Create a fasta file which contains the start of the provided result sequence (data/results/PH-1_rDNA.fas)
+    - Create a fasta file which contains the start of the provided result sequence (**data/results/PH-1_rDNA.fas**)
 
         head -2 data/results/PH-1_rDNA.fas >ref.fas
         ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
@@ -205,20 +205,20 @@ Steps
 #### Extract homologous sequences
 
 - In this tutorial three partial gene sequences will be used to extract homologous sequences from another strain
-- Reference sequences from Foc1 strain and reads from F11 strain (both them are F. oxysporum)
+- Reference sequences from Foc1 strain and reads from F11 strain (both them are _F. oxysporum_)
 
 Files used
 
-    - reads: data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz
-    - reference: data/references/Foc1_three_loci.fas
+    - reads: **data/reads/F11\_r1.fastq.gz** **data/reads/F11\_r2.fastq.gz**
+    - reference: **data/references/Foc1\_three\_loci.fas**
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/references/Foc1_three_loci.fas --reads data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz --folder tutorial4 --prefix F11_three_loci --type multi_exonerate
 
-    - The program runs for one iteration and saves the matching regions into separate files (tutorial4/F11_three_loci_result_[123].fas)
+    - The program runs for one iteration and saves the matching regions into separate files (__tutorial4/F11\_three\_loci\_result\_*\[123\]*.fas__)
 
 2. Compare results with the correct sequences
 
@@ -232,11 +232,11 @@ Steps
 -------------------
 #### Extract homologous sequence with polymorphic allele
 
-- In this tutorial part of the rDNA region will be extracted from a Fusarium graminearum (PH-1) strain using a reference from a F. oxysporum (F11) strain
+- In this tutorial part of the rDNA region will be extracted from a _Fusarium graminearum_ (PH-1) strain using a reference from a _F. oxysporum_ (F11) strain
 
     + The selected region has highly similar sequences at both termini whithin the two species while the middle part of the sequences are highly dissimilar
 
-- As an extra bait the whole rDNA sequence of the F. graminearum strain will be specified, thus the program only has to search the specified read files only once
+- As an extra bait the whole rDNA sequence of the _F. graminearum_ strain will be specified, thus the program only has to search the specified read files only once
 - This method can be used when extracting a region that is highly variable or has multiple possible alleles (both has somewhat conserved termini)
 
     + By specifying an extra bait file with all known possible alleles the run can be made more efficient, since the input read files have to be searched less often
@@ -244,17 +244,17 @@ Steps
 
 Files used
 
-    - reads: data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz
-    - reference: data/references/F11_rDNA_5000-7705.fas
-    - bait: data/results/PH-1_rDNA.fas
+    - reads: **data/reads/PH-1\_r1.fastq.gz** **data/reads/PH-1\_r2.fastq.gz**
+    - reference: **data/references/F11\_rDNA\_5000-7705.fas**
+    - bait: **data/results/PH-1\_rDNA.fas**
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/references/F11_rDNA_5000-7705.fas --bait data/results/PH-1_rDNA.fas --reads data/reads/PH-1_r1.fastq.gz data/reads/PH-1_r2.fastq.gz --folder tutorial5 --prefix PH-1_IGS --type multi_exonerate
 
-    - The program runs for one iteration and saves the matching region into separate file (tutorial5/PH-1_PH-1_IGS_result_thread_1.fas)
+    - The program runs for one iteration and saves the matching region into separate file (**tutorial5/PH-1\_IGS\_result\_thread_1.fas)
     - The program is run without the extra bait file then the program runs for two iterations
 
 2. Compare result with the correct sequence
@@ -263,7 +263,7 @@ Steps
 
     - This script outputs a comparison of the two sequences, the percentage marks the similarity of the two
     - We can see that two sequences are 100% identical
-    - The correct sequence was identified using blasting the reference sequences against data/results/PH-1_rDNA.fas
+    - The correct sequence was identified using blasting the reference sequences against **data/results/PH-1\_rDNA.fas**
 
 -------------
 #### Length criterion
@@ -273,17 +273,17 @@ Steps
 
 Files used
 
-    - reads: data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz
-    - reference: data/references/AY527619.fas
+    - reads: **data/reads/F11\_r1.fastq.gz** **data/reads/F11\_r2.fastq.gz**
+    - reference: **data/references/AY527619.fas**
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/references/AY527619.fas --reads data/reads/F11_r1.fastq.gz data/reads/F11_r2.fastq.gz --folder tutorial6 --prefix F11_rns_vicintiy --type total=3000
 
     - The program runs for 3 iterations
-    - Ending with an assembly (tutorial6/F11_rns_vicinity_assembly_thread_1.fas) with a single contig
+    - Ending with an assembly (**tutorial6/F11\_rns\_vicinity\_assembly\_thread\_1.fas**) with a single contig
     - The size of the contigs is 3856 bp
 
 2. Compare result with the correct sequence
@@ -292,7 +292,7 @@ Steps
 
     - This script outputs a comparison of the two sequences, the percentage marks the similarity of the two
     - We can see that two sequences are 100% identical
-    - The correct sequence was identified using blasting the result sequences against data/results/F11_mt.fas
+    - The correct sequence was identified using blasting the result sequences against **data/results/F11\_mt.fas**
 
 ---------
 #### Exhaustive assembly of a linear sequence
@@ -304,23 +304,23 @@ Steps
 
 Files used
 
-    - reads: data/reads/Foc1_r1.fastq.gz data/reads/Foc1_r2.fastq.gz
-    - reference: data/references/AY527535.fas
+    - reads: **data/reads/Foc1\_r1.fastq.gz** **data/reads/Foc1\_r2.fastq.gz**
+    - reference: **data/references/AY527535.fas**
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/references/AY527535.fas --reads data/reads/Foc1_r1.fastq.gz data/reads/Foc1_r2.fastq.gz --folder tutorial7 --prefix Foc1_tef1a
 
     - The program will run for 4 iterations
-    - Ending with an assembly (tutorial7/Foc1_tef1a_assembly_thread_1.fas) with a single contig
+    - Ending with an assembly (**tutorial7/Foc1\_tef1a\_assembly\_thread\_1.fas**) with a single contig
 
 2. Visually compare the sequence with the provided result sequence
 
         nucmer tutorial7/Foc1_tef1a_assembly_thread_1.fas data/results/Foc1_tef1a.fas; mummerplot out.delta
 
-    - For this mummer has to be installed on the system (Otherwise you can use **exonerate** to align the two sequences)
+    - For this `mummer` has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in opposite orientations
 
         + Thus our sequence has to reverse complemented
@@ -349,43 +349,43 @@ Steps
 
 Files used
 
-- reads: data/reads/Foc1_r1.fastq.gz data/reads/Foc1_r2.fastq.gz
-- reference: data/references/tutorial8_reference.fas
+- reads: **data/reads/Foc1\_r1.fastq.gz** **data/reads/Foc1\_r2.fastq.gz**
+- reference: **data/references/tutorial8\_reference.fas**
 
     + The identifier lines contain the criterion specifications (see brackets after each file name)
     + Contains the sequences from the following files
 
-        * data/results/PH-1_rDNA_5001-7733.fas     (exonerate)
-        * data/references/Foc1_cal_360-620.fas     (exonerate)
-        * data/results/F11_rpb2_rc1640-2400.fas    (exonerate)
-        * data/references/Foc1_tef1a_680-1240.fas  (exonerate)
-        * data/references/AY527619.fas             (total=3000)
-        * data/references/AY527535.fas
-        * data/results/PH-1_mt.fas
+        * __data/results/PH-1\_rDNA\_5001-7733.fas__     (exonerate)
+        * __data/references/Foc1\_cal\_360-620.fas__     (exonerate)
+        * __data/results/F11\_rpb2\_rc1640-2400.fas__    (exonerate)
+        * __data/references/Foc1\_tef1a_680-1240.fas__  (exonerate)
+        * __data/references/AY527619.fas__             (total=3000)
+        * __data/references/AY527535.fas__
+        * __data/results/PH-1\_mt.fas__
 
-- bait: data/references/tutorial8_bait.fas
+- bait: **data/references/tutorial8\_bait.fas**
 
     + Contains the sequences from the following files
 
-        * data/references/F11_rDNA_5000-7705.fas
-        * data/results/PH-1_rDNA_5001-7733.fas
+        * __data/references/F11\_rDNA\_5000-7705.fas__
+        * __data/results/PH-1\_rDNA\_5001-7733.fas__
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/references/tutorial8_reference.fas --bait data/references/tutorial8_bait.fas --reads data/reads/Foc1_r1.fastq.gz data/reads/Foc1_r2.fastq.gz --folder tutorial8 --prefix complex --type multi_diff
 
 
     - The program will run for 7 iterations
     - The program reads the completion criterion from each sequence entry in the reference file
-    - Ending with 7 assemblies files (tutorial8/complex_assembly_thread_[1234567].fas) and 4 results files (tutorial8/complex_result_thread_[1234].fas)
+    - Ending with 7 assemblies files (**tutorial8/complex\_assembly\_thread\_\[*1234567*\].fas**) and 4 results files (**tutorial8/complex\_result\_thread\_\[*1234*\].fas**)
 
         + The assemblies contain one contig each
 
-2. Run get_overlaps.pl script to see if the mitochondrial contig overlaps with itself
+2. Run `get_overlaps` script to see if the mitochondrial contig overlaps with itself
 
-        ./helper_programs/get_overlaps.pl tutorial8/complex_assembly_thread_7.fas 15
+        ./helper_programs/get_overlaps tutorial8/complex_assembly_thread_7.fas 15
 
     - 15 specifies the minimum overlap to be detected
     - The script will display which contig overlaps with which contig and what is the size of the overlap
@@ -393,14 +393,14 @@ Steps
 
 3. Circularize the mitochondrial genome
 
-        ./helper_programs/merge_contigs.pl tutorial8/complex_assembly_thread_7.fas 15 circular.fas
+        ./helper_programs/merge_contigs tutorial8/complex_assembly_thread_7.fas 15 circular.fas
 
     - This cuts the 24 bp overlap from one of the ends of the contig and marks the entry as circular
     - The resulting sequence is saved to circular.fas
 
 4. Visually compare the sequences with the reference sequences
 
-    - For this mummer has to be installed on the system (Otherwise you can use **exonerate** to align the two sequences)
+    - For this `mummer` has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in the same orientation or not or whether they are in the same phase
 
             nucmer data/results/Foc1_mt_38516-42174.fas tutorial8/complex_assembly_thread_5.fas; mummerplot out.delta
@@ -426,8 +426,8 @@ Steps
         ./helper_programs/fasta_shift -i reverse.fas -r ref.fas >final.fas
 
     - For this we either need short sequence which marks where the sequence should start or we have to specify the position
-    - Create a fasta file which contains the start of the Foc1 mitogenome (data/results/Foc1_mt.fas)
-    - Then shift the sequence using the reference file (ref.fas)
+    - Create a fasta file which contains the start of the Foc1 mitogenome (**data/results/Foc1\_mt.fas**)
+    - Then shift the sequence using the reference file (**ref.fas**)
 
 7. Compare result with the correct sequence
 
@@ -447,25 +447,25 @@ Steps
 
 - In this tutorial the first 100000 read pairs will be used from the SRR550150 sequencing run file
 
-    + This is produced from Fusarium oxysporum f. sp. cubense race 1 strain Foc1
+    + This is produced from _Fusarium oxysporum_ f. sp. _cubense_ race 1 strain Foc1
 
 Files used
 
-    - reads: data/reads/SRR550150_100000_1.fastq.gz data/reads/SRR550150_100000_2.fastq.gz
-    - reference: data/results/Foc1_rDNA.fas
+    - reads: **data/reads/SRR550150\_100000\_1.fastq.gz** **data/reads/SRR550150\_100000\_2.fastq.gz**
+    - reference: **data/results/Foc1_rDNA.fas**
 
 Steps
 
-1. Run GRAbB by specifying the above files
+1. Run `GRAbB.pl` by specifying the above files
 
         ./GRAbB.pl --ref data/results/Foc1_rDNA.fas --reads data/reads/SRR550150_100000_1.fastq.gz data/reads/SRR550150_100000_2.fastq.gz --folder tutorial9 --prefix Foc1_rDNA
 
     - The program will run for 2 iterations
-    - Ending with an assembly (tutorial9/Foc1_rDNA_assembly_thread_1.fas) with a single contig
+    - Ending with an assembly (**tutorial9/Foc1\_rDNA\_assembly\_thread\_1.fas**) with a single contig
 
-2. Run get_overlaps.pl script to see if the contig overlaps with itself
+2. Run `get_overlaps` script to see if the contig overlaps with itself
 
-        ./helper_programs/get_overlaps.pl tutorial9/Foc1_rDNA_assembly_thread_1.fas 15
+        ./helper_programs/get_overlaps tutorial9/Foc1_rDNA_assembly_thread_1.fas 15
 
     - 15 specifies the minimum overlap to be detected
     - The script will display which contig overlaps with which contig and what is the size of the overlap
@@ -473,7 +473,7 @@ Steps
 
 3. Circularize the genome
 
-        ./helper_programs/merge_contigs.pl tutorial9/Foc1_rDNA_assembly_thread_1.fas 15 circular.fas
+        ./helper_programs/merge_contigs tutorial9/Foc1_rDNA_assembly_thread_1.fas 15 circular.fas
 
     - This cuts the 34 bp overlap from one of the ends of the contig and marks the entry as circular
     - The resulting sequence is saved to circular.fas
@@ -482,7 +482,7 @@ Steps
 
         nucmer data/results/Foc1_rDNA.fas circular.fas; mummerplot out.delta
 
-    - For this mummer has to be installed on the system (Otherwise you can use **exonerate** to align the two sequences)
+    - For this `mummer` has to be installed on the system (Otherwise you can use `exonerate` to align the two sequences)
     - With this method we can see if the two sequences are in the same orientation or not or whether they are in the same phase
     - In this case our sequence has to be shifted, but it doesn't have to be reverse complemented
 
@@ -491,8 +491,8 @@ Steps
         head -2 data/results/Foc1_rDNA.fas >ref.fas
         ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
 
-    - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also tutorial 1)
-    - Create a fasta file which contains the start of the provided result sequence (data/results/Foc1_rDNA.fas)
+    - For this we either need short sequence which marks where the sequence should start or we have to specify the position (See also [tutorial 1](#reconstruction-of-the-mitochondrial-genome-using-the-mitogenome-of-a-related-species))
+    - Create a fasta file which contains the start of the provided result sequence (**data/results/Foc1\_rDNA.fas**)
 
 6. Compare result with the correct sequence
 
