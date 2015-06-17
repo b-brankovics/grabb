@@ -84,4 +84,4 @@ To remove the container:
 ----------------------
 #### Password for superuser privileges
 
-The password is "**grab**"
+The password is "**grabb**"
