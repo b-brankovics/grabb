@@ -5,53 +5,53 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 # Table of contents
 
 
-1. [Usage](#markdown-header-usage)
-    1. [Installation](#markdown-header-installation)
-    2. [Documentation](#markdown-header-documentation)
-    3. [Examples](#markdown-header-examples)
-2. [Prerequisites](#markdown-header-prerequisites)
-    1. [mirabait](#markdown-header-mirabait)
-    2. [Edena](#markdown-header-edena)
-    3. [Velvet](#markdown-header-velvet)
-    4. [Seqtk](#markdown-header-seqtk)
-    5. [exonerate](#markdown-header-exonerate)
-    6. [PRINSEQ lite](#markdown-header-prinseq-lite)
-3. [Helper programs](#markdown-header-helper-programs)
-    1. [fastq2fasta](#markdown-header-fastq2fasta)
-    2. [get_overlaps](#markdown-header-get_overlaps)
-    3. [interleaved2pairs](#markdown-header-interleaved2pairs)
-    4. [merg_mutual_contigs](#markdown-header-merg_mutual_contigs)
-    5. [rename_fastq](#markdown-header-rename_fastq)
-    6. [single2pairs](#markdown-header-single2pairs)
-    7. [uniform_length](#markdown-header-uniform_length)
-    8. [fasta_shift](#markdown-header-fasta_shift)
-    9. [pairwise_alignment_score](#markdown-header-pairwise_alignment_score)
-    10. [reverse_complement](#markdown-header-reverse_complement)
+1. [Usage](#usage)
+    1. [Installation](#installation)
+    2. [Documentation](#documentation)
+    3. [Examples](#examples)
+2. [Prerequisites](#prerequisites)
+    1. [mirabait](#mirabait)
+    2. [Edena](#edena)
+    3. [Velvet](#velvet)
+    4. [Seqtk](#seqtk)
+    5. [exonerate](#exonerate)
+    6. [PRINSEQ lite](#prinseq-lite)
+3. [Helper programs](#helper-programs)
+    1. [fastq2fasta](#fastq2fasta)
+    2. [get_overlaps](#get_overlaps)
+    3. [interleaved2pairs](#interleaved2pairs)
+    4. [merg_mutual_contigs](#merg_mutual_contigs)
+    5. [rename_fastq](#rename_fastq)
+    6. [single2pairs](#single2pairs)
+    7. [uniform_length](#uniform_length)
+    8. [fasta_shift](#fasta_shift)
+    9. [pairwise_alignment_score](#pairwise_alignment_score)
+    10. [reverse_complement](#reverse_complement)
 4. [Algorithm overview](#algorithm-overview)
-    1. [Main loop](#markdown-header-main-loop)
-    2. [Creating the bait](#markdown-header-creating-the-bait)
-    3. [Baiting](#markdown-header-baiting)
-    4. [Collecting reads](#markdown-header-collecting-reads)
-    5. [Assembly](#markdown-header-assembly)
-    6. [Testing completion](#markdown-header-testing-completion)
-    7. [Modes](#markdown-header-modes)
+    1. [Main loop](#main-loop)
+    2. [Creating the bait](#creating-the-bait)
+    3. [Baiting](#baiting)
+    4. [Collecting reads](#collecting-reads)
+    5. [Assembly](#assembly)
+    6. [Testing completion](#testing-completion)
+    7. [Modes](#modes)
 5. [Arguments](#arguments)
-    1. [ref](#markdown-header-ref)
-    2. [bait](#markdown-header-bait)
-    3. [reads](#markdown-header-reads)
-    4. [folder](#markdown-header-folder)
-    5. [prefix](#markdown-header-prefix)
-    6. [single](#markdown-header-single)
-    7. [min_length](#markdown-header-min_length)
-    8. [type](#markdown-header-type)
-    9. [arg1](#markdown-header-arg1)
-    10. [arg2](#markdown-header-arg2)
-    11. [assembler](#markdown-header-assembler)
-    12. [clean](#markdown-header-clean)
-6. [Using custom assembler program](#markdown-header-using-custom-assembler-program)
-    1. [Adding to the source code of GRAbB](#markdown-header-adding-to-the-source-code-of-grabb)
-    2. [Using external_scaffold](#markdown-header-using-external_scaffold)
-7. [Contact](#markdown-header-contact)
+    1. [ref](#ref)
+    2. [bait](#bait)
+    3. [reads](#reads)
+    4. [folder](#folder)
+    5. [prefix](#prefix)
+    6. [single](#single)
+    7. [min_length](#min_length)
+    8. [type](#type)
+    9. [arg1](#arg1)
+    10. [arg2](#arg2)
+    11. [assembler](#assembler)
+    12. [clean](#clean)
+6. [Using custom assembler program](#using-custom-assembler-program)
+    1. [Adding to the source code of GRAbB](#adding-to-the-source-code-of-grabb)
+    2. [Using external_scaffold](#using-external_scaffold)
+7. [Contact](#contact)
 
 ----------------------------
 #### Usage
@@ -77,7 +77,7 @@ Use Docker
 
 Run GRAbB.pl without any arguments and it prints the Usage information
 
-The documentation is this file and the files mantioned at the [examples](#markdown-header-examples).
+The documentation is this file and the files mantioned at the [examples](#examples).
 
 #### Examples
 
@@ -282,7 +282,7 @@ The main loop of GRAbB can be summarized as follows:
 4. _de novo_ assembly of selected reads
 5. testing completion
 
-If [multi-mode](#markdown-header-modes) is selected, then the general
+If [multi-mode](#modes) is selected, then the general
 baiting step is followed by specific baiting, _de novo_ assembling and
 completion testing for each of the threads. The threads are generated
 by splitting the reference file into single-entry FASTA files. These
@@ -294,15 +294,15 @@ is not completed yet, then it continues or stops accordingly.
 #### Creating the bait
 
 At the invocation of GRAbB it is possible to specify a [length
-filter](#markdown-header-min_length) that excludes all contigs from
+filter](#min_length) that excludes all contigs from
 the assembly that are shorter than the specified length from being
 used for generating the bait file for the next iteration.
 
 + Initial bait file
 
     At the start of the run an initial (general) bait file is created
-    by concatenating the [reference](#markdown-header-ref) and
-    [bait](#markdown-header-bait) files. This bait files is used for
+    by concatenating the [reference](#ref) and
+    [bait](#bait) files. This bait files is used for
     the first general baiting step.
 
 + General bait file
@@ -313,7 +313,7 @@ used for generating the bait file for the next iteration.
 + Specific bait file
 
     The specific bait file is only created in
-    [multi-mode](#markdown-header-modes). At the start of the run the
+    [multi-mode](#modes). At the start of the run the
     reference file is split into single-entry FASTA files and these
     are used as initial specific bait files. In latter iterations the
     latest assembly for the give thread is used as the new bait file.
@@ -350,14 +350,14 @@ The program can use two assemblers,
 [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), by default, but
 there is a scaffold code to add a new assembler to the source code of
 the program. Also it is also possible to write [an external perl
-script](#markdown-header-using-external_scaffold) that is used by
+script](#using-external_scaffold) that is used by
 GRAbB for the assembly. By default
 [EDENA](http://www.genomic.ch/edena.php) is used for assembly, but
 using command line options the other assemblers can be selected, as
 well.
 
-The fact that [single](#markdown-header-single)- or
-[paired-mode](#markdown-header-single) is selected is passed on to the
+The fact that [single](#single)- or
+[paired-mode](#single) is selected is passed on to the
 assembler program that assembles the specific reads _de novo_. Also,
 it is possible to pass additional arguments, such as overlap size
 ([EDENA](http://www.genomic.ch/edena.php)), to the assembler program
@@ -367,7 +367,7 @@ at the invocation of the main program.
 
 There are multiple completion criteria that can be specified for the
 program. These can be specified for each thread separately
-([multi-diff-mode](#markdown-header-modes) or for all of the threads
+([multi-diff-mode](#modes) or for all of the threads
 at once. Also, it is possible to specify multiple criteria for the
 same thread or run. In this case the program stops when any one of
 these criteria is met.
@@ -387,7 +387,7 @@ these criteria is met.
     three options that can be used for this setting: total assembly
     size, the length of the longest contig or the N50 value of the
     assembly. This criterion is tested independently for each of the
-    threads in [multi-mode](#markdown-header-modes) or, otherwise, for
+    threads in [multi-mode](#modes) or, otherwise, for
     the single thread. As mentioned before, multiple criteria can be
     used in a single run, this also applies for the different size
     criteria. These settings are useful when exploring the vicinity of
@@ -415,7 +415,7 @@ these criteria is met.
 
 #### Modes
 
-1. [Single-](#markdown-header-single) or [paired-mode](#markdown-header-single)
+1. [Single-](#single) or [paired-mode](#single)
 
     This information is passed on to the assembler program.
 
@@ -425,31 +425,31 @@ these criteria is met.
 
         In paired-mode the read files are tested whether GRAbB can
         identify pairs as
-        [expected](#markdown-header-collecting-reads).
+        [expected](#collecting-reads).
 
     + Single-mode
 
         It is the default mode if there is only one or more than two
         read files specified.
         If two read files are specified than single-mode can be chosen
-        by using the [--single](#markdown-header-single) argument.
+        by using the [--single](#single) argument.
 
 2. Multi-mode
 
     Multi-mode is selected by using [--type
-    multi](#markdown-header-type) option at invocation. In multi-mode
+    multi](#type) option at invocation. In multi-mode
     the reference file is split into single-entry FASTA files, these
     are referred to as specific references files. Also for each entry
     a separate thread is created. The individual threads are
     independent from each other, thus multiple regions can be
     assembled in a single run without interference from each
     other. The specific reference file is used as initial specific
-    bait file. Also in [exonerate-mode](#markdown-header-modes) the
+    bait file. Also in [exonerate-mode](#modes) the
     specific reference file is used for the homology matching.
 
 3. Multi-diff-mode
 
-    Multi-diff-mode is selected by using [--type multi-diff](#markdown-header-type) option at invocation.
+    Multi-diff-mode is selected by using [--type multi-diff](#type) option at invocation.
 It also belongs to the multi-mode with all its properties. The
 difference is that when the specific reference files are created if
 there is completion criterion specified in the identification line of
@@ -459,7 +459,7 @@ used for the given thread.
 4. Exonerate-mode
 
     Exonerate-mode is selected by using [--type
-    exonerate](#markdown-header-type) option at invocation. In this
+    exonerate](#type) option at invocation. In this
     case the specific reference sequence is used to identify the
     homologous region within the assembly. To identify the matching
     region, GRAbB uses Exonerate with settings that ensure that the
@@ -481,14 +481,14 @@ used for the given thread.
 
     + Clean-mode
 
-        It is selected by [--clean](#markdown-header-clean).
+        It is selected by [--clean](#clean).
         GRAbB will remove some internal files to save disk space. But
         there is no information lost, because all the deleted files
         can be reconstructed using the remaining files.
 
     + Double clean-mode
 
-        It is selected by [--clean --clean](#markdown-header-clean).
+        It is selected by [--clean --clean](#clean).
         GRAbB will remove some internal files to save disk space.
         At the end of the run all the output files and folders are
         deleted except for the result files.
@@ -499,9 +499,9 @@ used for the given thread.
     GRAbB.pl --ref <reference file> --reads <read file 1> [<read file 2>] --folder <directory> --prefix <prefix> [options]
 
 There are four mandatory arguments: [reference
-file](#markdown-header-ref), [read file(s)](#markdown-header-reads),
-[output folder](#markdown-header-folder) and [prefix for the log and
-results](#markdown-header-prefix)
+file](#ref), [read file(s)](#reads),
+[output folder](#folder) and [prefix for the log and
+results](#prefix)
 
 The order of the arguments is not important.
 
@@ -512,14 +512,14 @@ The order of the arguments is not important.
 The reference file is a FASTA formatted file that contains one or more
 sequences. The sequence IDs have to be unique for each sequence (as
 required by mirabait). If the file contains multiple sequences and the
-program is run in [multi-mode](#markdown-header-modes) then the
+program is run in [multi-mode](#modes) then the
 reference file is split into separate reference files that contain
 only a single sequence, the handling of these files is discussed in
 the segment on the [main
-loop](#markdown-header-main-loop). Furthermore, the description lines
+loop](#main-loop). Furthermore, the description lines
 may contain specification for the completion criterion to be used for
 the given sequence that is used if [multi-diff
-mode](#markdown-header-modes) is selected. Because the read selection
+mode](#modes) is selected. Because the read selection
 is based on exact k-mer (31 bp) matching, the reference sequence does
 not have to be highly similar to the target sequence.
 					      
@@ -529,9 +529,9 @@ not have to be highly similar to the target sequence.
 
 A separate bait file can be specified besides the reference file, this
 file together with the reference file will be used as [first
-bait](#markdown-header-creating-the-bait). Usefull when using special
+bait](#creating-the-bait). Usefull when using special
 criterion for the assembly, such as
-[homology](#markdown-header-modes).
+[homology](#modes).
 
 #### reads
 
@@ -539,8 +539,8 @@ criterion for the assembly, such as
 
 Multiple read files can be specified as input. If two read files are
 given, then it is assumed that reads are
-[paired](#markdown-header-modes), but in
-[single-mode](#markdown-header-modes), reads are considered as single
+[paired](#modes), but in
+[single-mode](#modes), reads are considered as single
 reads. The program identifies read pairs based on the read names, thus
 the first word of the identifier line should be the same for both
 sequences. The read files may be in FASTA or FASTQ format and may be
@@ -686,8 +686,8 @@ Specify the assembler to be used:
 
 * edena
 * velvet
-* [alternative](#markdown-header-adding-to-the-source-code-of-grabb)
-* [external](#markdown-header-using-external_scaffold)
+* [alternative](#adding-to-the-source-code-of-grabb)
+* [external](#using-external_scaffold)
 
 #### clean
 
@@ -720,7 +720,7 @@ the executable of the assembler are written between the quotation
 marks. The first one is the command used for the first step of the
 assembly, the second is the command used for the second step of the
 assembly. If the assembly requires only one step, then use [the other
-method](#markdown-header-using-external_scaffold) to add the assembler.
+method](#using-external_scaffold) to add the assembler.
 
 In addition, there is a scaffold code within the source code of GRAbB
 marked by `# Assemble (Alternative)` at the end of the lines. Within
