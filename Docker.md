@@ -24,7 +24,7 @@ There are two ways to do this:
 
 * Pull the repository
 
-        docker pull grabb
+        docker pull brankovics/grabb
 
 * Create local docker repository
 
