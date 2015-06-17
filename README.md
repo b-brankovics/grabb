@@ -689,8 +689,8 @@ Arguments needed for the assembler program used for the assembly
 
 Specify the assembler to be used:
 
-* edena
-* velvet
+* [EDENA](http://www.genomic.ch/edena.php)
+* [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/)
 * [alternative](#adding-to-the-source-code-of-grabb)
 * [external](#using-external_scaffold)
 
