@@ -50,7 +50,7 @@ Multiple folders maybe mounted to the same container.
 If the **-rm** argument is added then the container will be
 deleted after it is exited. (The Docker image won't be deleted)
 
-**grab** is the name of the Docker image that contains the desired installation of grabb
+**grabb** is the name of the Docker image that contains the desired installation of `GRAbB.pl`
 
     docker run -ti -v /absolute/path/to/the/directory/:/home/grabb/directory/ grabb
 
