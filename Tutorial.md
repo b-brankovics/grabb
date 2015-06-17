@@ -145,7 +145,7 @@ Steps
 #### Reconstruction of the rDNA region using partial sequences as references
 
 - The rDNA region is not circular DNA, but the sequence is present in multiple direct repeats so it behaves like a circular sequence in the computational sense
-- In this tutorial we are going to use IGS and ITS sequences as a refernce to assemble the rDNA region
+- In this tutorial we are going to use IGS and ITS sequences as a reference to assemble the rDNA region
 
 Files used
 
@@ -234,7 +234,7 @@ Steps
 
 - In this tutorial part of the rDNA region will be extracted from a _Fusarium graminearum_ (PH-1) strain using a reference from a _F. oxysporum_ (F11) strain
 
-    + The selected region has highly similar sequences at both termini whithin the two species while the middle part of the sequences are highly dissimilar
+    + The selected region has highly similar sequences at both termini within the two species while the middle part of the sequences are highly dissimilar
 
 - As an extra bait the whole rDNA sequence of the _F. graminearum_ strain will be specified, thus the program only has to search the specified read files only once
 - This method can be used when extracting a region that is highly variable or has multiple possible alleles (both has somewhat conserved termini)
@@ -298,7 +298,7 @@ Steps
 #### Exhaustive assembly of a linear sequence
 
 - In this tutorial we are going to use a partial sequence of the tef1a gene to extract the whole gene from the assembly
-- In this dataset the tef1a sequence is a linear genomic element that has no continuation, this makes it similar to linear virus genomes
+- In this data set the tef1a sequence is a linear genomic element that has no continuation, this makes it similar to linear virus genomes
 
     + tef1a would be further extend to its surroundings in real life sample
 
