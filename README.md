@@ -563,7 +563,7 @@ Folder structure:
 - reference.fas
 - bait.fas
 - extra_bait.fas
-- *prefix*_assembly_thread_*int*.fas
+- *`<`prefix`>`*`_`assembly`_`thread`_`*int*.fas
 - *prefix*_result_thread_*int*.fas
 - *prefix*.log
 - old_collection.list
