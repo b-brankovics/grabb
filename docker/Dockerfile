@@ -20,8 +20,6 @@ RUN apt-get install -y seqtk
 COPY edena /home/grabb/bin/
 COPY GRAbB.pl /home/grabb/bin/
 COPY mirabait /home/grabb/bin/
-COPY velvetg /home/grabb/bin/
-COPY velveth /home/grabb/bin/
 
 # Copy helper programs
 COPY prinseq-lite.pl /home/grabb/bin/
