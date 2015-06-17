@@ -563,7 +563,7 @@ Folder structure:
 - reference.fas
 - bait.fas
 - extra_bait.fas
-- _<prefix>_.fas
+- *<prefix>*_assembly_thread_*<int>*.fas
 - old_collection.list
 - reads*<int>*.fastq or reads*<int>*.fasta
 - **Round_<int>_**/
