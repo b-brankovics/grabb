@@ -13,7 +13,7 @@ Tutorials for GRAbB
 
 
 ----------------------
-**** Reconstruction of the mitochondrial genome using the mitogenome of a related species
+#### Reconstruction of the mitochondrial genome using the mitogenome of a related species
 
 - This tutorial shows how to assemble the mitogenome of Fusarium graminearum (PH-1) by using F. oxysporum (F11) as a reference
 
@@ -84,7 +84,7 @@ Steps
     - We can see that two sequences are 100% identical
 
 ----------------	
-**** Reconstruction of the mitochondrial genome using multiple references
+#### Reconstruction of the mitochondrial genome using multiple references
 
 - This tutorial shows how to assemble the mitogenome using multiple reference sequences
 - Also in this case the downstream process is more complicated than in the first tutorial
@@ -142,7 +142,7 @@ Steps
     - We can see that two sequences are 100% identical
 
 ---------------
-**** Reconstruction of the rDNA region using partial sequences as references
+#### Reconstruction of the rDNA region using partial sequences as references
 
 - The rDNA region is not circular DNA, but the sequence is present in multiple direct repeats so it behaves like a circular sequence in the computational sense
 - In this tutorial we are going to use IGS and ITS sequences as a refernce to assemble the rDNA region
@@ -202,7 +202,7 @@ Steps
     - We can see that two sequences are 100% identical
 
 ------------------	
-**** Extract homologous sequences
+#### Extract homologous sequences
 
 - In this tutorial three partial gene sequences will be used to extract homologous sequences from another strain
 - Reference sequences from Foc1 strain and reads from F11 strain (both them are F. oxysporum)
@@ -230,7 +230,7 @@ Steps
     - We can see that each pair of sequences are 100% identical to each other
 
 -------------------
-**** Extract homologous sequence with polymorphic allele
+#### Extract homologous sequence with polymorphic allele
 
 - In this tutorial part of the rDNA region will be extracted from a Fusarium graminearum (PH-1) strain using a reference from a F. oxysporum (F11) strain
 
@@ -266,7 +266,7 @@ Steps
     - The correct sequence was identified using blasting the reference sequences against data/results/PH-1_rDNA.fas
 
 -------------
-**** Length criterion
+#### Length criterion
 
 - This tutorial demonstrates how to use one of the length criteria (total assembly length) for the assembly
 - This can be useful if the vicinity of the sequence is unknown
@@ -295,7 +295,7 @@ Steps
     - The correct sequence was identified using blasting the result sequences against data/results/F11_mt.fas
 
 ---------
-**** Exhaustive assembly of a linear sequence
+#### Exhaustive assembly of a linear sequence
 
 - In this tutorial we are going to use a partial sequence of the tef1a gene to extract the whole gene from the assembly
 - In this dataset the tef1a sequence is a linear genomic element that has no continuation, this makes it similar to linear virus genomes
@@ -337,7 +337,7 @@ Steps
     - We can see that two sequences are 100% identical
 	
 --------------
-**** Complex run with diverse criteria
+#### Complex run with diverse criteria
 
 - In this tutorial the different runs that were discussed will be combined into a single run
 
@@ -443,7 +443,7 @@ Steps
     - We can see that each pair of sequences are 100% identical
 
 ------------------	
-**** Reconstruction of the rDNA region from actual reads
+#### Reconstruction of the rDNA region from actual reads
 
 - In this tutorial the first 100000 read pairs will be used from the SRR550150 sequencing run file
 
