@@ -40,6 +40,8 @@ COPY README.md /home/grabb/
 COPY Examples.md /home/grabb/
 COPY Tutorial.md /home/grabb/
 
+# Copy the helper script for extra assemblers
+COPY external_scaffold.pl /home/grabb/
 
 # Change the owner of the files
 RUN chmod +x /home/grabb/bin/*
