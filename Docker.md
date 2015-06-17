@@ -55,7 +55,7 @@ deleted after it is exited. (The Docker image won't be deleted)
     docker run -ti -v /absolute/path/to/the/directory/:/home/grabb/directory/ grabb
 
 Now all the commands are issued are inside the container.
-After the analysis is finished Ctrl+D has to be typed to return to the host computer.
+After the analysis is finished **Ctrl+D** has to be typed to return to the host computer.
 
 ----------------------
 #### Run the Docker image detached
