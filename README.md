@@ -564,11 +564,11 @@ Folder structure:
 - bait.fas
 - extra_bait.fas
 - *\<prefix\>*\_assembly\_thread\_*\<int\>*.fas
-- *\<prefix\>*\_result\_thread\_*\<int\>*.fas
+- *\<prefix\>*\_result\_thread\_*\<int\>*.fas (if exonerate-mode is selected and the sequence was matched)
 - *\<prefix\>*.log
 - old\_collection.list
 - reads*\<int\>*.fastq or reads*\<int\>*.fasta
-- **Round_\<int\>_**/
+- __Round*\<int\>*__/
 
     + hashstat.bin
     + mirabait.log
@@ -585,7 +585,7 @@ Folder structure:
         * exonerate.log (if exonerate-mode is selected)
         * result.fas (if exonerate-mode is selected and the sequence was matched)
 
-- **thread\__\<int\>_**/
+- __thread\_*\<int\>*__/
 
     + assembly.fas
     + assembly\_*\<int\>*.fas
