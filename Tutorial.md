@@ -91,8 +91,8 @@ Steps
 
 Files used
 
-    - reads: **data/reads/F11_r1.fastq.gz** **data/reads/F11_r2.fastq.gz**
-    - reference: **data/references/published_mts.fas**
+- reads: **data/reads/F11_r1.fastq.gz** **data/reads/F11_r2.fastq.gz**
+- reference: **data/references/published_mts.fas**
 
 Steps
 
