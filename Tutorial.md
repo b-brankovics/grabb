@@ -191,8 +191,8 @@ Steps
 
     - Create a fasta file which contains the start of the provided result sequence (**data/results/PH-1_rDNA.fas**)
 
-        head -2 data/results/PH-1_rDNA.fas >ref.fas
-        ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
+            head -2 data/results/PH-1_rDNA.fas >ref.fas
+            ./helper_programs/fasta_shift -i circular.fas -r ref.fas >final.fas
 
 6. Compare result with the correct sequence
 
