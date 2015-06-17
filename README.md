@@ -51,7 +51,8 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 6. [Using custom assembler program](#using-custom-assembler-program)
     1. [Adding to the source code of GRAbB](#adding-to-the-source-code-of-grabb)
     2. [Using external_scaffold](#using-external_scaffold)
-7. [Contact](#contact)
+7. [Citation](#citation)
+8. [Contact](#contact)
 
 ----------------------------
 #### Usage
@@ -846,6 +847,13 @@ assembler program. Using the proper argument:
 
     --assembler external <external.pl>
 
+
+--------------------------------
+#### Citation
+
+If you use the `GRAbB.pl` or any of the helper programs, please, site the paper describing the program
+
+_The paper is not yet published_
 
 --------------------------------
 #### Contact
