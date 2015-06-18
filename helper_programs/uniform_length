@@ -22,9 +22,7 @@ use strict;
 
 # Print help message if the only argument is "-h"
 if (@ARGV == 1 && $ARGV[0] eq '-h') {
-    print "Usage:\n\t$0 <integer> <ReadFile>\n";
-    print "\n\tFor each read file file the program will create a read file with reads that are exactly [integer] long\n";
-    exit 0;
+    die "Usage:\n\t$0 <integer> <ReadFile>\n\n\tFor each read file the program will create a read file with reads that are exactly [integer] long\n";
 }
 
 # This variable holds the prinseq-lite executable
@@ -34,7 +32,7 @@ my $prinseq = 'prinseq-lite.pl';
 die "The specified command ($prinseq) does not work.\n" unless (`which $prinseq`);
 
 # At least two inputs should be defined
-die unless scalar @ARGV > 1;
+die "Usage:\n\t$0 <integer> <ReadFile>\n\n\tFor each read file the program will create a read file with reads that are exactly [integer] long\n" unless scalar @ARGV > 1;
 
 # The first argument is the length of the minimum sequence length
 my $len = shift;
