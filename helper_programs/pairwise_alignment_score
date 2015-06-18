@@ -25,7 +25,7 @@ if (@ARGV) {
     &read_fasta(\%fas_data, \@ids);
 }
 
-print &match_score($fas{$ids[0]},$fas{$ids[1]});
+print &match_score($fas_data{$ids[0]},$fas_data{$ids[1]});
 
 
 #===SUBROUTINES=================================================================
