@@ -1239,7 +1239,7 @@ sub check_fasta{                                                                
             s/\R//g;                                                                                                   # Check files (fasta)
                                                                                                                        # Check files (fasta)
             # Make sure that there are no incorrect characters in the sequences                                        # Check files (fasta)
-            if (/[^ACTGRYMKSWHBVDN]/) {                                                                                # Check files (fasta)
+            if (/[^ACTGRYMKSWHBVDN]/i) {                                                                               # Check files (fasta)
                 $print = "Error: the fasta file ($$file_ref) has entry containing incorrect character!\n";             # Check files (fasta)
                 print {$$log_ref} $print; print $print;                                                                # Check files (fasta)
                 die "Fasta file ($$file_ref) contains incorrect character!\nProgram is terminated\n";                  # Check files (fasta)
