@@ -66,7 +66,7 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 
 OR
 
-Use Docker
+Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
 
 * `docker pull brankovics/grabb`
 * Create local docker repository
