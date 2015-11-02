@@ -266,7 +266,7 @@ while (not $done) {                                                             
     # Update the relative paths of the files that are in the main directory                        #	/Round###
     #   The file names are fixed inside the subroutine                                             #	/Round###
     #   The prefix is passed then the reference file, bait file and old collection variables       #	/Round###
-    &update_path(\"../", \$ref, \$bait, \$old_collection);                                         #	/Round###
+    &update_path(\"../", \$ref, \$bait, \$old_collection);#/                                       #	/Round###
                                                                                                    #	/Round###
     # Check if all the necessary files are in order                                                #	/Round###
     #   Creates a folder called test_reads which will be destroyed if all goes well                #	/Round###
@@ -315,7 +315,7 @@ while (not $done) {                                                             
         # Update the relative paths of the files that are in the main thread directory             #	/Round###/thread#
         #   The file names are fixed inside the subroutine                                         #	/Round###/thread#
         #   The prefix is passed then the reference file, bait file and old collection variables   #	/Round###/thread#
-        &update_path(\"../../$thread\/", \$thread_ref, \$thread_bait, \$thread_old);               #	/Round###/thread#
+        &update_path(\"../../$thread\/", \$thread_ref, \$thread_bait, \$thread_old);#"             #	/Round###/thread#
                                                                                                    #	/Round###/thread#
         # Create the symlinks to the readpool files of the Round folder so that the same read file #	/Round###/thread#
         #   name can be used for the threads                                                       #	/Round###/thread#
@@ -352,7 +352,8 @@ while (not $done) {                                                             
                                                                                                    #	/Round###/thread#
                 # Find reads for the current thread and update the threads state                   #	/Round###/thread#
                 $multi{$thread} = &find_reads(\$log, \$thread_bait, \@reads,                       #	/Round###/thread#
-                                              \$thread_old, \$new_collection, \@readpools, \"\t"); #	/Round###/thread#
+                                              \$thread_old, \$new_collection,                      #	/Round###/thread#
+                                              \@readpools, \"\t"); #"                              #	/Round###/thread#
                                                                                                    #	/Round###/thread#
                 # If no new reads were found then go to the next thread                            #	/Round###/thread#
                 if ($multi{$thread}) {                                                             #	/Round###/thread#
@@ -387,7 +388,7 @@ while (not $done) {                                                             
                                                                                                    #	/Round###/thread#
             # Do assembly according to parameters and create the assembly file                     #	/Round###/thread#
             &assemble(\$log, \@readpools, \$single, \@parameters,                                  #	/Round###/thread#
-                      \$assembly_file, \"\t", \$format);                                           #	/Round###/thread#
+                      \$assembly_file, \"\t", \$format);#"                                         #	/Round###/thread#
                                                                                                    #	/Round###/thread#
             # Copy the latest assembly to the thread folder in the main directory                  #	/Round###/thread#
             system("cp", $assembly_file, "../../$thread/$assembly_file");                          #	/Round###/thread#
@@ -424,10 +425,10 @@ while (not $done) {                                                             
             if ($type && $type =~ /diff/) {                                                        #	/Round###/thread#
                 $multi{$thread} = &test_completion(\$log, \$thread_ref, \$thread_bait,             #	/Round###/thread#
                                                     \$types{$thread}, \$assembly_file, \$min_len,  #	/Round###/thread#
-                                                    \"\t", \@current_asmbls);                      #	/Round###/thread#
+                                                    \"\t", \@current_asmbls);#"                    #	/Round###/thread#
             } else {                                                                               #	/Round###/thread#
                 $multi{$thread} = &test_completion(\$log, \$thread_ref, \$thread_bait, \$type,     #	/Round###/thread#
-                                                   \$assembly_file, \$min_len, \"\t",              #	/Round###/thread#
+                                                   \$assembly_file, \$min_len, \"\t",#"            #	/Round###/thread#
                                                    \@current_asmbls);                              #	/Round###/thread#
             }                                                                                      #	/Round###/thread#
             # If homology is used as test there might be a "result file created that holds the     #	/Round###/thread#
@@ -498,7 +499,7 @@ while (not $done) {                                                             
     # Update the relative paths of the files that are in the main directory                        #	/
     #   The file names are fixed inside the subroutine                                             #	/
     #	The prefix is passed then the reference file, bait file and old collection variables       #	/
-    &update_path(\"", \$ref, \$bait, \$old_collection);                                            #	/
+    &update_path(\"", \$ref, \$bait, \$old_collection);#"                                          #	/
                                                                                                    #	/
     # If this was the first round of a multi run with extra bait specified then make the           #	/
     #   $extra_bait variable undefined, because no more inner iterations will be need in the future#	/
@@ -953,23 +954,23 @@ sub parse_input{                                                                
         $$gzip_ref++ if /\.gz/;                                                                               # Defining variables: Create reads
                                                                                                               # Defining variables: Create reads
         # Identify the file format of the read file based on the first character                              # Defining variables: Create reads
-        my $read_cmd = "cat";
-        $read_cmd = "zcat" if $$gzip_ref;
-        my $first_line = `$read_cmd $_ | head -1`;
-        if ($first_line =~ /^>/) {
-            if ($$format_ref) {
-                die "All the read files should have the same format\n" if $$format_ref ne "fasta"; 
-            }
-            $$format_ref = "fasta";
-        } elsif ($first_line =~ /^\@/) {
-            if ($$format_ref) {
-                die "All the read files should have the same format\n" if $$format_ref ne "fastq"; 
-            }
-            $$format_ref = "fastq";
-        } else {
-
-        }
-
+        my $read_cmd = "cat";                                                                                 # Defining variables: Create reads
+        $read_cmd = "zcat" if $$gzip_ref;                                                                     # Defining variables: Create reads
+        my $first_line = `$read_cmd $_ | head -1`;                                                            # Defining variables: Create reads
+        if ($first_line =~ /^>/) {                                                                            # Defining variables: Create reads
+            if ($$format_ref) {                                                                               # Defining variables: Create reads
+                die "All the read files should have the same format\n" if $$format_ref ne "fasta";            # Defining variables: Create reads
+            }                                                                                                 # Defining variables: Create reads
+            $$format_ref = "fasta";                                                                           # Defining variables: Create reads
+        } elsif ($first_line =~ /^\@/) {                                                                      # Defining variables: Create reads
+            if ($$format_ref) {                                                                               # Defining variables: Create reads
+                die "All the read files should have the same format\n" if $$format_ref ne "fastq";            # Defining variables: Create reads
+            }                                                                                                 # Defining variables: Create reads
+            $$format_ref = "fastq";                                                                           # Defining variables: Create reads
+        } else {                                                                                              # Defining variables: Create reads
+                                                                                                              # Defining variables: Create reads
+        }                                                                                                     # Defining variables: Create reads
+                                                                                                              # Defining variables: Create reads
         # Create the name of the symlink for the read files                                                   # Defining variables: Create reads
         my $symlink = "$$folder_ref\/reads$i\.$$format_ref";                                                  # Defining variables: Create reads
                                                                                                               # Defining variables: Create reads
@@ -1418,7 +1419,7 @@ sub find_reads{                                                                 
                         ) = @_;                                                                               # Find reads
                                                                                                               # Find reads
     # If $tab is undefined then put a reference to an empty string so the print commands won't throw an error # Find reads
-    $tab = \"" unless $tab;                                                                                   # Find reads
+    $tab = \"" unless $tab;#;#"                                                                               # Find reads
                                                                                                               # Find reads
     # Print the current status: Finding reads                                                                 # Find reads
     $print = "" . strftime('%H:%M:%S',localtime) . "\t$$tab\tFind matching reads\n";                          # Find reads
@@ -1604,7 +1605,7 @@ sub assemble{                                                                   
                             ) = @_;                                                                                   # Assemble
                                                                                                                       # Assemble
     # If $tab was not defined then use a reference to an empty string                                                 # Assemble
-    $tab = \"" unless $tab;                                                                                           # Assemble
+    $tab = \"" unless $tab;#"                                                                                         # Assemble
     # Print the current state of the program                                                                          # Assemble
     $print = "" . strftime('%H:%M:%S',localtime) . "\t$$tab\tAssemble collected reads\n";                             # Assemble
     print {$$log_ref} $print; print $print;                                                                           # Assemble
@@ -1666,7 +1667,7 @@ sub edena_assemble{                                                             
                             ) = @_;                                                                                   # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
     # If $tab was not defined then use a reference to an empty string                                                 # Assemble (Edena)
-    $tab = \"" unless $tab;                                                                                           # Assemble (Edena)
+    $tab = \"" unless $tab;#"                                                                                         # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
     # pairing specific input for edena                                                                                # Assemble (Edena)
     my $pairing;                                                                                                      # Assemble (Edena)
@@ -1738,7 +1739,7 @@ sub velvet_assemble{                                                            
                             ) = @_;                                                                                   # Assemble (Velvet)
                                                                                                                       # Assemble (Velvet)
     # If $tab was not defined then use a reference to an empty string                                                 # Assemble (Velvet)
-    $tab = \"" unless $tab;                                                                                           # Assemble (Velvet)
+    $tab = \"" unless $tab;#"                                                                                         # Assemble (Velvet)
                                                                                                                       # Assemble (Velvet)
     # @arg1 will hold the parameters the were specified for the graph/hash generation                                 # Assemble (Velvet)
     my @arg1;                                                                                                         # Assemble (Velvet)
@@ -1831,7 +1832,7 @@ sub alternative_assemble{                                                       
                             ) = @_;                                                                                   # Assemble (Alternative)
                                                                                                                       # Assemble (Alternative)
     # If $tab was not defined then use a reference to an empty string                                                 # Assemble (Alternative)
-    $tab = \"" unless $tab;                                                                                           # Assemble (Alternative)
+    $tab = \"" unless $tab;#"                                                                                         # Assemble (Alternative)
                                                                                                                       # Assemble (Alternative)
     # @arg1 will hold the parameters the were specified for the graph/hash generation                                 # Assemble (Alternative)
     my @arg1;                                                                                                         # Assemble (Alternative)
@@ -1930,7 +1931,7 @@ sub test_completion{                                                            
                         ) = @_;                                                                               # Test completion
                                                                                                               # Test completion
     # If $tab was not defined then use a reference to an empty string                                         # Test completion
-    $tab = \"" unless $tab;                                                                                   # Test completion
+    $tab = \"" unless $tab;#"                                                                                 # Test completion
                                                                                                               # Test completion
     # 1) Done IF there is NO bait file OR it is EMPTY                                                         # Test completion: No assembly
     unless (-e $$new_bait_ref) {                                                                              # Test completion: No assembly
@@ -2103,7 +2104,7 @@ sub assembly_statistics{                                                        
                         ) = @_;                                                                               # Test completion: statistics
                                                                                                               # Test completion: statistics
     # If $tab was not defined then use a reference to an empty string                                         # Test completion: statistics
-    $tab = \"" unless $tab;                                                                                   # Test completion: statistics
+    $tab = \"" unless $tab;#"                                                                                 # Test completion: statistics
                                                                                                               # Test completion: statistics
     # A variable to store the return string                                                                   # Test completion: statistics
     my $print;                                                                                                # Test completion: statistics
@@ -2165,7 +2166,7 @@ sub exonerate{                                                                  
                     ) = @_;                                                                                   # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # If $tab was not defined then use a reference to an empty string                                         # Test completion: Exonerate
-    $tab = \"" unless $tab;                                                                                   # Test completion: Exonerate
+    $tab = \"" unless $tab;#"                                                                                 # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # A variable to store the return string                                                                   # Test completion: Exonerate
     my $print;                                                                                                # Test completion: Exonerate
@@ -2196,8 +2197,8 @@ sub exonerate{                                                                  
                                                                                                               # Test completion: Exonerate
     # Parse the exonerate result                                                                              # Test completion: Exonerate
     for (split /\n/, $exonerate) {                                                                            # Test completion: Exonerate
-        if (/\((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)\     # query (ID length start end aligned strand)  # Test completion: Exonerate
-             \((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)/x){  # target (ID length start end aligned strand) # Test completion: Exonerate
+        if (/\((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)\ \((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)/x){ # Test completion: Exonerate
+           # ^ query (ID length start end aligned strand)   ^ target (ID length start end aligned strand)     # Test completion: Exonerate
             my %query = (     id      => $1,                                                                  # Test completion: Exonerate
                               len     => $2,                                                                  # Test completion: Exonerate
                               start   => $3,                                                                  # Test completion: Exonerate
