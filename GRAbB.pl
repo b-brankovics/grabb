@@ -1437,7 +1437,22 @@ sub find_reads{                                                                 
         if (not -e "$mira_temp\_$i\.txt" || -z "$mira_temp\_$i\.txt") {                                       # Find reads
             # Run mirabait                                                                                    # Find reads
             #   mirabait -t txt bait_file read_file output_prefix                                             # Find reads
-            `$bait_cmd -t txt $$bait_ref $read $mira_temp\_$i 2>&1 >>mirabait.log`;                           # Find reads
+            system("$bait_cmd -t txt $$bait_ref $read $mira_temp\_$i 2>&1 >>mirabait.log");                   # Find reads
+	    # Test if baiting program is fuctioning correctly                                                 # Find reads
+	    unless ($? == 0) {                                                                                # Find reads
+		# bait has crashed                                                                            # Find reads
+		$print = "Error: Baiting failed!\n";                                                          # Find reads
+		$print .= "\tThe command that crashed is:\n";                                                 # Find reads
+		$print .= "\t\t' $bait_cmd -t txt $$bait_ref $read $mira_temp\_$i'\n";                        # Find reads
+		$print .= "\tIf you are using mirabait, try installing another version (e.g. 4.0).\n";        # Find reads
+		$print .= "\t\tMira 4.0.2 has a bug and will crash when using the above command\n";           # Find reads
+		unless ($not_stdout) {                                                                        # Find reads
+		    print {$$log_ref} $print; print $print;                                                   # Find reads
+		} else {                                                                                      # Find reads
+		    print {$$log_ref} $print;                                                                 # Find reads
+		    die $print;                                                                               # Find reads
+		}                                                                                             # Find reads
+	    }                                                                                                 # Find reads
             $print = strftime('%H:%M:%S',localtime) . "\t$$tab\t\tDone baiting read file #$i\n";              # Find reads
             print {$$log_ref} $print; print $print unless $not_stdout;                                        # Find reads
         }                                                                                                     # Find reads
