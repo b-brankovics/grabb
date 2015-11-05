@@ -16,3 +16,35 @@ not call any programs that need to be separately installed.
       matched to the bait
 	+ It is less efficient than seqtk. Therefore it is recommended
       to install seqtk.
+
+## Add these programs to the GRAbB\.pl source code
+
+1. Make the files executable
+
+        chmod +x <file_name>
+
+2. Add the executable to the path or to your __bin__ directory
+
+        cp <file_name> /home/user/bin/.
+
+3. Adjust the source code of GRAbB\.pl
+
+    - kmer\_bait\.pl
+
+        Replace the following line:
+
+            my $bait_cmd =    "mirabait";       # The command to invoke the baiting program                    #	!!!!
+
+        with:
+
+            my $bait_cmd =    "kmer_bait.pl";       # The command to invoke the baiting program                    #	!!!!
+
+    - create\_readpool\.pl
+
+        Replace the following line:
+
+            my $collect_cmd = "seqtk subseq";   # The command to invoke the read collecting program            #	!!!!
+
+        with:
+
+            my $collect_cmd = "create_readpool.pl";   # The command to invoke the read collecting program            #	!!!!
