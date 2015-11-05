@@ -98,6 +98,9 @@ See the wiki or the files __[Docker.md](Docker.md)__, __[Examples.md](Examples.m
 
     __Bug__: mira 4.0.2 does not work properly, but mira 4.0 does
 
+OR you may also use [kmer\_bait\.pl](perl_programs/kmer_bait.pl),
+which is less efficient, but uses only perl and standard Unix commands
+
 #### Edena
 
 1. Download [EDENA](http://www.genomic.ch/edena.php) and extract it or use the copy in the 3rd_party_programs
@@ -122,6 +125,9 @@ See the wiki or the files __[Docker.md](Docker.md)__, __[Examples.md](Examples.m
 2. Move to the directory
 3. Type `make` on the command line (zlib needs to be installed, see 1.3) for instructions)
 4. Copy/move or smylink '__seqtk__' into somewhere in the path or add the folder to the path (The files in the bin folder)
+
+OR you may also use [create\_readpool\.pl](perl_programs/create_readpool.pl),
+which is less efficient, but uses only perl and standard Unix commands
 
 #### exonerate
 
