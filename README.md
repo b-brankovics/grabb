@@ -104,15 +104,15 @@ which is less efficient, but uses only perl and standard Unix commands
 #### Edena
 
 1. Download [EDENA](http://www.genomic.ch/edena.php) and extract it or use the copy in the 3rd_party_programs
-2. Move to the directory
+2. Change to the directory
 3. Type `make` on the command line (g++ needs to be installed, on ubuntu type `sudo apt-get install g++`)
 4. Copy/move or smylink '**edena**' into somewhere in the path or add the folder to the path (The files in the bin folder)
 
 #### Velvet
 
 1. Download [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/) and extract it or use the copy in the 3rd_party_programs
-2. Move to the directory. First zlib needs to be installed
-3. Move to 'third-party/zlib-1.2.3/'
+2. Change to the directory. First zlib needs to be installed
+3. Change to 'third-party/zlib-1.2.3/'
 4. Type `make` on the command line
 5. Type `sudo make install` on the command line
 6. Go back to the parent directory (`cd ../..`)
@@ -122,7 +122,7 @@ which is less efficient, but uses only perl and standard Unix commands
 #### Seqtk
 
 1. Download [Seqtk]()https://github.com/lh3/seqtk.git from github and uncompress it or `git clone https://github.com/lh3/seqtk.git`
-2. Move to the directory
+2. Change to the directory
 3. Type `make` on the command line (zlib needs to be installed, see 1.3) for instructions)
 4. Copy/move or smylink '__seqtk__' into somewhere in the path or add the folder to the path (The files in the bin folder)
 
@@ -153,7 +153,7 @@ Usage:
 
 This program reads the contigs from a fasta file and checks if they
 are overlapping with each other by using a minimal overlap size that is
-specified at invocation. Finally, prints the all the overlaps found.
+specified at invocation. Finally, prints all the overlaps found.
 
 Usage:
 
