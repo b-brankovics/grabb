@@ -2378,6 +2378,7 @@ sub which {
 	# Return path if found
 	return $path if -x $path;
     }
+    return $prog if -x $prog;
     return 0;
 }
 
