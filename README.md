@@ -50,7 +50,7 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
     12. [clean](#clean)
 6. [Using custom assembler program](#using-custom-assembler-program)
     1. [Adding to the source code of GRAbB](#adding-to-the-source-code-of-grabb)
-    2. [Using external_scaffold](#using-external_scaffold)
+    2. [Using external_skeleton](#using-external_skeleton)
 7. [Citation](#citation)
 8. [Contact](#contact)
 
@@ -60,10 +60,33 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 
 #### Installation
 
-1. Install all prerequisites
-2. Add prerequisites to the Path or add the absolute path of the executables to the source code of GRAbB.pl
-    * Find the lines marked with exclamation marks and correct the executable names
+1. Install prerequisites
+    - Minimal set:
+        + Baiting program: **mirabait** _(recommended)_ OR
+		kmer\_bait\.pl (no installation needed)
+	    + Read collecting program: **seqtk** _(recommended)_ OR
+          create\_readpool\.pl (no installation needed)
+		+ Assembler: Edena OR Vevlet OR external\_scaffold\.pl (needs
+          to be modified and requires a working installation of an assembler)
 
+    - Assemblers:
+		+ Edena: default assembler for GRAbB.pl
+		+ Vevlet
+		+ Other assembler: external\_scaffold\.pl has to be also edited
+
+    - Exonerate:
+		+ Required for running GRAbB.pl in exonerate mode
+
+2. Configure GRAbB.pl
+
+        ./configure_GRAbB.pl
+
+    Recommended to add prerequisites to the Path Or add the absolute
+    path of the executables to the source code of GRAbB.pl before
+	running configure_GRAbB.pl
+
+    Configured GRAbB.pl can be found in bin directory
+	
 OR
 
 Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
@@ -356,9 +379,9 @@ single-end or should be the same for both reads of the pair.
 The program can use two assemblers,
 [EDENA](http://www.genomic.ch/edena.php) and
 [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), by default, but
-there is a scaffold code to add a new assembler to the source code of
+there is a skeleton code to add a new assembler to the source code of
 the program. Also it is also possible to write [an external perl
-script](#using-external_scaffold) that is used by
+script](#using-external_skeleton) that is used by
 GRAbB for the assembly. By default
 [EDENA](http://www.genomic.ch/edena.php) is used for assembly, but
 using command line options the other assemblers can be selected, as
@@ -699,7 +722,7 @@ Specify the assembler to be used:
 * [EDENA](http://www.genomic.ch/edena.php)
 * [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/)
 * [alternative](#adding-to-the-source-code-of-grabb)
-* [external](#using-external_scaffold)
+* [external](#using-external_skeleton)
 
 #### clean
 
@@ -732,9 +755,9 @@ the executable of the assembler are written between the quotation
 marks. The first one is the command used for the first step of the
 assembly, the second is the command used for the second step of the
 assembly. If the assembly requires only one step, then use [the other
-method](#using-external_scaffold) to add the assembler.
+method](#using-external_skeleton) to add the assembler.
 
-In addition, there is a scaffold code within the source code of GRAbB
+In addition, there is a skeleton code within the source code of GRAbB
 marked by `# Assemble (Alternative)` at the end of the lines. Within
 this block of code there are six lines that need to be changed to add
 the new assembler. These lines have exclamation marks at the end.
@@ -788,9 +811,9 @@ the newly specified assembler program. Using the proper argument:
 
     --assembler alternative
 
-#### Using external_scaffold
+#### Using external_skeleton
 
-There is a scaffold script that maybe copied and modified to run the
+There is a skeleton script that maybe copied and modified to run the
 assembly if **external** is selected as assembler.
 
     #!/usr/bin/perl -w
