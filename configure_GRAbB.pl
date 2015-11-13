@@ -160,7 +160,7 @@ close $source;
     unless ($working) {
 	# Test if the program is available through the path
 	my $print = "\t\t$prog (found in the path)";
-	if (`which $prog`) {
+	if (&which($prog)) {
 	    print "\t\t$prog is found in the path\n";
 	    my $cmd = $prog;
 
@@ -270,7 +270,7 @@ close $source;
     unless ($working) {
 	# Test if the program is available through the path
 	my $print = "\t\t$prog (found in the path)";
-	if (`which $prog`) {
+	if (&which($prog)) {
 	    print "\t\t$prog is found in the path\n";
 	    my $cmd = $prog;
 	    
@@ -344,7 +344,7 @@ close $source;
     unless ($working) {
 	# Test if the program is available through the path
 	my $print = "\t\t$prog (found in the path)";
-	if (`which $prog`) {
+	if (&which($prog)) {
 	    print "\t\t$prog is found in the path\n";
 	    my $cmd = $prog;
 	    
@@ -551,7 +551,7 @@ sub configure_helper {
     unless ($working) {
 	my $cmd = "prinseq-lite.pl";
 	my $print = "\t\tprinseq-lite.pl found in the path";
-	if (`which $cmd`) {
+	if (&which($cmd)) {
 	    print "\t\tprinseq-lite found in the path\n";
 	    system("$cmd >/dev/null 2>/dev/null");
 	    if ($? == 0) {
@@ -631,7 +631,7 @@ sub test_path {
     my $final;
     print "\tTesting $prog\n";
     # Test if the program is available through the path
-    if (`which $prog`) {
+    if (&which($prog)) {
 	print "\t\t$prog is found in the path\n";
 	my $cmd = $prog;
 
@@ -694,4 +694,16 @@ sub test_cmd {
 	unlink $_ if -e $_;
     }
     return $final;
+}
+
+sub which {
+    # Get the command needed to be found
+    my $prog = shift;
+    # Search through the PATH
+    for (split /\:/, $ENV{"PATH"}) {
+	my $path = "$_/$prog";
+	# Return path if found
+	return $path if -x $path;
+    }
+    return 0;
 }

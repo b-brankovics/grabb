@@ -148,23 +148,23 @@ my @current_asmbls; # The list of assembly files to be modified if min_len is se
 #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #
 # Test if all the specified programs are usable                                                    #
 for ($bait_cmd, $collect_cmd) {                                                                    #
-    die "$_ program is not executable\n" unless `which $_`;                                        #
+    die "$_ program is not executable\n" unless &which($_);                                        #
 }                                                                                                  #
 # Test if the assembler is usable or die                                                           #
 if ($parameters[0] eq "alternative") {                                                             #
-    die "$alt_1_cmd program is not executable\n" unless `which $alt_1_cmd`;                        #
-    die "$alt_2_cmd program is not executable\n" unless `which $alt_2_cmd`;                        #
+    die "$alt_1_cmd program is not executable\n" unless &which($alt_1_cmd);                        #
+    die "$alt_2_cmd program is not executable\n" unless &which($alt_2_cmd);                        #
 } elsif ($parameters[0] eq "velvet") {                                                             #
-    die "$velveth_cmd program is not executable\n" unless `which $velveth_cmd`;                    #
-    die "$velvetg_cmd program is not executable\n" unless `which $velvetg_cmd`;                    #
+    die "$velveth_cmd program is not executable\n" unless &which($velveth_cmd);                    #
+    die "$velvetg_cmd program is not executable\n" unless &which($velvetg_cmd);                    #
 } elsif ($parameters[0] eq "external") {                                                           #
     # This will not be checked                                                                     #
 } else {                                                                                           #
-    die "$edena_cmd program is not executable\n" unless `which $edena_cmd`;                        #
+    die "$edena_cmd program is not executable\n" unless &which($edena_cmd);                        #
 }                                                                                                  #
 # If exonerate is necessary then test it also                                                      #
 if ($type =~ /exonerate/) {                                                                        #
-    die "$exonerate_cmd program is not executable\n" unless `which $exonerate_cmd`;                #
+    die "$exonerate_cmd program is not executable\n" unless &which($exonerate_cmd);                #
 }                                                                                                  #
 ####################################################################################################
 # Dynamic variables (They are undefined at start)                                                  #
@@ -2369,6 +2369,18 @@ sub fasta2hash{                                                                 
     close $fasta;                                                                                             # fasta2hash
 }                                                                                                             # fasta2hash
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+sub which {
+    # Get the command needed to be found
+    my $prog = shift;
+    # Search through the PATH
+    for (split /\:/, $ENV{"PATH"}) {
+	my $path = "$_/$prog";
+	# Return path if found
+	return $path if -x $path;
+    }
+    return 0;
+}
+
 
 #======================================END===================================================================================================
 # The MIT License (MIT)
