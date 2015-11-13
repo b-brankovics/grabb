@@ -157,6 +157,8 @@ if ($parameters[0] eq "alternative") {                                          
 } elsif ($parameters[0] eq "velvet") {                                                             #
     die "$velveth_cmd program is not executable\n" unless `which $velveth_cmd`;                    #
     die "$velvetg_cmd program is not executable\n" unless `which $velvetg_cmd`;                    #
+} elsif ($parameters[0] eq "external") {                                                           #
+    # This will not be checked                                                                     #
 } else {                                                                                           #
     die "$edena_cmd program is not executable\n" unless `which $edena_cmd`;                        #
 }                                                                                                  #
