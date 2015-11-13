@@ -88,6 +88,7 @@ close $source;
     }
 
     $working = &test_cmd($collect, $call, $out, "\tRead collecting command found in GRAbB.pl source code", @trash) if $collect;
+    $collect = $working;
 
     $call ="subseq @input 2>err >out" unless $working;
     $working = &test_path($prog, $call, $out, @trash) unless $working;
