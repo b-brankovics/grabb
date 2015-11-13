@@ -184,12 +184,12 @@ Else:
 	    make install
 4. The executable is found at `src/program/exonerate`. Copy/move or
    symlink '__exonerate__' into somewhere in the path or add the folder to
-   the path (The files in the bin folder)
+   the path (The files in the src/program folder)
 
 #### PRINSEQ lite
 
 1. Download [PRINSEQ lite](http://prinseq.sourceforge.net/) and extract it or use the copy in the 3rd_party_programs
-2. Copy/move or smylink '**prinseq-lite.pl**' into somewhere in the path or add the folder to the path
+2. Copy/move or symlink '**prinseq-lite.pl**' into somewhere in the path or add the folder to the path
 
 -----------------------
 #### Helper programs
