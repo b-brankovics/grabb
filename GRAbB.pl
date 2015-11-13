@@ -840,7 +840,9 @@ sub parse_input{                                                                
     # Put the assembler values in the parameter array                                                         # Defining variables: assembler
     @$parameters_ref = ($asmblr, $arg1, $arg2);                                                               # Defining variables: assembler
                                                                                                               # Defining variables: assembler
-    die "Could not find external assembler script '$$external_ref'\n" unless -s $$external_ref;               # Defining variables: assembler
+    if ($asmblr eq "external") {                                                                              # Defining variables: assembler
+	die "Could not find external assembler script '$$external_ref'\n" unless -s $$external_ref;           # Defining variables: assembler
+    }                                                                                                         # Defining variables
                                                                                                               # Defining variables
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - # Defining variables: Folder
     # Check the folder                                                                                        # Defining variables: Folder
