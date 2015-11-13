@@ -699,11 +699,13 @@ sub test_cmd {
 sub which {
     # Get the command needed to be found
     my $prog = shift;
+    ($prog) = split /\s/, $prog; 
     # Search through the PATH
     for (split /\:/, $ENV{"PATH"}) {
 	my $path = "$_/$prog";
 	# Return path if found
 	return $path if -x $path;
     }
+    return $prog if -x $prog;
     return 0;
 }
