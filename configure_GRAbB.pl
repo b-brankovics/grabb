@@ -1,6 +1,5 @@
 #!/usr/bin/perl -w
 use strict;
-use autodie;
 
 
 print "This is a script to test the installation of prerequisites for the programs in\n" .
