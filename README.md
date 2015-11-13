@@ -127,7 +127,7 @@ See the wiki or the files __[Docker.md](Docker.md)__, __[Examples.md](Examples.m
 
 1. Download MIRA (4.0) assembler (http://sourceforge.net/projects/mira-assembler/)
 2. Extract it. The executable files are in the _bin_ folder.
-3. Copy/move or smylink '**mirabait**' into somewhere in the path or add the folder to the path (This program uses only mirabait)
+3. Copy/move or symlink '**mirabait**' into somewhere in the path or add the folder to the path (This program uses only mirabait)
 
     __Warning__: the name of the executable file has to be mirabait!
 
@@ -141,7 +141,7 @@ which is less efficient, but uses only perl and standard Unix commands
 1. Download [EDENA](http://www.genomic.ch/edena.php) and extract it or use the copy in the 3rd_party_programs
 2. Change to the directory
 3. Type `make` on the command line (g++ needs to be installed, on ubuntu type `sudo apt-get install g++`)
-4. Copy/move or smylink '**edena**' into somewhere in the path or add the folder to the path (The files in the bin folder)
+4. Copy/move or symlink '**edena**' into somewhere in the path or add the folder to the path (The files in the bin folder)
 
 #### Velvet
 
@@ -152,14 +152,14 @@ which is less efficient, but uses only perl and standard Unix commands
 5. Type `sudo make install` on the command line
 6. Go back to the parent directory (`cd ../..`)
 7. Type `make` on the command line
-8. Copy/move or smylink '__velveth__' and '__velvetg__' into somewhere in the path or add the folder to the path
+8. Copy/move or symlink '__velveth__' and '__velvetg__' into somewhere in the path or add the folder to the path
 
 #### Seqtk
 
 1. Download [Seqtk](https://github.com/lh3/seqtk.git) from github and uncompress it or `git clone https://github.com/lh3/seqtk.git`
 2. Change to the directory
 3. Type `make` on the command line (zlib needs to be installed, see 1.3) for instructions)
-4. Copy/move or smylink '__seqtk__' into somewhere in the path or add the folder to the path (The files in the bin folder)
+4. Copy/move or symlink '__seqtk__' into somewhere in the path or add the folder to the path (The files in the bin folder)
 
 OR you may also use [create\_readpool\.pl](perl_programs/create_readpool.pl),
 which is less efficient, but uses only perl and standard Unix commands
@@ -182,6 +182,9 @@ Else:
 	    make
 	    make check
 	    make install
+4. The executable is found at `src/program/exonerate`. Copy/move or
+   symlink '__exonerate__' into somewhere in the path or add the folder to
+   the path (The files in the bin folder)
 
 #### PRINSEQ lite
 
