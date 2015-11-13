@@ -70,7 +70,7 @@ close $source;
 
 {# Check collecting program
     my @input = ('for_testing/read1.fastq', 'for_testing/found.txt');
-    my $call ="subseq @input 2>err >out";
+    my $call ="@input 2>err >out";
     my $prog = 'seqtk';
     my $out = 'out';
     my @trash = ('out', 'err');
@@ -89,8 +89,11 @@ close $source;
 
     $working = &test_cmd($collect, $call, $out, "\tRead collecting command found in GRAbB.pl source code", @trash) if $collect;
 
+    $call ="subseq @input 2>err >out" unless $working;
     $working = &test_path($prog, $call, $out, @trash) unless $working;
     $working = &test_exe($prog, $path, $call, $out, @trash) unless $working;
+
+    $working .= " subseq" if $working && not $collect;
 
     print "\tConfiguration script failed to locate a working version of $prog\n" unless $working;
     $call ="@input 2>err >out";
