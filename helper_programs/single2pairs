@@ -27,10 +27,10 @@ if (@ARGV == 1 && $ARGV[0] eq '-h') {
 }
 
 # This variable holds the prinseq-lite executable
-my $prinseq = 'prinseq-lite.pl';
+my $prinseq_cmd = "prinseq-lite.pl";
 
 # Test if prinseq is functioning
-die "The specified command ($prinseq) does not work.\n" unless (`which $prinseq`);
+die "The specified command ($prinseq_cmd) does not work.\n" unless (`which $prinseq_cmd`);
 
 # At least two inputs should be defined
 die "Usage:\n\t$0 <integer> <ReadFile>\n\n\tFor each fastq file the program will create two fastq files (forward and reverse reads) with the specified read length\n" unless scalar @ARGV > 1;
@@ -58,7 +58,7 @@ for my $in (@ARGV) {
         my $out = "temp_$final";
         
         # Collect all the reads that are at least as long as the first argument specified it
-        `$prinseq -fastq $in -min_len $len -out_good $out -out_bad null`;
+        `$prinseq_cmd -fastq $in -min_len $len -out_good $out -out_bad null`;
 
         # Create the paired read files
         #    Get the first $len bases of the read to use it for the forward read
@@ -91,7 +91,7 @@ for my $in (@ARGV) {
         my $out = "temp_$final";
         
         # Collect all the reads that are at least as long as the first argument specified it
-        `$prinseq -fasta $in -min_len $len -out_good $out -out_bad null`;
+        `$prinseq_cmd -fasta $in -min_len $len -out_good $out -out_bad null`;
 
         # Create the paired read files
         #    Get the first $len bases of the read to use it for the forward read

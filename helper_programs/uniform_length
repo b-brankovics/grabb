@@ -26,10 +26,10 @@ if (@ARGV == 1 && $ARGV[0] eq '-h') {
 }
 
 # This variable holds the prinseq-lite executable
-my $prinseq = 'prinseq-lite.pl';
+my $prinseq_cmd = "prinseq-lite.pl";
 
 # Test if prinseq is functioning
-die "The specified command ($prinseq) does not work.\n" unless (`which $prinseq`);
+die "The specified command ($prinseq_cmd) does not work.\n" unless (`which $prinseq_cmd`);
 
 # At least two inputs should be defined
 die "Usage:\n\t$0 <integer> <ReadFile>\n\n\tFor each read file the program will create a read file with reads that are exactly [integer] long\n" unless scalar @ARGV > 1;
@@ -51,10 +51,10 @@ for my $in (@ARGV) {
             
     if ($in =~ /\.f(ast)?q$/) {
         # Filter and trim the reads and save them to the outfile(=prefix.fastq)
-        `prinseq-lite.pl -fastq $in -min_len $len -trim_to_len $len -out_good $final -out_bad null`;
+        `$prinseq_cmd -fastq $in -min_len $len -trim_to_len $len -out_good $final -out_bad null`;
     } else {
         # Filter and trim the reads and save them to the outfile(=prefix.fasta)
-        `prinseq-lite.pl -fasta $in -min_len $len -trim_to_len $len -out_good $final -out_bad null`;
+        `$prinseq_cmd -fasta $in -min_len $len -trim_to_len $len -out_good $final -out_bad null`;
     }
 }
 
