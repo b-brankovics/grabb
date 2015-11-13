@@ -3,40 +3,33 @@ use strict;
 use autodie;
 
 
-# Check which version they want to configure
-#  minimal or normal
-my $response;
-if (@ARGV == 0) {
-    print "This is a script to test the installation of prerequisites for the programs in\n" .
-	"the GRAbB package, and to configure the scripts before usage.\n";
-    print "This script may be run with the following arguments:\n";
-    print "\tall\t- configure GRAbB and the helper programs\n";
-    print "\tdef\t- configure GRAbB\n";
-    print "\tmin\t- configure minmal_GRAbB\n";
-    print "\thelp\t- configure the helper programs\n\n";
-    print "Which option would you like to run? ";
-    $response = <>;
-    push @ARGV, $response;
-}
+print "This is a script to test the installation of prerequisites for the programs in\n" .
+    "the GRAbB package, and to configure the scripts before usage.\n";
 
-my ($normal, $min, $help);
-for (@ARGV) {
-    if (/all/) {
-	$normal++;
-	$help++;
-    } elsif (/help/) {
-	$help++;
-    } elsif (/min/) {
-	$min++;
-    } elsif (/def/) {
-	$normal++;
-    }
-}
 
 print "Configuring GRAbB package\n";
 
 # Variables that are true if given element is functional
-my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
+my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate);
+
+# Read commands from GRAbB.pl
+open(my $source, '<', 'GRAbB.pl') || die "Could not open GRAbB.pl. Make sure GRAbB.pl is in the base directory of the package and run configure_GRAbB.pl there.\n";
+for(<$source>) {
+    if (/my\s+\$bait_cmd\s+=\s+"([^"]+)"/) {
+	$bait = $1;
+    } elsif (/my\s+\$collect_cmd\s+=\s+"([^"]+)"/) {
+	$collect = $1;
+    } elsif (/my\s+\$edena_cmd\s+=\s+"([^"]+)"/) {
+	$edena = $1;
+    } elsif (/my\s+\$velveth_cmd\s+=\s+"([^"]+)"/) {
+	$velveth = $1;
+    } elsif (/my\s+\$velvetg_cmd\s+=\s+"([^"]+)"/) {
+	$velvetg = $1;
+    } elsif (/my\s+\$exonerate_cmd\s+=\s+"([^"]+)"/) {
+	$exonerate = $1;
+    }
+}
+close $source;
 
 {# Check baiting program
     my @input = ('for_testing/assembly.fas', 'for_testing/read1.fastq');
@@ -58,10 +51,12 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
 	last;
     }
 
-    $working = &test_path($prog, $call, $out, @trash) if $normal;
-    $working = &test_exe($prog, $path, $call, $out, @trash) if ($normal && not $working);
+    $working = &test_cmd($bait, $call, $out, "\tRead baiting command found in GRAbB.pl source code", @trash) if $bait;
 
-    print "\tConfiguration script failed to locate a working version of $prog\n" if ($normal && not $working);
+    $working = &test_path($prog, $call, $out, @trash) unless $working;
+    $working = &test_exe($prog, $path, $call, $out, @trash) unless $working;
+
+    print "\tConfiguration script failed to locate a working version of $prog\n" unless $working;
     $prog = 'kmer_bait.pl' unless $working;
     $working = &test_path($prog, $call, $out, @trash) unless $working;
 
@@ -92,9 +87,11 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
 	last;
     }
 
-    $working = &test_path($prog, $call, $out, @trash) if $normal;
+    $working = &test_cmd($collect, $call, $out, "\tRead collecting command found in GRAbB.pl source code", @trash) if $collect;
 
-    print "\tConfiguration script failed to locate a working version of $prog\n" if ($normal && not $working);
+    $working = &test_path($prog, $call, $out, @trash) unless $working;
+
+    print "\tConfiguration script failed to locate a working version of $prog\n" unless $working;
     $prog = 'create_readpool.pl' unless $working;
     $working = &test_path($prog, $call, $out, @trash) unless $working;
 
@@ -129,43 +126,70 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
     }
 
     print "\tTesting $prog\n";
-    # Test if the program is available through the path
-    my $print = "\t\t$prog (found in the path)";
-    if (`which $prog`) {
-	print "\t\t$prog is found in the path\n";
-	my $cmd = $prog;
-
-	# Check if it is working correctly
-	# Command, arguments, output, text, to be removed
+    if ($edena) {
+	my $cmd = $edena;
+	my $print = "\t\t$prog (found in the GRAbB.pl source)";
 	system("$cmd $call1");
-	if ($? == 0 && -s $out) {
-	    print "$print step 1 is working correctly\n";
-	    # Save the command that works
-	    system("$cmd $call2");
-	    if ($? == 0 && -s $out2) {
-		print "$print step 2 is working correctly\n";
+        if ($? == 0 && -s $out) {
+            print "$print step 1 is working correctly\n";
+            # Save the command that works
+            system("$cmd $call2");
+            if ($? == 0 && -s $out2) {
+                print "$print step 2 is working correctly\n";
+                # Save the command that works
+                $working = $cmd;
+            } else {
+                print "$print step 2 is not working correctly\n";
+            }
+            for (glob("out*")) {
+                unlink $_ if -e $_;
+            }
+        } else {
+            print "$print step 1 is not working correctly\n";
+        }
+        # Remove possible output files
+        for (@trash) {
+            unlink $_ if -e $_;
+        }
+    }
+    unless ($working) {
+	# Test if the program is available through the path
+	my $print = "\t\t$prog (found in the path)";
+	if (`which $prog`) {
+	    print "\t\t$prog is found in the path\n";
+	    my $cmd = $prog;
+
+	    # Check if it is working correctly
+	    # Command, arguments, output, text, to be removed
+	    system("$cmd $call1");
+	    if ($? == 0 && -s $out) {
+		print "$print step 1 is working correctly\n";
 		# Save the command that works
-		$working = $cmd;
+		system("$cmd $call2");
+		if ($? == 0 && -s $out2) {
+		    print "$print step 2 is working correctly\n";
+		    # Save the command that works
+		    $working = $cmd;
+		} else {
+		    print "$print step 2 is not working correctly\n";
+		}
+		for (glob("out*")) {
+		    unlink $_ if -e $_;
+		}
 	    } else {
-		print "$print step 2 is not working correctly\n";
+		print "$print step 1 is not working correctly\n";
 	    }
-	    for (glob("out*")) {
+	    # Remove possible output files
+	    for (@trash) {
 		unlink $_ if -e $_;
 	    }
 	} else {
-	    print "$print step 1 is not working correctly\n";
+	    print "\t\t$prog is not found in the path\n";
 	}
-	# Remove possible output files
-	for (@trash) {
-	    unlink $_ if -e $_;
-	}
-    } else {
-	print "\t\t$prog is not found in the path\n";
     }
 
     unless ($working) {    
-	
-	$print = "\t\t$prog (found in the package)";
+	my $print = "\t\t$prog (found in the package)";
 	if (-x $path) {
 	    print "\t\t$prog is found in the package\n";
 	    my $cmd = $ENV{"PWD"} . '/' . $path;
@@ -223,12 +247,11 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
     }
 
     print "\tTesting $prog\n";
-    # Test if the program is available through the path
-    my $print = "\t\t$prog (found in the path)";
-    if (`which $prog`) {
-	print "\t\t$prog is found in the path\n";
-	my $cmd = $prog;
-
+    if ($velveth) {
+	# Test if the program is available through the path
+	my $print = "\t\t$prog (found in the GRAbB.pl source)";
+	my $cmd = $velveth;
+	    
 	# Check if it is working correctly
 	system("$cmd $call");
 	if ($? == 0 && -s $out) {
@@ -238,13 +261,30 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
 	} else {
 	    print "$print is not working correctly\n";
 	}
-    } else {
-	print "\t\t$prog is not found in the path\n";
     }
-
+    unless ($working) {
+	# Test if the program is available through the path
+	my $print = "\t\t$prog (found in the path)";
+	if (`which $prog`) {
+	    print "\t\t$prog is found in the path\n";
+	    my $cmd = $prog;
+	    
+	    # Check if it is working correctly
+	    system("$cmd $call");
+	    if ($? == 0 && -s $out) {
+		print "$print is working correctly\n";
+		# Save the command that works
+		$working = $cmd;
+	    } else {
+		print "$print is not working correctly\n";
+	    }
+	} else {
+	    print "\t\t$prog is not found in the path\n";
+	}
+    }
     unless ($working) {    
 	
-	$print = "\t\t$prog (found in the package)";
+	my $print = "\t\t$prog (found in the package)";
 	if (-x $path) {
 	    print "\t\t$prog is found in the package\n";
 	    my $cmd = $ENV{"PWD"} . '/' . $path;
@@ -282,12 +322,10 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
     }
 
     print "\tTesting $prog\n";
-    # Test if the program is available through the path
-    my $print = "\t\t$prog (found in the path)";
-    if (`which $prog`) {
-	print "\t\t$prog is found in the path\n";
-	my $cmd = $prog;
-
+    if ($velvetg) {
+	my $print = "\t\t$prog (found in the GRAbB.pl source)";
+	my $cmd = $velvetg;
+	    
 	# Check if it is working correctly
 	system("$cmd $call");
 	if ($? == 0 && -s $out) {
@@ -297,13 +335,30 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
 	} else {
 	    print "$print is not working correctly\n";
 	}
-    } else {
-	print "\t\t$prog is not found in the path\n";
     }
-
+    unless ($working) {
+	# Test if the program is available through the path
+	my $print = "\t\t$prog (found in the path)";
+	if (`which $prog`) {
+	    print "\t\t$prog is found in the path\n";
+	    my $cmd = $prog;
+	    
+	    # Check if it is working correctly
+	    system("$cmd $call");
+	    if ($? == 0 && -s $out) {
+		print "$print is working correctly\n";
+		# Save the command that works
+		$working = $cmd;
+	    } else {
+		print "$print is not working correctly\n";
+	    }
+	} else {
+	    print "\t\t$prog is not found in the path\n";
+	}
+    }
     unless ($working) {    
 	
-	$print = "\t\t$prog (found in the package)";
+	my $print = "\t\t$prog (found in the package)";
 	if (-x $path) {
 	    print "\t\t$prog is found in the package\n";
 	    my $cmd = $ENV{"PWD"} . '/' . $path;
@@ -353,15 +408,57 @@ my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate, $prinseq);
 	last;
     }
 
-    $working = &test_path($prog, $call, $out, @trash) if $normal;
+    $working = &test_cmd($exonerate, $call, $out, "\tExonerate command found in GRAbB.pl source code", @trash) if $exonerate;
 
-    print "\tConfiguration script failed to locate a working version of $prog\n" if ($normal && not $working);
+    $working = &test_path($prog, $call, $out, @trash) unless $working;
+
+    print "\tConfiguration script failed to locate a working version of $prog\n" unless $working;
 
     $exonerate = $working;
 }
 
+# Create configured copy of GRAbB.pl in bin directory
+my $summary = "\n" . "=" x 80 . "\n";
+if ($bait && $collect) {
+    my %pair;
+    $pair{'(my\s+\$bait_cmd\s+=\s+")[^"]+"'} = $bait;
+    $pair{'(my\s+\$collect_cmd\s+=\s+")[^"]+"'} = $collect;
+    $pair{'(my\s+\$edena_cmd\s+=\s+")[^"]+"'} = $edena if $edena;
+    $pair{'(my\s+\$velveth_cmd\s+=\s+")[^"]+"'} = $velveth if $velveth;
+    $pair{'(my\s+\$velvetg_cmd\s+=\s+")[^"]+"'} = $velvetg if $velvetg;
+    $pair{'(my\s+\$exonerate_cmd\s+=\s+")[^"]+"'} = $exonerate if $exonerate;
+    &setup_program('GRAbB.pl', 'GRAbB.pl', \%pair);
+    
+    $summary .= "\nGRAbB.pl configuration:\n";
+    
+    if ($edena && $velveth && $velvetg && $exonerate) {
+	$summary .= "\tGRAbB.pl is fully configured\n";
+    } else {
+	$summary .= "\tGRAbB.pl is minimally configured\n";
+    }
+    if ($edena) {
+	$summary .= "\t\tEdena assembler is setup correctly\n";
+    }
+    if ($velveth && $velvetg) {
+	$summary .= "\t\tVelvet assembler is setup correctly\n";
+    }
+    unless ($edena || ($velveth && $velvetg)) {
+	$summary .= "\t\tGRAbB.pl cannot run without an external assembler '--assembler external <extranal_skeleton.pl>'\n"
+    }
+    if ($exonerate) {
+	$summary .= "\t\tExonerate is setup correctly => exonerate mode can be used\n";
+    } else {
+	$summary .= "\t\tExonerate is not setup correctly => exonerate mode is disabled\n";
+    }
+} else {
+    $summary .= "\nCould not configure GRAbB.pl\n";
+    $summary .= "\tConfiguration script failed to locate a working read baiting program\n" unless $bait;
+    $summary .= "\tConfiguration script failed to locate a working read collecting program\n" unless $collect;
+}
+
+
 # For PRINSEQ-lite the following modules are needed
-if ($help) {
+{# Check helper scripts
     print "Configuring helper_programs\n";
     # Test each module that is needed for PRINSEQ-lite
     # Collect the missing modules at the end
@@ -393,32 +490,134 @@ if ($help) {
 	print join("\n\t\t", @missing);
 	print "\n\tUse cpan or cpanm to install these modules (http://www.cpan.org/modules/INSTALL.html)\n";
     } else {
-	# Configure helper scripts
 	print "\tAll the Perl modules are installed that are needed to run PRINSEQ-lite.\n";
-	my $working;
-	my $cmd = "prinseq-lite.pl";
-
-	if (`which $cmd`) {
-	    $working = $cmd;
-	    print "\t\tprinseq-lite found in the path\n";
-	} else {
-	    print "$cmd is not in the path\n";
-	    $cmd = $ENV{"PWD"} . '/' . '3rd_party_programs/prinseq-lite-0.20.4/prinseq-lite.pl';
-	    if (-x $cmd) {
-		print "\t\tprinseq-lite executable is found in the package\n";
-		$working = $cmd;
-	    } else {
-		print "\t\tprinseq-lite executable is not found in the package\n";
-		$working = "perl $cmd" if -s $cmd;
-		print "\t\tprinseq-lite source is found in the package\n" if $working;
-	    }
-	}
-	$prinseq = $working;
-	print "\t\tprinseq-lite source is not found in the package\n" unless $working;
+	# Configure helper scripts
+	$summary .= "\nhelper_program configuration\n";
+	&configure_helper('helper_programs/single2pairs', 'single2pairs');
+	&configure_helper('helper_programs/uniform_length', 'uniform_length');
     }
 }
 
-# Add all the collected commands to the corresponding scripts
+print $summary;
+
+# Copy rest of the helper programs
+unless (-d "bin") {
+    mkdir "bin" || die "Could not create bin directory\n";
+    print "bin directory is created to store the configured executables\n"
+}
+my @rest = qw/fasta_shift  fastq2fasta  get_overlaps  interleaved2pairs  merge_contigs  pairwise_alignment_score  rename_fastq  reverse_complement/;
+for (@rest) {
+    my $old = "helper_programs/$_";
+    my $new = "bin/$_";
+    system("cp $old $new");
+    chmod 0755, $new;
+}
+
+#==========Subroutines===============================================================
+sub configure_helper {
+    # Configure helper scripts
+    my ($file, $name) = @_;
+    my $prinseq;
+    open(my $helper, '<', $file) || die "Could not open $file. Make sure yoe run configure_GRAbB.pl in the base directory of the package.\n";
+    for (<$helper>) {
+	if (/my\s+\$prinseq_cmd\s+=\s+"([^"]+)"/) {
+	    $prinseq = $1;
+	}
+    }
+    close $helper;
+
+    my $working;
+   
+    if ($prinseq) {
+	my $cmd = $prinseq;
+	my $print = "\tprinseq-lite.pl command found in $file source";
+	system("$cmd >/dev/null 2>/dev/null");
+	if ($? == 0) {
+	    print "$print is working correctly\n";
+	    # Save the command that works
+	    $working = $cmd;
+	} else {
+	    print "$print is not working correctly\n";
+	}
+    }
+
+    unless ($working) {
+	my $cmd = "prinseq-lite.pl";
+	my $print = "\t\tprinseq-lite.pl found in the path";
+	if (`which $cmd`) {
+	    print "\t\tprinseq-lite found in the path\n";
+	    system("$cmd >/dev/null 2>/dev/null");
+	    if ($? == 0) {
+		print "$print is working correctly\n";
+		$working = $cmd;
+	    } else {
+		print "$print is not working correctly\n";
+	    }
+	} else {
+	    print "$cmd is not in the path\n";
+	    my $print = "prinseq-lite executable";
+	    $cmd = $ENV{"PWD"} . '/' . '3rd_party_programs/prinseq-lite-0.20.4/prinseq-lite.pl';
+	    if (-x $cmd) {
+		print "\t\tprinseq-lite executable is found in the package\n";
+		system("$cmd >/dev/null 2>/dev/null");
+		if ($? == 0) {
+		    print "$print is working correctly\n";
+		    $working = $cmd;
+		} else {
+		    print "$print is not working correctly\n";
+		}
+	    } else {
+		print "\t\tprinseq-lite executable is not found in the package\n";
+		if (-s $cmd) {
+		    $cmd = "perl $cmd";
+		    print "\t\tprinseq-lite source is found in the package\n";
+		    $print = "prinseq-lite source";
+		    system("$cmd >/dev/null 2>/dev/null");
+		    if ($? == 0) {
+			print "$print is working correctly\n";
+			$working = $cmd;
+		    } else {
+			print "$print is not working correctly\n";
+		    }
+		} else {
+		    print "\t\tprinseq-lite source is not found in the package\n";
+		}
+	    }
+	}
+    }
+    $prinseq = $working;
+    if ($prinseq) {
+	my %pair;
+	$pair{'(my\s+\$prinseq_cmd\s+=\s+")[^"]+"'} = $prinseq;
+	&setup_program($file, $name, \%pair)
+    }
+}
+
+sub setup_program {
+    my ($read, $name, $replace) = @_;
+    # Put the final program to bin directory inside GRAbB package
+    my $new = "bin/$name";
+    unless (-d "bin") {
+	mkdir "bin" || die "Could not create bin directory\n";
+	print "bin directory is created to store the configured executables\n"
+    }
+    open(my $in, '<', $read) || die $!;
+    open(my $out, '>', $new) || die $!;
+    for (<$in>) {
+	for my $pattern (keys %{$replace}) {
+	    if (/$pattern/) {
+		s/$pattern/$1$replace->{$pattern}\"/;
+	    }
+	}
+	print {$out} $_;
+    }
+    close $in;
+    close $out;
+    print "Configured $name can be found in the bin folder ($new)\n";
+    chmod 0755, $new || die $!;
+    print "Configured $name can be found in the bin folder ($new) is made executable\n";
+    $summary .= "\t$name is configured\n" unless $name eq 'GRAbB.pl';
+}
 
 sub test_path {
     my ($prog, $args, $out, @trash) = @_;
