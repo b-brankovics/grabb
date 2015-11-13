@@ -145,7 +145,7 @@ which is less efficient, but uses only perl and standard Unix commands
 
 #### Seqtk
 
-1. Download [Seqtk]()https://github.com/lh3/seqtk.git from github and uncompress it or `git clone https://github.com/lh3/seqtk.git`
+1. Download [Seqtk](https://github.com/lh3/seqtk.git) from github and uncompress it or `git clone https://github.com/lh3/seqtk.git`
 2. Change to the directory
 3. Type `make` on the command line (zlib needs to be installed, see 1.3) for instructions)
 4. Copy/move or smylink '__seqtk__' into somewhere in the path or add the folder to the path (The files in the bin folder)
@@ -155,7 +155,21 @@ which is less efficient, but uses only perl and standard Unix commands
 
 #### exonerate
 
-1. `sudo apt-get install exonerate`
+For Ubuntu run `sudo apt-get install exonerate`
+
+Else:
+
+1. Download [exonerate](https://github.com/nathanweeks/exonerate)
+   from github and uncompress it or `git clone
+   https://github.com/nathanweeks/exonerate`
+2. Change to the directory
+3. Type the following codes
+
+        git checkout v2.4.0
+	    ./configure [YOUR_CONFIGURE_OPTIONS]
+	    make
+	    make check
+	    make install
 
 #### PRINSEQ lite
 

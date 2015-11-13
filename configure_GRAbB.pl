@@ -401,7 +401,7 @@ close $source;
     my $prog = 'exonerate';
     my $out = 'out';
     my @trash = ('out', 'err');
-    my $path = '3rd_party_programs/exonerate-2.2.0/bin/exonerate';
+    my $path = '3rd_party_programs/exonerate/src/program/exonerate';
 
     my $working;
 
