@@ -60,7 +60,8 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 
 #### Installation
 
-1. Install prerequisites
+1. Install prerequisites (If this step is skipped, then
+   **configure_GRAbB.pl** tries to use prerequisites included in the package)
     - Minimal set:
         + Baiting program: **mirabait** _(recommended)_ OR
 		kmer\_bait\.pl (no installation needed)
