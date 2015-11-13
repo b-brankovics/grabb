@@ -94,6 +94,11 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 	  In this case exonerate mode cannot be used. (*On systems with
       this problem it is recommended to use the __docker package__*)
 
+2. To test installation run the following (assembler has to be
+   adjusted unless GRAbB.pl is configured without **Edena**)
+
+        bin/GRAbB.pl --ref for_testing/assembly.fas --reads for_testing/read* --folder test --prefix test
+
 OR
 
 Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
@@ -104,11 +109,6 @@ Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
         git clone https://github.com/b-brankovics/grabb
         cd grabb/docker
         docker build -t localhost:5000/$USER/grabb .
-
-2. To test installation run the following (assembler has to be
-   adjusted unless GRAbB.pl is configured without **Edena**)
-
-        bin/GRAbB.pl --ref for_testing/assembly.fas --reads for_testing/read* --folder test --prefix test
 
 #### Documentation
 
