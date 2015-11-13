@@ -73,6 +73,7 @@ if ($fastq) {
 	    $read .= $_;
 	}
     }
+    print $read if $ids{$read_id};
 } else {
     for (<$read_handle>) {
 	# save read id
