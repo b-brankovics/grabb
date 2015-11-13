@@ -87,7 +87,13 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 	running configure_GRAbB.pl
 
     Configured GRAbB.pl can be found in bin directory
-	
+
+    **Bug:** On some systems exonerate runs extremely slow. Configure
+      can get stuck at 'Testing exonerate' block, then issue **Ctrl +
+      c**.
+	  In this case exonerate mode cannot be used. (*On systems with
+      this problem it is recommended to use the __docker package__*)
+
 OR
 
 Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
@@ -98,6 +104,11 @@ Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
         git clone https://github.com/b-brankovics/grabb
         cd grabb/docker
         docker build -t localhost:5000/$USER/grabb .
+
+2. To test installation run the following (assembler has to be
+   adjusted unless GRAbB.pl is configured without **Edena**)
+
+        bin/GRAbB.pl --ref for_testing/assembly.fas --reads for_testing/read* --folder test --prefix test
 
 #### Documentation
 
@@ -163,9 +174,10 @@ Else:
    from github and uncompress it or `git clone
    https://github.com/nathanweeks/exonerate`
 2. Change to the directory
-3. Type the following codes
+3. Type the following codes (sometimes `./configure
+   --disable-dependency-tracking` works when `make` fails after
+   `./configure`)
 
-        git checkout v2.4.0
 	    ./configure [YOUR_CONFIGURE_OPTIONS]
 	    make
 	    make check
