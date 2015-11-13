@@ -395,6 +395,7 @@ close $source;
     my $prog = 'exonerate';
     my $out = 'out';
     my @trash = ('out', 'err');
+    my $path = '3rd_party_programs/exonerate-2.2.0/bin/exonerate';
 
     my $working;
 
@@ -411,6 +412,7 @@ close $source;
     $working = &test_cmd($exonerate, $call, $out, "\tExonerate command found in GRAbB.pl source code", @trash) if $exonerate;
 
     $working = &test_path($prog, $call, $out, @trash) unless $working;
+    $working = &test_exe($prog, $path, $call, $out, @trash) unless $working;
 
     print "\tConfiguration script failed to locate a working version of $prog\n" unless $working;
 
@@ -571,7 +573,7 @@ sub configure_helper {
 		if (-s $cmd) {
 		    $cmd = "perl $cmd";
 		    print "\t\tprinseq-lite source is found in the package\n";
-		    $print = "prinseq-lite source";
+		    $print = "\t\tprinseq-lite source";
 		    system("$cmd >/dev/null 2>/dev/null");
 		    if ($? == 0) {
 			print "$print is working correctly\n";
