@@ -179,7 +179,7 @@ Else:
 3. Type the following commands (The following packages have to be
    installed on the system before running `./configure`: **gcc**, **make** and **glib2**)
 
-	    ./configure [YOUR_CONFIGURE_OPTIONS]
+	    ./configure
 	    make
 	    make check
 	    make install
