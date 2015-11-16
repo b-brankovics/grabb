@@ -88,11 +88,13 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 
     Configured GRAbB.pl can be found in bin directory
 
-    **Bug:** On some systems exonerate runs extremely slow. Configure
-      can get stuck at 'Testing exonerate' block, then issue **Ctrl +
-      c**.
-	  In this case exonerate mode cannot be used. (*On systems with
-      this problem it is recommended to use the __docker package__*)
+    **Bug:** On some systems the exonerate binary included in the
+      package runs extremely slow. Configure can get stuck at 'Testing
+      exonerate'
+	  block, then issue **Ctrl + c**.
+	  On these systems exonerate has to be installed or build from
+      source code (See [Prerequisites::exonerate](#exonerate), before
+      rerunning the configuration script.
 
 2. To test installation run the following (assembler has to be
    adjusted unless GRAbB.pl is configured without **Edena**)
@@ -170,13 +172,12 @@ For Ubuntu run `sudo apt-get install exonerate`
 
 Else:
 
-1. Download [exonerate](https://github.com/nathanweeks/exonerate)
-   from github and uncompress it or `git clone
-   https://github.com/nathanweeks/exonerate`
+1. Download [exonerate](https://www.ebi.ac.uk/sites/ebi.ac.uk/files/groups/flicek/exonerate/exonerate-2.2.0.tar.gz)
+   from the EBI website and uncompress it or use the version included
+   in the GRAbB package (3rd\_party\_programs)
 2. Change to the directory
-3. Type the following codes (sometimes `./configure
-   --disable-dependency-tracking` works when `make` fails after
-   `./configure`)
+3. Type the following commands (The following packages have to be
+   installed on the system before running `./configure`: **gcc**, **make** and **glib2**)
 
 	    ./configure [YOUR_CONFIGURE_OPTIONS]
 	    make
