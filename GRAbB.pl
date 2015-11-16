@@ -2022,27 +2022,20 @@ sub test_completion{                                                            
     print {$$log_ref} $print; print $print;                                                                   # Test completion
                                                                                                               # Test completion
     if ($$min_len_ref) {                                                                                      # Test completion
+        # unless there is a value that is defined, there was nothing new in the assembly so stop the thread   # Test completion
+        unless (grep{$_} values %screened) {                                                                  # Test completion
+            $print = strftime('%H:%M:%S',localtime);                                                          # Test completion
+            $print = "\t$$tab\tAssembly contains no contigs that are of sufficient length\n";                 # Test completion
+            print {$$log_ref} $print; print $print;                                                           # Test completion
+            return "No assembly";                                                                             # Test completion
+        }                                                                                                     # Test completion
+                                                                                                              # Test completion
         my $statistics = &assembly_statistics(\%screened, $tab);                                              # Test completion
         $print = strftime('%H:%M:%S',localtime);                                                              # Test completion
         $print = "\t$$tab\tAssembly statistics after the removal of short contigs\n";                         # Test completion
         $print .= $statistics;                                                                                # Test completion
         print {$$log_ref} $print; print $print;                                                               # Test completion
                                                                                                               # Test completion
-                                                                                                              # Test completion
-        # unless there is a value that is defined, there was nothing new in the assembly so stop the thread   # Test completion: Same bait
-        unless (grep{$_} values %screened) {                                                                  # Test completion: Same bait
-            $print = strftime('%H:%M:%S',localtime);                                                          # Test completion: Same bait
-            $print = "\t$$tab\tAssembly contains no contigs that are of sufficient length\n";                 # Test completion: Same bait
-            print {$$log_ref} $print; print $print;                                                           # Test completion: Same bait
-            return "Same bait";                                                                               # Test completion: Same bait
-        }                                                                                                     # Test completion: Same bait
-    }                                                                                                         # Test completion: Same bait
-                                                                                                              # Test completion: Same bait
-    # unless there is a value that is defined, there was nothing new in the assembly so stop the thread       # Test completion: Same bait
-    unless (grep{$_} values %new_fasta) {                                                                     # Test completion: Same bait
-        $print = strftime('%H:%M:%S',localtime) . "\t$$tab\tAssembly is the same as the bait\n";              # Test completion: Same bait
-        print {$$log_ref} $print; print $print;                                                               # Test completion: Same bait
-        return "Same bait";                                                                                   # Test completion: Same bait
     }                                                                                                         # Test completion
                                                                                                               # Test completion
     # 3) Done if homologous region is completely matched using exonerate or there is no improvement           # Test completion: Exonerate
@@ -2106,6 +2099,13 @@ sub test_completion{                                                            
             print {$$log_ref} $print; print $print;                                                           # Test completion: Length (N50)
             return "Reached: $length_spec";                                                                   # Test completion: Length (N50)
         }                                                                                                     # Test completion: Length
+    }                                                                                                         # Test completion
+                                                                                                              # Test completion
+    # unless there is a value that is defined, there was nothing new in the assembly so stop the thread       # Test completion: Same bait
+    unless (grep{$_} values %new_fasta) {                                                                     # Test completion: Same bait
+        $print = strftime('%H:%M:%S',localtime) . "\t$$tab\tAssembly is the same as the bait\n";              # Test completion: Same bait
+        print {$$log_ref} $print; print $print;                                                               # Test completion: Same bait
+        return "Same bait";                                                                                   # Test completion: Same bait
     }                                                                                                         # Test completion
                                                                                                               # Test completion
     # No criteria was met so copy the assembly file to be the new bait file                                   # Test completion: continue
