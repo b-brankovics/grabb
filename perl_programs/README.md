@@ -21,7 +21,7 @@ not call any programs that need to be separately installed.
 
 - This can be done using the **configure_GRAbB.pl** script (this adds
   either these programs or the recommended programs for these steps if
-  they are found by the script and are working as expected) or manual:
+  they are found by the script and are working as expected) or manually:
 
 1. Make the files executable
 
