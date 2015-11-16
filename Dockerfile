@@ -2,19 +2,17 @@ FROM ubuntu:14.04
 
 # Create user and add to sudoers
 #  password: grabb
-RUN useradd --create-home --shell /bin/bash grabb
-RUN echo `echo "grabb\ngrabb\n" | passwd grabb`
-RUN usermod -a -G sudo grabb
+RUN useradd --create-home --shell /bin/bash grabb && echo `echo "grabb\ngrabb\n" | passwd grabb` &&  usermod -a -G sudo grabb
 
 # Create bin directory for the user
 RUN mkdir /home/grabb/bin
 
 # Install couple of prerequisites
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y exonerate
-RUN apt-get install -y velvet
-RUN apt-get install -y seqtk
+RUN apt-get update && \
+     apt-get install -y exonerate \
+     velvet \
+     seqtk
 
 # Copy executable files from local folder to the bin folder
 COPY docker/edena /home/grabb/bin/
@@ -42,12 +40,12 @@ COPY Tutorial.md /home/grabb/
 COPY LICENSE /home/grabb/
 
 # Copy the helper script for extra assemblers
-COPY external_scaffold.pl /home/grabb/
+COPY external_skeleton.pl /home/grabb/
 
 # Change the owner of the files
-RUN chmod +x /home/grabb/bin/*
-RUN chown grabb /home/grabb/bin/*
-RUN chown grabb /home/grabb/*
+RUN chmod +x /home/grabb/bin/* && \
+    chown grabb /home/grabb/bin/* && \
+    chown grabb /home/grabb/*
 
 # Make the home directory the working directory
 WORKDIR /home/grabb
