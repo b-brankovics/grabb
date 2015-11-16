@@ -103,8 +103,8 @@ OR
 
 Use Docker (See __[Docker.md](Docker.md)__ for more detailed instructions)
 
-* `docker pull brankovics/grabb`
-* Create local docker repository
+* Either download the docker repository via docker interface `docker pull brankovics/grabb`
+* Or create a local docker image:
 
         git clone https://github.com/b-brankovics/grabb
         cd grabb/docker
