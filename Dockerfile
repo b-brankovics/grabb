@@ -1,27 +1,9 @@
-FROM ubuntu:14.04
-
-# Create user and add to sudoers
-#  password: grabb
-RUN useradd --create-home --shell /bin/bash grabb && echo `echo "grabb\ngrabb\n" | passwd grabb` &&  usermod -a -G sudo grabb
-
-# Create bin directory for the user
-RUN mkdir /home/grabb/bin
-
-# Install couple of prerequisites
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
-RUN apt-get update && \
-     apt-get install -y exonerate
+FROM brankovics/prerequisites
 
 # Copy executable files from local folder to the bin folder
-COPY docker/edena /home/grabb/bin/
 COPY GRAbB.pl /home/grabb/bin/
-COPY docker/mirabait /home/grabb/bin/
-COPY docker/seqtk /home/grabb/bin/
-COPY docker/velveth /home/grabb/bin/
-COPY docker/velvetg /home/grabb/bin/
 
 # Copy helper programs
-COPY docker/prinseq-lite.pl /home/grabb/bin/
 COPY helper_programs/fasta_shift /home/grabb/bin/
 COPY helper_programs/fastq2fasta /home/grabb/bin/
 COPY helper_programs/get_overlaps /home/grabb/bin/
