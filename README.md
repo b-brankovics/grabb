@@ -63,7 +63,12 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 **Asciinema casts:**
 - Ubuntu:
 [![asciicast](https://asciinema.org/a/4hxyurupv8xmt3mqzbffl3e8q.png)](https://asciinema.org/a/4hxyurupv8xmt3mqzbffl3e8q)
+- Centos:
+[![asciicast](https://asciinema.org/a/bwqddtrqsdsdbldnvt9d27gbf.png)](https://asciinema.org/a/bwqddtrqsdsdbldnvt9d27gbf)
+- Fedora:
+[![asciicast](https://asciinema.org/a/8m9b4w70gw9mo6mfda36rg024.png)](https://asciinema.org/a/8m9b4w70gw9mo6mfda36rg024)
 
+**Steps:**
 
 1. Install prerequisites (If this step is skipped, then
    **configure_GRAbB.pl** tries to use prerequisites included in the package)
