@@ -60,6 +60,11 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 
 #### Installation
 
+**Asciinema casts:**
+- Ubuntu:
+[![asciicast](https://asciinema.org/a/4hxyurupv8xmt3mqzbffl3e8q.png)](https://asciinema.org/a/4hxyurupv8xmt3mqzbffl3e8q)
+
+
 1. Install prerequisites (If this step is skipped, then
    **configure_GRAbB.pl** tries to use prerequisites included in the package)
     - Minimal set:
