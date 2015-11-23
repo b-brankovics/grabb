@@ -1443,7 +1443,7 @@ sub find_reads{                                                                 
         if (not -e "$mira_temp\_$i\.txt" || -z "$mira_temp\_$i\.txt") {                                       # Find reads
             # Run mirabait                                                                                    # Find reads
             #   mirabait -t txt bait_file read_file output_prefix                                             # Find reads
-            system("$bait_cmd -t txt $$bait_ref $read $mira_temp\_$i 2>&1 >>mirabait.log");                   # Find reads
+            system("$bait_cmd -t txt $$bait_ref $read $mira_temp\_$i >>mirabait.log 2>&1");                   # Find reads
 	    # Test if baiting program is fuctioning correctly                                                 # Find reads
 	    unless ($? == 0) {                                                                                # Find reads
 		# bait has crashed                                                                            # Find reads
@@ -1709,12 +1709,20 @@ sub edena_assemble{                                                             
     }                                                                                                                 # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
     # Command line command for graph/hash generation                                                                  # Assemble (Edena)
-    `$edena_cmd $pairing @$readpool_ref @arg1 -prefix edena 2>&1 >>edena_graph.log`;                                  # Assemble (Edena)
+    `$edena_cmd $pairing @$readpool_ref @arg1 -prefix edena >>edena_graph.log 2>&1`;                                  # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
     # If there is no overlap file then the assembly has failed, so return                                             # Assemble (Edena)
     unless (-e "edena.ovl") {                                                                                         # Assemble (Edena)
         $print = "Error: Assembly failed, overlap file (edena.ovl) is missing\n";                                     # Assemble (Edena)
+	if (-s 'edena_graph.log') {                                                                                   # Assemble (Edena)
+	    $print .= "Output from the assembler is the following:\n";                                                # Assemble (Edena)
+	    open(my $error, '<', 'edena_graph.log');                                                                  # Assemble (Edena)
+	    for (<$error>) {$print .= "\t$_";}                                                                        # Assemble (Edena)
+	    close $error;                                                                                             # Assemble (Edena)
+	    $print .= "*" x 80;                                                                                       # Assemble (Edena)
+	    $print .= "\n";                                                                                           # Assemble (Edena)
+	}                                                                                                             # Assemble (Edena)
         print {$$log_ref} $print; print $print;                                                                       # Assemble (Edena)
         return;                                                                                                       # Assemble (Edena)
     }                                                                                                                 # Assemble (Edena)
@@ -1730,11 +1738,19 @@ sub edena_assemble{                                                             
     }                                                                                                                 # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
     # Command line command for assembly                                                                               # Assemble (Edena)
-    `$edena_cmd -e edena.ovl @arg2 -prefix edena 2>&1 >>edena_asmbl.log`;                                             # Assemble (Edena)
+    `$edena_cmd -e edena.ovl @arg2 -prefix edena >>edena_asmbl.log 2>&1`;                                             # Assemble (Edena)
                                                                                                                       # Assemble (Edena)
     # Print if there is no assembly file generated                                                                    # Assemble (Edena)
     unless (-e "edena_contigs.fasta") {                                                                               # Assemble (Edena)
         $print = "Error: Assembly failed, contig file (edena_contigs.fasta) is missing\n";                            # Assemble (Edena)
+	if (-s 'edena_asmbl.log') {                                                                                   # Assemble (Edena)
+	    $print .= "Output from the assembler is the following:\n";                                                # Assemble (Edena)
+	    open(my $error, '<', 'edena_asmbl.log');                                                                  # Assemble (Edena)
+	    for (<$error>) {$print .= "\t$_";}                                                                        # Assemble (Edena)
+	    close $error;                                                                                             # Assemble (Edena)
+	    $print .= "*" x 80;                                                                                       # Assemble (Edena)
+	    $print .= "\n";                                                                                           # Assemble (Edena)
+	}                                                                                                             # Assemble (Edena)
         print {$$log_ref} $print; print $print;                                                                       # Assemble (Edena)
         return;                                                                                                       # Assemble (Edena)
     } else {                                                                                                          # Assemble (Edena)
