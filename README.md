@@ -873,6 +873,10 @@ assembly if **external** is selected as assembler.
     # If there were no extra arguments passed for the assembler at the invocation of GRAbB
     #   then the value passed to this script is "-" ($param1[0] and/or $param2[0])
 
+    # For mapping-assemblers a reference is needed
+    #my $ref = &get_reference();  # For reference based assembly uncomment this line
+
+
     # The program to be used for assembly
     my $assmebler = ""; # ADD
     
@@ -885,7 +889,24 @@ assembly if **external** is selected as assembler.
     # Copy the result file to the expected position
     `perl -ne 'if (/^>/) {print} else {tr/acgtwmrskybvdh/ACGTWMRSKYBVDH/; print}' $result >$outfile`;
 
+    sub get_reference {
+        # This subroutine finds the reference file for the current thread
+        my $ref;
+        my $pwd = $ENV{"PWD"};
+        $pwd =~ /(thread_\d+)$/;
+        my $thread = $1;
+        $ref = "../../$thread/bait.fas";
+        return $ref;
+    }
+
+
 The lines marked with `# ADD` have to be adjusted:
+
+* If the user wishes to add a mapping-assembler then the following
+  command has to be uncommented. Afterwards the reference file will be
+  referred to by `$ref`.
+
+        #my $ref = &get_reference();  # For reference based assembly uncomment this line
 
 * The absolute path or the command for the assembler
 
