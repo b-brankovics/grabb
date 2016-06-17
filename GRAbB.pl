@@ -600,6 +600,16 @@ system("rm", "-r", grep{$_ !~ /$prefix.*?\.((txt)|(fas)|(log))/} glob("*")) if $
 # Print separator to mark the end of the run                                                                  # Final steps
 $print = "=" x 90 . "\n" . "X" x 90 . "\n";                                                                   # Final steps
 print {$log} $print; print $print;                                                                            # Final steps
+                                                                                                              # Final steps
+# Print citation information                                                                                  # Final steps
+$print = "\n\nIf you use GRAbB.pl or any of the helper programs in your publications, please," .              # Final steps
+         "site the paper describing the program.\n\n" .                                                       # Final steps
+	 "Brankovics B, Zhang H, van Diepeningen AD, van der Lee TAJ, Waalwijk C\n" .                         # Final steps
+	 "G Sybren de Hoog. (2016) GRAbB: Selective Assembly of Genomic Regions,\n" .                         # Final steps
+	 "a New Niche for Genomic Research. PLoS Comput Biol 12(6):e1004753.\n" .                             # Final steps
+         "doi: 10.1371/journal.pcbi.1004753\n";                                                               # Final steps
+print {$log} $print; print $print;                                                                            # Final steps
+
 ###############################################################################################################
 
 

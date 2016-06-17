@@ -942,9 +942,13 @@ assembler program. Using the proper argument:
 --------------------------------
 #### Citation
 
-If you use the `GRAbB.pl` or any of the helper programs, please, site the paper describing the program.
+If you use `GRAbB.pl` or any of the helper programs, please,
+site the [paper](http://journals.plos.org/ploscompbiol/article?id=10.1371%2Fjournal.pcbi.1004753) describing the program.
 
-_The paper is not yet published_
+Brankovics B, Zhang H, van Diepeningen AD, van der Lee TAJ, Waalwijk
+C, et al. (2016) **GRAbB: Selective Assembly of Genomic Regions, a New
+Niche for Genomic Research**. PLoS Comput Biol 12(6):
+e1004753. doi: 10.1371/journal.pcbi.1004753
 
 --------------------------------
 #### Contact
