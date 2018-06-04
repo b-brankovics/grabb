@@ -51,6 +51,7 @@ GRAbB (Genome Region Assembly by Baiting) is program designed to assemble select
 6. [Using custom assembler program](#using-custom-assembler-program)
     1. [Adding to the source code of GRAbB](#adding-to-the-source-code-of-grabb)
     2. [Using external_skeleton](#using-external_skeleton)
+	3. [Using SPAdes as assembler](#using-spades-as-assembler)
 7. [Citation](#citation)
 8. [Contact](#contact)
 
@@ -947,7 +948,7 @@ is selected as assembler (`--assembler external external_SPAdes.pl`).
 
 The script is configured to use SPAdes by calling
 `spades.py`. Therefore, if you have the `spades.py` command in your
-_PATH_, then you do not have to modify the script it and use it
+_PATH_, then you do not have to modify the script and use it
 directly by specifying it as the assembler script by including the
 following in the `GRAbB.pl` invocation:
 
@@ -966,18 +967,21 @@ use `--arg1` option. For example:
 --arg1 '-k 31,61,91 --only-assembler --cov-cutoff 200'
 ```
 
-If `spades.py` command is not in the _PATH_, then you can either add
-it to the _PATH_ or modify the `external_SPAdes.pl` script.
+**If `spades.py` command is not in the _PATH_**, then you can
+- either add it to the _PATH_
+- or modify the `external_SPAdes.pl` script.
 
-By modifying line 22 of `external_SPAdes.pl`, from
-```
-my $assmebler = "spades.py"; # ADD executable here! 
-```
-to specify where your SPAdes executable is located. If it is at
-`~/SPAdes-3.10.0/bin/spades.py`, then line 22 should look like this:
-```
-my $assmebler = "~/SPAdes-3.10.0/bin/spades.py"; # ADD executable here! 
-```
+1. Modify line 22 of `external_SPAdes.pl`, from
+    ```
+    my $assmebler = "spades.py"; # ADD executable here! 
+    ```
+    to specify where your SPAdes executable is located. If it is at
+    `~/SPAdes-3.10.0/bin/spades.py`, then line 22 should look like this:
+    ```
+    my $assmebler = "~/SPAdes-3.10.0/bin/spades.py"; # ADD executable here! 
+    ```
+2. Save the modified file
+3. And use it as described above.
 
 
 
