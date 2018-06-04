@@ -1000,4 +1000,8 @@ e1004753. doi: 10.1371/journal.pcbi.1004753
 --------------------------------
 #### Contact
 
-Balázs Brankovics <b.brankovics@westerdijkinstitute.nl>
+Balázs Brankovics <balazs.brankovics@wur.nl>
+- [ORCID](http://orcid.org/0000-0003-0536-7787)
+- [LinkedIn](https://www.linkedin.com/in/balazs-brankovics/)
+- [ResearchGate](https://www.researchgate.net/profile/Balazs_Brankovics)
+- Contact details at [Wageningen Plant Research](https://www.wur.nl/en/Persons/Balazs-B-Balazs-Brankovics.htm)
