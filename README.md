@@ -939,6 +939,49 @@ assembler program. Using the proper argument:
     --assembler external <external.pl>
 
 
+#### Using SPAdes as assembler
+
+[external_SPAdes.pl](external_SPAdes.pl) is a skeleton script that
+maybe downloaded (and modified)  to run the assembly if **external**
+is selected as assembler (`--assembler external external_SPAdes.pl`).
+
+The script is configured to use SPAdes by calling
+`spades.py`. Therefore, if you have the `spades.py` command in your
+_PATH_, then you do not have to modify the script it and use it
+directly by specifying it as the assembler script by including the
+following in the `GRAbB.pl` invocation:
+
+```
+--assembler external external_SPAdes.pl
+```
+
+Where `external_SPAdes.pl` stands for the relative path (you can also
+use the absolute path) of the script. In the above example
+`external_SPAdes.pl` has to be in the current working directory.
+
+To specify arguments for the SPAdes assembly within the GRAbB.pl run
+use `--arg1` option. For example:
+
+```
+--arg1 '-k 31,61,91 --only-assembler --cov-cutoff 200'
+```
+
+If `spades.py` command is not in the _PATH_, then you can either add
+it to the _PATH_ or modify the `external_SPAdes.pl` script.
+
+By modifying line 22 of `external_SPAdes.pl`, from
+```
+my $assmebler = "spades.py"; # ADD executable here! 
+```
+to specify where your SPAdes executable is located. If it is at
+`~/SPAdes-3.10.0/bin/spades.py`, then line 22 should look like this:
+```
+my $assmebler = "~/SPAdes-3.10.0/bin/spades.py"; # ADD executable here! 
+```
+
+
+
+
 --------------------------------
 #### Citation
 
