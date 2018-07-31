@@ -1,14 +1,13 @@
 #!/usr/bin/perl -w
 
 use strict;
-use Data::Dumper;
+#use Data::Dumper;
 
 
 # Store info on 
 my %map;
 my %gfa;
 
-my @segment;
 
 # Turn on for debugging
 my $debug = 0;
