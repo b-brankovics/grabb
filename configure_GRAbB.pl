@@ -9,14 +9,16 @@ print "This is a script to test the installation of prerequisites for the progra
 print "Configuring GRAbB package\n";
 
 # Variables that are true if given element is functional
-my ($bait, $collect, $edena, $velveth, $velvetg, $exonerate);
+my ($bait, $kmeraa, $collect, $edena, $velveth, $velvetg, $exonerate);
 
 # Read commands from GRAbB.pl
 open(my $source, '<', 'GRAbB.pl') || die "Could not open GRAbB.pl. Make sure GRAbB.pl is in the base directory of the package and run configure_GRAbB.pl there.\n";
 for(<$source>) {
     if (/my\s+\$bait_cmd\s+=\s+"([^"]+)"/) {
 	$bait = $1;
-    } elsif (/my\s+\$collect_cmd\s+=\s+"([^"]+)"/) {
+    } elsif (/my\s+\$bait_aa_cmd\s+=\s+"([^"]+)"/) {
+	$kmeraa = $1;
+    }elsif (/my\s+\$collect_cmd\s+=\s+"([^"]+)"/) {
 	$collect = $1;
     } elsif (/my\s+\$edena_cmd\s+=\s+"([^"]+)"/) {
 	$edena = $1;
@@ -65,6 +67,37 @@ close $source;
     $working = &test_perl($prog, $path, $call, $out, @trash) unless $working;
 
     $bait = $working;
+}
+
+{# Check amino acid based baiting program
+    my @input = ('for_testing/protein_ref.fas', 'for_testing/read1.fastq');
+    my $call ="-t txt @input temp 2>err >out";
+    my $prog = 'kmer_bait_aa.pl';
+    my $out = 'temp.txt';
+    my @trash = ('out', 'err', 'temp.txt', 'hashstat.bin');
+    my $path = "perl_programs/$prog";
+
+    my $working;
+
+    my $good_to_go = 0;
+    for (@input) {
+	$good_to_go++ if -s $_;
+    }
+
+    unless ($good_to_go == scalar @input) {
+	print "\tCould not locate test files for $prog\n\t\tMake sure that configure script is run inside the package folder\n";
+	last;
+    }
+
+    $working = &test_cmd($kmeraa, $call, $out, "\tRead baiting (using protein sequences) command found in GRAbB.pl source code", @trash) if $kmeraa;
+
+    $working = &test_path($prog, $call, $out, @trash) unless $working;
+
+    # Try the file in the package
+    $working =  &test_exe($prog, $path, $call, $out, @trash) unless $working;
+    $working = &test_perl($prog, $path, $call, $out, @trash) unless $working;
+
+    $kmeraa = $working;
 }
 
 {# Check collecting program
@@ -429,6 +462,7 @@ my $summary = "\n" . "=" x 80 . "\n";
 if ($bait && $collect) {
     my %pair;
     $pair{'(my\s+\$bait_cmd\s+=\s+")[^"]+"'} = $bait;
+    $pair{'(my\s+\$bait_aa_cmd\s+=\s+")[^"]+"'} = $kmeraa if $kmeraa;
     $pair{'(my\s+\$collect_cmd\s+=\s+")[^"]+"'} = $collect;
     $pair{'(my\s+\$edena_cmd\s+=\s+")[^"]+"'} = $edena if $edena;
     $pair{'(my\s+\$velveth_cmd\s+=\s+")[^"]+"'} = $velveth if $velveth;
@@ -442,6 +476,9 @@ if ($bait && $collect) {
 	$summary .= "\tGRAbB.pl is fully configured\n";
     } else {
 	$summary .= "\tGRAbB.pl is minimally configured\n";
+    }
+    if ($kmeraa) {
+	$summary .= "\t\tProtein based baiting is setup correctly => protein primed mode can be used\n";
     }
     if ($edena) {
 	$summary .= "\t\tEdena assembler is setup correctly\n";

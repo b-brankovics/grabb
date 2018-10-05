@@ -45,6 +45,12 @@ my $usage = "Usage:\n" .                                                        
 "\t--prefix <prefix_of_output>\n" .                                                                                   #
 "\t\t\t\tThe prefix for the output files\n" .                                                                         #
 "Additional options:\n" .                                                                                             #
+"\t--protein\n" .                                                                                                     #
+"\t\t\t\tActivates the protein primed mode: The first round of baiting steps will filter based\n" .                   #
+"\t\t\t\ton protein sequence(s) instead of nucleotide sequences. The reads are translated in\n" .                     #
+"\t\t\t\tsix frames and filtered based on 10-mer exact matching with the reference/bait\n" .                          #
+"\t\t\t\tsequences. Exenorate is also adjusted to protein2genome:bestfit model.\n" .                                  #
+"\t\t\t\tLater rounds are based on nucleotide based baiting as in standard mode.\n" .                                 #
 "\t--single\n" .                                                                                                      #
 "\t\t\t\tTreat reads as unpaired reads even if two read files are specified\n" .                                      #
 "\t--bait <bait.fas>\n" .                                                                                             #
@@ -109,6 +115,7 @@ my $print;                                                                      
 # Constant variables                                                                               #
 #	Only declared at the start and never changed afterwards                                    #
 #	These variables have to be adjusted to the environment                                     #
+my $bait_aa_cmd = "kmer_bait_aa.pl";# The command to invoke the baiting program                    #	!!!!
 my $bait_cmd =    "mirabait";       # The command to invoke the baiting program                    #	!!!!
 my $collect_cmd = "seqtk subseq";   # The command to invoke the read collecting program            #	!!!!
 my $edena_cmd =	  "edena";          # The command to invoke the default assembler program          #	!!!!
@@ -121,6 +128,7 @@ my $exonerate_cmd = "exonerate";    # The command to invoke exonerate           
 #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #
 # The variables holding file names and / or depend on the command line invocation                  #
 my $ref;            # What is the reference file?                                                  #
+my $prot;           # Is the reference protein sequence instead of nucleotide sequence?            #
 my @reads;          # What are the reads files used as input?                                      #
 my $format;         # What is the file format of the read files? (fasta or fastq)                  #
 my $gzip;           # True if the reads are zipped using gzip                                      #
@@ -144,7 +152,7 @@ my @current_asmbls; # The list of assembly files to be modified if min_len is se
 #   This also creates the folder and all the files that are based on the input                     #
 #       (reference, bait, links to the read files)                                                 #
 &parse_input(\@ARGV, \$ref, \@reads, \$single, \$folder, \$prefix, \$type, \@parameters, \$p_log,  #
-             \$bait, \$extra_bait, \$clean, \$gzip, \$min_len, \$ext_assembler, \$format);         #
+             \$bait, \$extra_bait, \$clean, \$gzip, \$min_len, \$ext_assembler, \$format, \$prot); #
 #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #
 # Test if all the specified programs are usable                                                    #
 for ($bait_cmd, $collect_cmd) {                                                                    #
@@ -217,7 +225,12 @@ print {$log} $print; print $print;                                              
 # Print what belongs into the log                                                             #			/
 print {$log} $p_log; print $p_log;                                                            #			/
                                                                                               #			/
-&load_multi(\$log, \$ref, \$bait, \$type, \%multi, \%types);                                  #			/
+$print = "Protein primed mode is selected:\n";                                                #			/
+$print .= "\tIn the first round aa sequence will be used for baiting instead of nucleotide\n";  #			/
+# Print what belongs into the log                                                             #			/
+print {$log} $print; print $print;                                                            #			/
+                                                                                              #			/
+&load_multi(\$log, \$ref, \$bait, \$type, \%multi, \%types, $prot);                           #			/
                                                                                               #			/
 # Detect previous runs to be continued or start a new one                                     #			/
 {                                                                                             #			/
@@ -268,16 +281,25 @@ while (not $done) {                                                             
     # Update the relative paths of the files that are in the main directory                        #	/Round###
     #   The file names are fixed inside the subroutine                                             #	/Round###
     #   The prefix is passed then the reference file, bait file and old collection variables       #	/Round###
-    &update_path(\"../", \$ref, \$bait, \$old_collection);#/                                       #	/Round###
+    my $p = "../";
+    &update_path(\$p, \$ref, \$bait, \$old_collection);                                            #	/Round###
                                                                                                    #	/Round###
     # Check if all the necessary files are in order                                                #	/Round###
     #   Creates a folder called test_reads which will be destroyed if all goes well                #	/Round###
     #   The program dies if some error is found                                                    #	/Round###
-    &check_files(\$log, \$bait, \$ref, \@reads, \$single, \$gzip);                                 #	/Round###
                                                                                                    #	/Round###
     # Find reads and create read(pool) file(s) for the assembly                                    #	/Round###
     #   Stop if there are no new reads (Returns "No new reads")                                    #	/Round###
-    $done = &find_reads(\$log, \$bait, \@reads, \$old_collection, \$new_collection, \@readpools);  #	/Round###
+    my @proteins = (undef, undef);
+    if ($prot) {
+	$proteins[1] = $prot;
+	if ($round == 1) {
+	    $proteins[0] = $prot;
+	}
+    }
+    &check_files(\$log, \$bait, \$ref, \@reads, \$single, \$gzip, \@proteins);                                 #	/Round###
+    $done = &find_reads(\$log, \$bait, \@reads, \$old_collection, \$new_collection, \@readpools,   #	/Round###
+			undef, undef, $prot);                                                      #	/Round###
     # If done then break the loop and proceed to the finishing steps                               #	/Round###
     if ($done) {                                                                                   #	/Round###
         chdir "..";                                                                                #	/Round###			=>	/
@@ -342,7 +364,19 @@ while (not $done) {                                                             
             $iteration++;                                                                          #	/Round###/thread#
                                                                                                    #	/Round###/thread#
             # Check if all the necessary files are in order                                        #	/Round###/thread#
-            &check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, \undef);           #	/Round###/thread#
+	    my @thread_prots = (undef, undef);
+	    if ($prot) {
+		$thread_prots[1] = $prot;
+		if ($round == 1 && $iteration == 1) {
+		    $thread_prots[0] = $prot;
+		}
+	    }
+	    &check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, \undef, \@thread_prots);                    #	/Round###/thread#
+#	    if ($prot && $round == 1) {                                                            #	/Round###/thread#
+#		&check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, [$prot, $prot]);                    #	/Round###/thread#
+#	    } else {                                                                               #	/Round###/thread#
+#		&check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, [undef, $prot]);             #	/Round###/thread#
+#	    }                                                                                      #	/Round###/thread#
                                                                                                    #	/Round###/thread#
             # Find reads and create read(pool) file(s) for the assembly                            #	/Round###/thread#
             #   Stop if there are no new reads (Returns "No new reads")                            #	/Round###/thread#
@@ -353,10 +387,16 @@ while (not $done) {                                                             
                 print {$log} $print; print $print;                                                 #	/Round###/thread#
                                                                                                    #	/Round###/thread#
                 # Find reads for the current thread and update the threads state                   #	/Round###/thread#
-                $multi{$thread} = &find_reads(\$log, \$thread_bait, \@reads,                       #	/Round###/thread#
-                                              \$thread_old, \$new_collection,                      #	/Round###/thread#
-                                              \@readpools, \"\t"); #"                              #	/Round###/thread#
+		if ($prot && $round == 1 && $iteration == 1) {                                     #	/Round###/thread#
+		    $multi{$thread} = &find_reads(\$log, \$thread_ref, \@reads,                    #	/Round###/thread#
+						  \$thread_old, \$new_collection,                  #	/Round###/thread#
+						  \@readpools, \"\t", 0, 1); #"                    #	/Round###/thread#
                                                                                                    #	/Round###/thread#
+		} else {                                                                           #	/Round###/thread#
+		    $multi{$thread} = &find_reads(\$log, \$thread_bait, \@reads,                   #	/Round###/thread#
+						  \$thread_old, \$new_collection,                  #	/Round###/thread#
+						  \@readpools, \"\t"); #"                          #	/Round###/thread#
+                }                                                                                  #	/Round###/thread#
                 # If no new reads were found then go to the next thread                            #	/Round###/thread#
                 if ($multi{$thread}) {                                                             #	/Round###/thread#
                     # If this is the first Round with multi mode and extra bait,                   #	/Round###/thread#
@@ -427,11 +467,11 @@ while (not $done) {                                                             
             if ($type && $type =~ /diff/) {                                                        #	/Round###/thread#
                 $multi{$thread} = &test_completion(\$log, \$thread_ref, \$thread_bait,             #	/Round###/thread#
                                                     \$types{$thread}, \$assembly_file, \$min_len,  #	/Round###/thread#
-                                                    \"\t", \@current_asmbls);#"                    #	/Round###/thread#
+                                                    \"\t", \@current_asmbls, $prot);#"             #	/Round###/thread#
             } else {                                                                               #	/Round###/thread#
                 $multi{$thread} = &test_completion(\$log, \$thread_ref, \$thread_bait, \$type,     #	/Round###/thread#
                                                    \$assembly_file, \$min_len, \"\t",#"            #	/Round###/thread#
-                                                   \@current_asmbls);                              #	/Round###/thread#
+                                                   \@current_asmbls, $prot);                       #	/Round###/thread#
             }                                                                                      #	/Round###/thread#
             # If homology is used as test there might be a "result file created that holds the     #	/Round###/thread#
             #   the sequence matching the reference from the assembly                              #	/Round###/thread#
@@ -443,7 +483,7 @@ while (not $done) {                                                             
                                                                                                    #	/Round###/thread#
             # If this is the first round of a multi run with extra bait specified                  #	/Round###/thread#
             #   Then rename the files in the thread folder by adding the "old_" prefix             #	/Round###/thread#
-            if ($extra_bait) {                                                                     #	/Round###/thread#
+            if ($extra_bait || $prot) {                                                            #	/Round###/thread#
                 # If there are files with "old_" prefix in the folder then delete them,            #	/Round###/thread#
                 #   because all the files are present with updated data                            #	/Round###/thread#
                 for (glob("old_*")) {                                                              #	/Round###/thread#
@@ -654,6 +694,7 @@ sub parse_input{                                                                
         $min_len_ref,   # 14) (scalar) the minimal size for a contig to be kept                               # Defining variables
         $external_ref,  # 15) (scalar) the perl script to be used for the assembly                            # Defining variables
         $format_ref,    # 16) (scalar) the format of the read files                                           # Defining variables
+        $protein_ref,   # 17) (scalar) TRUE if reference is protein instead of nucleotide                     # Defining variables
                         ) = @_;                                                                               # Defining variables
                                                                                                               # Defining variables
     # Create a variable to hold the reference to the value that is waiting for a value                        # Defining variables
@@ -732,6 +773,11 @@ sub parse_input{                                                                
                                                                                                               # Defining variables: get params
             } elsif (/--min_length=(\d+)/) {                                                                  # Defining variables: get params
                 $$min_len_ref = $1;                                                                           # Defining variables: get params
+                $current = undef;                                                                             # Defining variables: get params
+                $array = undef;                                                                               # Defining variables: get params
+                                                                                                              # Defining variables: get params
+            } elsif (/^((--protein)|(--pp?))$/) {                                                            # Defining variables: get params
+                $$protein_ref++;                                                                              # Defining variables: get params
                 $current = undef;                                                                             # Defining variables: get params
                 $array = undef;                                                                               # Defining variables: get params
                                                                                                               # Defining variables: get params
@@ -1050,6 +1096,7 @@ sub load_multi{                                                                 
 	$type_ref,  # The reference of the run type variable                                        # Multi thread (load_multi)
         $multi_ref, # The reference to the multi hash variable                                      # Multi thread (load_multi)
         $types_ref, # The reference to the types hash variable                                      # Multi thread (load_multi)
+        $protein,   # (scalar) TRUE if protein sequences are used as reference instead of nucleotide# Multi thread (load_multi)
                     ) = @_;                                                                         # Multi thread (load_multi)
                                                                                                     # Multi thread (load_multi)
     # A hash to store the entries of the reference file as key-value pairs                          # Multi thread (load_multi)
@@ -1072,7 +1119,7 @@ sub load_multi{                                                                 
         #   bait.fas                -same as the reference.fas, but will be updated later           # Multi thread (load_multi)
                                                                                                     # Multi thread (load_multi)
         # Check if the reference file is correct (no entry with the same id)                        # Multi thread (load_multi)
-        &check_fasta($log_ref, $ref_ref);                                                           # Multi thread (load_multi)
+        &check_fasta($log_ref, $ref_ref, $protein);                                                 # Multi thread (load_multi)
                                                                                                     # Multi thread (load_multi)
         # Load the content of the reference file into a hash and store the order of the entries     # Multi thread (load_multi)
         &fasta2hash($ref_ref, \%ref_fasta, \@order);                                                # Multi thread (load_multi)
@@ -1182,7 +1229,8 @@ sub check_files{                                                                
         $ref_ref,       # The reference of the reference file                                                          # Check files
         $reads_ref,     # The reference of the array storing the read files                                            # Check files
         $single_ref,    # The reference of the variable that is true if the reads are unpaired                         # Check files
-        $gzip_ref       # The reference of the variable that is true if the read files are compressed by gzip          # Check files
+        $gzip_ref,      # The reference of the variable that is true if the read files are compressed by gzip          # Check files
+        $protein_ref,   # The reference of the array of boolean variables whether the bait and ref are proteins        # Check files
                         ) = @_;                                                                                        # Check files
                                                                                                                        # Check files
     # Check the two fasta format files                                                                                 # Check files
@@ -1190,7 +1238,8 @@ sub check_files{                                                                
         # Check if they exist and if they are non-empty                                                                # Check files
         if (-e $_ && not -z $_) {                                                                                      # Check files
             # This function tests fasta file, that all the entries have unique identifiers                             # Check files
-            &check_fasta($log_ref, \$_);                                                                               # Check files
+	    my $protein = shift @$protein_ref;                                                                         # Check files
+            &check_fasta($log_ref, \$_, $protein);                                                                     # Check files
         } else {                                                                                                       # Check files
             # Print an error if they are missing or are empty                                                          # Check files
             $print = "Error: the fasta file ($_) does not exist or is empty!\n";                                       # Check files
@@ -1226,7 +1275,7 @@ sub check_files{                                                                
 sub check_fasta{                                                                                                       # Check files (fasta)
     # Check a fasta file for errors: duplicate entries, empty entries or incorrect characters                          # Check files (fasta)
     #   Inputs: reference for the log file handle and the reference of the fasta file                                  # Check files (fasta)
-    my ($log_ref, $file_ref) = @_;                                                                                     # Check files (fasta)
+    my ($log_ref, $file_ref, $protein) = @_;                                                                           # Check files (fasta)
                                                                                                                        # Check files (fasta)
     # Hash to store fasta data: key: first word of the id line, value: the sequence                                    # Check files (fasta)
     my %hash;                                                                                                          # Check files (fasta)
@@ -1256,8 +1305,14 @@ sub check_fasta{                                                                
             s/\R//g;                                                                                                   # Check files (fasta)
                                                                                                                        # Check files (fasta)
             # Make sure that there are no incorrect characters in the sequences                                        # Check files (fasta)
-            if (/[^ACTGRYMKSWHBVDN]/i) {                                                                               # Check files (fasta)
-                $print = "Error: the fasta file ($$file_ref) has entry containing incorrect character!\n";             # Check files (fasta)
+            if ($protein) {                                                                                            # Check files (fasta)
+		if (/[^ACDEFGHIKLMNPQRSTVWY]/) {                                                                       # Check files (fasta)
+		    $print = "Error: the fasta file ($$file_ref) has entry containing incorrect (aa) character!\n";    # Check files (fasta)
+		    print {$$log_ref} $print; print $print;                                                            # Check files (fasta)
+		    die "Fasta file ($$file_ref) contains incorrect character!\nProgram is terminated\n";              # Check files (fasta)
+		}                                                                                                      # Check files (fasta)
+	    } elsif (/[^ACTGRYMKSWHBVDN]/i) {                                                                          # Check files (fasta)
+                $print = "Error: the fasta file ($$file_ref) has entry containing incorrect (base) character!\n";      # Check files (fasta)
                 print {$$log_ref} $print; print $print;                                                                # Check files (fasta)
                 die "Fasta file ($$file_ref) contains incorrect character!\nProgram is terminated\n";                  # Check files (fasta)
             }                                                                                                          # Check files (fasta)
@@ -1435,14 +1490,21 @@ sub find_reads{                                                                 
         $new_ref,   # Reference to the new collection                                                         # Find reads
         $readpools, # Reference to the array with the output read files                                       # Find reads
         $tab,       # Reference to the variable possibly holding some tabs                                    # Find reads
-        $not_stdout # Reference to the variable that is true if out put should not be printed to the STDOUT   # Find reads
+        $not_stdout,# Reference to the variable that is true if out put should not be printed to the STDOUT   # Find reads
+	$protein,   # TRUE if reference is protein sequence                                                   # Find reads
                         ) = @_;                                                                               # Find reads
                                                                                                               # Find reads
     # If $tab is undefined then put a reference to an empty string so the print commands won't throw an error # Find reads
-    $tab = \"" unless $tab;#;#"                                                                               # Find reads
+    my $t = "";                                                                                               # Find reads
+    $tab = \$t unless $tab;#;#"                                                                               # Find reads
                                                                                                               # Find reads
     # Print the current status: Finding reads                                                                 # Find reads
-    $print = "" . strftime('%H:%M:%S',localtime) . "\t$$tab\tFind matching reads\n";                          # Find reads
+    $print = "" . strftime('%H:%M:%S',localtime);                                                             # Find reads
+    if ($protein) {                                                                                           # Find reads
+	$print .= "\t$$tab\tFind matching reads based on protein matching\n";                                 # Find reads
+    } else {                                                                                                  # Find reads
+	$print .= "\t$$tab\tFind matching reads\n";                                                           # Find reads
+    }                                                                                                         # Find reads
     print {$$log_ref} $print; print $print unless $not_stdout;                                                # Find reads
                                                                                                               # Find reads
     # The base name for the file holding the ids of the positive reads                                        # Find reads
@@ -1457,7 +1519,11 @@ sub find_reads{                                                                 
         if (not -e "$mira_temp\_$i\.txt" || -z "$mira_temp\_$i\.txt") {                                       # Find reads
             # Run mirabait                                                                                    # Find reads
             #   mirabait -t txt bait_file read_file output_prefix                                             # Find reads
-            system("$bait_cmd -t txt $$bait_ref $read $mira_temp\_$i >>mirabait.log 2>&1");                   # Find reads
+	    if ($protein) {                                                                                   # Find reads
+		system("$bait_aa_cmd -t txt $$bait_ref $read $mira_temp\_$i >>mirabait.log 2>&1");            # Find reads
+	    } else {                                                                                          # Find reads
+		system("$bait_cmd -t txt $$bait_ref $read $mira_temp\_$i >>mirabait.log 2>&1");               # Find reads
+	    }                                                                                                 # Find reads
 	    # Test if baiting program is fuctioning correctly                                                 # Find reads
 	    unless ($? == 0) {                                                                                # Find reads
 		# bait has crashed                                                                            # Find reads
@@ -1979,6 +2045,7 @@ sub test_completion{                                                            
         $min_len_ref,   # The minimum length for contigs to be kept                                           # Test completion
         $tab,           # Reference to the variable possibly holding some tabs                                # Test completion
         $asmbls_ref,    # Reference to array holding the assembly files that need to be modified if min_len   # Test completion
+        $protein,       # (scalar) TRUE if protein reference is used instead of nucleotide                    # Test completion
                         ) = @_;                                                                               # Test completion
                                                                                                               # Test completion
     # If $tab was not defined then use a reference to an empty string                                         # Test completion
@@ -2074,7 +2141,7 @@ sub test_completion{                                                            
         print {$$log_ref} $print; print $print;                                                               # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
         # Run the exonerate subroutine and print the result if it returns true                                # Test completion: Exonerate
-        my $test = &exonerate($ref_ref, $new_bait_ref, $tab, $log_ref);                                       # Test completion: Exonerate
+        my $test = &exonerate($ref_ref, $new_bait_ref, $tab, $log_ref, $protein);                             # Test completion: Exonerate
         if ($test) {                                                                                          # Test completion: Exonerate
             my $time = strftime('%H:%M:%S',localtime);                                                        # Test completion: Exonerate
             if ($test eq "No improvement") {                                                                  # Test completion: Exonerate
@@ -2214,6 +2281,7 @@ sub exonerate{                                                                  
         $t_ref,     # The reference to the assembly fasta file                                                # Test completion: Exonerate
         $tab,       # Reference to the variable possibly holding some tabs                                    # Test completion: Exonerate
         $log_ref,   # The reference for the log file handle                                                   # Test completion: Exonerate
+        $protein,   # (scalar) TRUE if protein is used as reference instead of nucleotide                     # Test completion: Exonerate
                     ) = @_;                                                                                   # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # If $tab was not defined then use a reference to an empty string                                         # Test completion: Exonerate
@@ -2224,6 +2292,11 @@ sub exonerate{                                                                  
                                                                                                               # Test completion: Exonerate
     # The string to store witch positions are matched (+) and unmatched (-) in the reference                  # Test completion: Exonerate
     my $matched;                                                                                              # Test completion: Exonerate
+    # Initialize the matched string with no bases matched                                                     # Test completion: Exonerate
+    my (%q_seq, @q_ids);                                                                                      # Test completion: Exonerate
+    &fasta2hash($q_ref, \%q_seq, \@q_ids);                                                                    # Test completion: Exonerate
+    my $query_len = length $q_seq{$q_ids[0]};                                                                 # Test completion: Exonerate
+    $matched = "-" x $query_len;                                                                              # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # The matched string from the previous round                                                              # Test completion: Exonerate
     my $matched_old = "";                                                                                     # Test completion: Exonerate
@@ -2234,8 +2307,13 @@ sub exonerate{                                                                  
     }                                                                                                         # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # Command to run the exonerate analysis                                                                   # Test completion: Exonerate
-    my $cmd = "$exonerate_cmd $$q_ref $$t_ref --percent 5  --model affine:overlap -E --ryo ";                 # Test completion: Exonerate
-    $cmd .= '"(%qi %ql %qab %qae %qal %qS) (%ti %tl %tab %tae %tal %tS) (%V) (%et %es %em %pi)\n" ';          # Test completion: Exonerate
+    my $cmd = "$exonerate_cmd $$q_ref $$t_ref --percent 5 -E --model ";                                       # Test completion: Exonerate
+    if ($protein) {                                                                                           # Test completion: Exonerate
+	$cmd .= " protein2genome:bestfit ";                                                                   # Test completion: Exonerate
+    } else {                                                                                                  # Test completion: Exonerate
+	$cmd .= " affine:overlap ";                                                                           # Test completion: Exonerate
+    }                                                                                                         # Test completion: Exonerate
+    $cmd .= ' --ryo "(%qi %ql %qab %qae %qal %qS) (%ti %tl %tab %tae %tal %tS) (%V) (%et %es %em %pi)\n" ';   # Test completion: Exonerate
     $cmd .= "--showalignment no --showvulgar no";                                                             # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # Run the command                                                                                         # Test completion: Exonerate
@@ -2247,8 +2325,9 @@ sub exonerate{                                                                  
     close $exonerate_save;                                                                                    # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
     # Parse the exonerate result                                                                              # Test completion: Exonerate
-    for (split /\n/, $exonerate) {                                                                            # Test completion: Exonerate
-        if (/\((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)\ \((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)/x){ # Test completion: Exonerate
+    my @ryohits = grep {/^\(/} split /\n/, $exonerate;                                                        # Test completion: Exonerate
+    for (@ryohits) {                                                                                          # Test completion: Exonerate
+        if (/\((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+.])\)\ \((\S+)\ (\d+)\ (\d+)\ (\d+)\ (\d+)\ ([-+])\)/x){# Test completion: Exonerate
            # ^ query (ID length start end aligned strand)   ^ target (ID length start end aligned strand)     # Test completion: Exonerate
             my %query = (     id      => $1,                                                                  # Test completion: Exonerate
                               len     => $2,                                                                  # Test completion: Exonerate
@@ -2278,8 +2357,6 @@ sub exonerate{                                                                  
                 }                                                                                             # Test completion: Exonerate
             }                                                                                                 # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
-            # Initialize the matched string with no bases matched                                             # Test completion: Exonerate
-            $matched = "-" x $query{len};                                                                     # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
             # Did the current hit completely cover the reference                                              # Test completion: Exonerate
             if ( ($query{start} == 0 && $query{len} == $query{end}) ||                                        # Test completion: Exonerate
@@ -2364,7 +2441,9 @@ sub exonerate{                                                                  
         # Print some information about the match                                                              # Test completion: Exonerate
 	my $ref_len = length $matched;                                                                        # Test completion: Exonerate
 	my $ref_m = length join "", grep {$_ eq "+"} split //, $matched;                                      # Test completion: Exonerate
-        $print .= strftime('%H:%M:%S',localtime) . "\t$$tab\t\t$ref_m bp are matched out of $ref_len bp\n";   # Test completion: Exonerate
+	my $u = "bp";                                                                                         # Test completion: Exonerate
+	$u = "aa" if $protein;                                                                                # Test completion: Exonerate
+        $print .= strftime('%H:%M:%S',localtime) . "\t$$tab\t\t$ref_m $u are matched out of $ref_len $u\n";   # Test completion: Exonerate
         print {$$log_ref} $print; print $print;                                                               # Test completion: Exonerate        
     }                                                                                                         # Test completion: Exonerate
                                                                                                               # Test completion: Exonerate
