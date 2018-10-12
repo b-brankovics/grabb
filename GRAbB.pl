@@ -291,15 +291,17 @@ while (not $done) {                                                             
     # Find reads and create read(pool) file(s) for the assembly                                    #	/Round###
     #   Stop if there are no new reads (Returns "No new reads")                                    #	/Round###
     my @proteins = (undef, undef);
+    my $prot_kmer = undef;
     if ($prot) {
 	$proteins[1] = $prot;
 	if ($round == 1) {
 	    $proteins[0] = $prot;
+	    $prot_kmer++;
 	}
     }
     &check_files(\$log, \$bait, \$ref, \@reads, \$single, \$gzip, \@proteins);                                 #	/Round###
     $done = &find_reads(\$log, \$bait, \@reads, \$old_collection, \$new_collection, \@readpools,   #	/Round###
-			undef, undef, $prot);                                                      #	/Round###
+			undef, undef, $prot_kmer);                                                      #	/Round###
     # If done then break the loop and proceed to the finishing steps                               #	/Round###
     if ($done) {                                                                                   #	/Round###
         chdir "..";                                                                                #	/Round###			=>	/
@@ -483,7 +485,7 @@ while (not $done) {                                                             
                                                                                                    #	/Round###/thread#
             # If this is the first round of a multi run with extra bait specified                  #	/Round###/thread#
             #   Then rename the files in the thread folder by adding the "old_" prefix             #	/Round###/thread#
-            if ($extra_bait || $prot) {                                                            #	/Round###/thread#
+            if ($extra_bait) {                                                            #	/Round###/thread#
                 # If there are files with "old_" prefix in the folder then delete them,            #	/Round###/thread#
                 #   because all the files are present with updated data                            #	/Round###/thread#
                 for (glob("old_*")) {                                                              #	/Round###/thread#
