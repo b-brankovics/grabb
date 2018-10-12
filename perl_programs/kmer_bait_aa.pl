@@ -139,7 +139,7 @@ $read_id = $1;
 if ($fastq) {
     # Keep track of line numbers
     my $n = 1;
-    for (<$read_handle>) {
+    while (<$read_handle>) {
 	$n++;
 	# save read id
 	if ($n%4 == 1) {
@@ -155,7 +155,7 @@ if ($fastq) {
 	}
     }
 } else {
-    for (<$read_handle>) {
+    while (<$read_handle>) {
 	# save read id
 	if (/^>(\S+)/) {
 	    my $new_id = $1;
