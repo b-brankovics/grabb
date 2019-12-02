@@ -229,6 +229,7 @@ sub fasta2hash{                                                                 
             $current = $1;                 # save the ID                                                      # fasta2hash
             push @$order_ref, $current;    # save the ID in the order array                                   # fasta2hash
         } else {                                                                                              # fasta2hash
+	    die "ERROR: the input is not correct FASTA format\n" unless $current;
             $$hash_ref{$current} .= $_;    # append line to the current sequence                              # fasta2hash
         }                                                                                                     # fasta2hash
     }                                                                                                         # fasta2hash
