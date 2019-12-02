@@ -353,10 +353,10 @@ sub overlap{                                                                    
                     return $min . $post;                                                                      # overlap
                 } else {                                                                                      # overlap
                     # Check if the search term matches inside the previous hit                                # overlap
-                    my $str = substr($min, 1, $len - 1) . substr($post, 0, $len - 1);                         # overlap
+                    my $str = substr($min, 1) . $post;                         # overlap
                     # If yes then for the next iteration reduce the size of the string by one                 # overlap
                     if ($str =~ /$min/) {                                                                     # overlap
-                        my $next = substr($min, 1, $len - 1) . $post;                                         # overlap
+                        my $next = substr($min, 1) . $post;                                         # overlap
                         return &overlap(\$next, \$right);                                                     # overlap
                     } else {                                                                                  # overlap
                         # Use only the postmatch, because there is no nearer hit possible                     # overlap
