@@ -115,7 +115,7 @@ my $print;                                                                      
 # Constant variables                                                                               #
 #	Only declared at the start and never changed afterwards                                    #
 #	These variables have to be adjusted to the environment                                     #
-my $bait_aa_cmd = "kmer_bait_aa.pl";# The command to invoke the baiting program                    #	!!!!
+my $bait_aa_cmd = "kmer_bait_kraken_aa.pl";# The command to invoke the baiting program (protein)   #	!!!! (for protein mode)
 my $bait_cmd =    "mirabait";       # The command to invoke the baiting program                    #	!!!!
 my $collect_cmd = "seqtk subseq";   # The command to invoke the read collecting program            #	!!!!
 my $edena_cmd =	  "edena";          # The command to invoke the default assembler program          #	!!!!
@@ -281,7 +281,7 @@ while (not $done) {                                                             
     # Update the relative paths of the files that are in the main directory                        #	/Round###
     #   The file names are fixed inside the subroutine                                             #	/Round###
     #   The prefix is passed then the reference file, bait file and old collection variables       #	/Round###
-    my $p = "../";
+    my $p = "../";                                                                                 #	/Round###
     &update_path(\$p, \$ref, \$bait, \$old_collection);                                            #	/Round###
                                                                                                    #	/Round###
     # Check if all the necessary files are in order                                                #	/Round###
@@ -290,18 +290,18 @@ while (not $done) {                                                             
                                                                                                    #	/Round###
     # Find reads and create read(pool) file(s) for the assembly                                    #	/Round###
     #   Stop if there are no new reads (Returns "No new reads")                                    #	/Round###
-    my @proteins = (undef, undef);
-    my $prot_kmer = undef;
-    if ($prot) {
-	$proteins[1] = $prot;
-	if ($round == 1) {
-	    $proteins[0] = $prot;
-	    $prot_kmer++;
-	}
-    }
-    &check_files(\$log, \$bait, \$ref, \@reads, \$single, \$gzip, \@proteins);                                 #	/Round###
+    my @proteins = (undef, undef);                                                                 #	/Round###
+    my $prot_kmer = undef;                                                                         #	/Round###
+    if ($prot) {                                                                                   #	/Round###
+	$proteins[1] = $prot;                                                                      #	/Round###
+	if ($round == 1) {                                                                         #	/Round###
+	    $proteins[0] = $prot;                                                                  #	/Round###
+	    $prot_kmer++;                                                                          #	/Round###
+	}                                                                                          #	/Round###
+    }                                                                                              #	/Round###
+    &check_files(\$log, \$bait, \$ref, \@reads, \$single, \$gzip, \@proteins);                     #	/Round###
     $done = &find_reads(\$log, \$bait, \@reads, \$old_collection, \$new_collection, \@readpools,   #	/Round###
-			undef, undef, $prot_kmer);                                                      #	/Round###
+			undef, undef, $prot_kmer);                                                 #	/Round###
     # If done then break the loop and proceed to the finishing steps                               #	/Round###
     if ($done) {                                                                                   #	/Round###
         chdir "..";                                                                                #	/Round###			=>	/
@@ -366,19 +366,15 @@ while (not $done) {                                                             
             $iteration++;                                                                          #	/Round###/thread#
                                                                                                    #	/Round###/thread#
             # Check if all the necessary files are in order                                        #	/Round###/thread#
-	    my @thread_prots = (undef, undef);
-	    if ($prot) {
-		$thread_prots[1] = $prot;
-		if ($round == 1 && $iteration == 1) {
-		    $thread_prots[0] = $prot;
-		}
-	    }
-	    &check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, \undef, \@thread_prots);                    #	/Round###/thread#
-#	    if ($prot && $round == 1) {                                                            #	/Round###/thread#
-#		&check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, [$prot, $prot]);                    #	/Round###/thread#
-#	    } else {                                                                               #	/Round###/thread#
-#		&check_files(\$log, \$thread_bait, \$thread_ref, \@reads, \$single, [undef, $prot]);             #	/Round###/thread#
-#	    }                                                                                      #	/Round###/thread#
+	    my @thread_prots = (undef, undef);                                                     #	/Round###/thread#
+	    if ($prot) {                                                                           #	/Round###/thread#
+		$thread_prots[1] = $prot;                                                          #	/Round###/thread#
+		if ($round == 1 && $iteration == 1) {                                              #	/Round###/thread#
+		    $thread_prots[0] = $prot;                                                      #	/Round###/thread#
+		}                                                                                  #	/Round###/thread#
+	    }                                                                                      #	/Round###/thread#
+	    &check_files(\$log, \$thread_bait, \$thread_ref,                                       #	/Round###/thread#
+			 \@reads, \$single, \undef, \@thread_prots);                               #	/Round###/thread#
                                                                                                    #	/Round###/thread#
             # Find reads and create read(pool) file(s) for the assembly                            #	/Round###/thread#
             #   Stop if there are no new reads (Returns "No new reads")                            #	/Round###/thread#
@@ -1308,10 +1304,10 @@ sub check_fasta{                                                                
                                                                                                                        # Check files (fasta)
             # Make sure that there are no incorrect characters in the sequences                                        # Check files (fasta)
             if ($protein) {                                                                                            # Check files (fasta)
-		if (/[^ACDEFGHIKLMNPQRSTVWY]/) {                                                                       # Check files (fasta)
+		if (/([^ACDEFGHIKLMNPQRSTVWY])/) {                                                                       # Check files (fasta)
 		    $print = "Error: the fasta file ($$file_ref) has entry containing incorrect (aa) character!\n";    # Check files (fasta)
 		    print {$$log_ref} $print; print $print;                                                            # Check files (fasta)
-		    die "Fasta file ($$file_ref) contains incorrect character!\nProgram is terminated\n";              # Check files (fasta)
+		    die "Fasta file ($$file_ref) contains incorrect character ('$1')!\nProgram is terminated\n";              # Check files (fasta)
 		}                                                                                                      # Check files (fasta)
 	    } elsif (/[^ACTGRYMKSWHBVDN]/i) {                                                                          # Check files (fasta)
                 $print = "Error: the fasta file ($$file_ref) has entry containing incorrect (base) character!\n";      # Check files (fasta)
@@ -1365,6 +1361,8 @@ sub check_read_file {                                                           
         # Otherwise use zcat to read the compressed read file                                                          # Check files (read_file)
         $cat = "zcat" if $$gzip_ref;                                                                                   # Check files (read_file)
                                                                                                                        # Check files (read_file)
+	# Hide error about broken pipe, because head terminates before cat does                                        # Check files (read_file)
+	$cat .= " 2>/dev/null ";                                                                                       # Check files (read_file)
         # Get the first line of the read file to determine if it is a fasta or fastq format                            # Check files (read_file)
         my $first_line = `$cat $read | head -1`;                                                                       # Check files (read_file)
                                                                                                                        # Check files (read_file)
